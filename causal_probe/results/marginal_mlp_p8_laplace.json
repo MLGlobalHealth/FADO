@@ -1,0 +1,19 @@
+{
+  "method": "marginal",
+  "n_scms": 100,
+  "n_failed": 0,
+  "pearson": 0.6181846933377044,
+  "spearman": 0.49336940370219334,
+  "r2": 0.0483127933175862,
+  "mse": 0.3150511646657983,
+  "auroc_nonzero": 0.7002867626653511,
+  "mae_zero": 0.4412772356538287,
+  "config": {
+    "method": "marginal",
+    "scm_type": "mlp",
+    "p": 8,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025
+  }
+}

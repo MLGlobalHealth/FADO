@@ -1,0 +1,22 @@
+{
+  "pearson": 0.1660196642987126,
+  "spearman": 0.14388496286603428,
+  "r2": 0.010539864130105436,
+  "mse": 0.6253465718811815,
+  "auroc_nonzero": 0.5309852960859672,
+  "mae_zero": 0.019112107974083907,
+  "n_features_finite": 500,
+  "n_features_total": 500,
+  "method": "fci",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "fci",
+    "scm_type": "mixed",
+    "p": 5,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100
+  }
+}

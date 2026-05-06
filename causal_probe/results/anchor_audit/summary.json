@@ -1,0 +1,7 @@
+{
+  "tubingen": {
+    "n_features": 99,
+    "n_flagged": 2,
+    "out": "causal_probe/results/anchor_audit/tubingen.json"
+  }
+}

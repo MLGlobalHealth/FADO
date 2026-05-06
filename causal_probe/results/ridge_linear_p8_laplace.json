@@ -1,0 +1,19 @@
+{
+  "method": "ridge",
+  "n_scms": 100,
+  "n_failed": 0,
+  "pearson": 0.2647328466808517,
+  "spearman": 0.2800357268105415,
+  "r2": -1.5263086765720297,
+  "mse": 1.3425984409235543,
+  "auroc_nonzero": 0.5595482467267876,
+  "mae_zero": 0.584977369544877,
+  "config": {
+    "method": "ridge",
+    "scm_type": "linear",
+    "p": 8,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025
+  }
+}

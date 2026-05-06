@@ -1,0 +1,21 @@
+{
+  "method": "causalpfn",
+  "control": "nsw",
+  "outcome": "re78",
+  "with_decoys": true,
+  "k_noise": 3,
+  "n_total": 445,
+  "n_per_fit": 445,
+  "bootstrap_B": 500,
+  "tau_T_rct": 0.2670085288066394,
+  "tau_hat_T_mean": 0.03710533326428025,
+  "tau_hat_T_ci": [
+    -0.04317016002756916,
+    0.11849597866792014
+  ],
+  "ATE_error_mean": 0.22990319554235913,
+  "ATE_error_ci": [
+    0.14851255013871925,
+    0.31017868883420857
+  ]
+}

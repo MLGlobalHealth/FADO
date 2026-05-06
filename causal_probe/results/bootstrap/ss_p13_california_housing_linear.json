@@ -1,0 +1,29 @@
+{
+  "ckpt": "causal_probe/results/probe_p13_20k.ckpt",
+  "covariate_source": "california_housing",
+  "outcome_family": "linear",
+  "n_scms": 30,
+  "pearson": {
+    "model": 0.3368833884108336,
+    "marginal": 0.5241529451873862,
+    "multivariate": 0.7392272998195337
+  },
+  "spearman_model": 0.3471434998492375,
+  "causal_mse_model": 1.1535411901368182,
+  "causal_mse_marginal": 0.45820354013115355,
+  "fp_proxy": {
+    "model": 0.19772580275215054,
+    "marginal": 0.9737327220467645,
+    "multivariate": 0.005885338528545962
+  },
+  "fp_leak": {
+    "model": 0.5106811184591303,
+    "marginal": 1.9444059594004808,
+    "multivariate": 1.0289626300606234
+  },
+  "fp_noise": {
+    "model": 0.034770089078422946,
+    "marginal": 0.01086377345463692,
+    "multivariate": 0.0018456518547019238
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "pearson": 0.39410756670982033,
+  "spearman": 0.5189302965110247,
+  "r2": -0.0038264928906097673,
+  "mse": 0.6344262222760174,
+  "auroc_nonzero": 0.6335111570010898,
+  "mae_zero": 0.26190136153243376,
+  "n_features_finite": 500,
+  "n_features_total": 500,
+  "method": "permutation",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "permutation",
+    "scm_type": "linear",
+    "p": 5,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100,
+    "n_repeats": 10
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "method": "causalpfn",
+  "control": "cps1",
+  "outcome": "re78",
+  "with_decoys": true,
+  "k_noise": 3,
+  "n_total": 16177,
+  "n_per_fit": 2048,
+  "bootstrap_B": 200,
+  "tau_T_rct": 0.039456341696365554,
+  "tau_hat_T_mean": -0.10535204031028683,
+  "tau_hat_T_ci": [
+    -0.20016308537204347,
+    -0.003054334476736703
+  ],
+  "ATE_error_mean": 0.14501929859326892,
+  "ATE_error_ci": [
+    0.042510676173102314,
+    0.23961942706840905
+  ]
+}

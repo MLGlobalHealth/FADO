@@ -1,0 +1,22 @@
+{
+  "pearson": 0.9958793943034765,
+  "spearman": 0.8532247682899339,
+  "r2": 0.9917718726650769,
+  "mse": 0.004372811222173371,
+  "auroc_nonzero": 0.9999692475647916,
+  "mae_zero": 0.0008901828984848976,
+  "n_features_finite": 800,
+  "n_features_total": 800,
+  "method": "lingam",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "lingam",
+    "scm_type": "linear",
+    "p": 8,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100
+  }
+}

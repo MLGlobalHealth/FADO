@@ -1,0 +1,19 @@
+{
+  "method": "shap",
+  "n_scms": 100,
+  "n_failed": 0,
+  "pearson": 0.5371522930500546,
+  "spearman": 0.3980887283549134,
+  "r2": 0.2734774455236543,
+  "mse": 0.27021468836775003,
+  "auroc_nonzero": 0.6465142857142858,
+  "mae_zero": 0.16598166890775654,
+  "config": {
+    "method": "shap",
+    "scm_type": "nonlinear",
+    "p": 5,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025
+  }
+}

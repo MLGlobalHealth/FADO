@@ -1,0 +1,21 @@
+{
+  "method": "doubleml",
+  "n_scms": 100,
+  "n_failed": 0,
+  "n_features_finite": 800,
+  "n_features_total": 800,
+  "pearson": 0.39786248656482553,
+  "spearman": 0.38029854148138187,
+  "r2": -0.05829599423651466,
+  "mse": 0.5624279269885474,
+  "auroc_nonzero": 0.5858338907212215,
+  "mae_zero": 0.3967105303639506,
+  "config": {
+    "method": "doubleml",
+    "scm_type": "mixed",
+    "p": 8,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025
+  }
+}

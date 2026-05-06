@@ -1,0 +1,22 @@
+{
+  "pearson": 0.5212894930835154,
+  "spearman": 0.5104578119100591,
+  "r2": 0.25178294706900495,
+  "mse": 0.4728790500105225,
+  "auroc_nonzero": 0.5944855542170978,
+  "mae_zero": 0.18608884097360326,
+  "n_features_finite": 500,
+  "n_features_total": 500,
+  "method": "shap",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "shap",
+    "scm_type": "linear",
+    "p": 5,
+    "noise": "gaussian",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "ihdp": {
+    "dataset": "ihdp",
+    "methods": {
+      "fado_probe_default_mixture_hetero_p2_15_30k": {
+        "n": 100,
+        "rel_err_mean": 0.9599230374454862,
+        "rel_err_sem": 0.0031985407219281186,
+        "hat_mean": 0.16030785021805477,
+        "true_mean": 4.0,
+        "time_mean": 0.060213441848754885
+      },
+      "fado_probe_hetero_p3_15_linear": {
+        "n": 100,
+        "rel_err_mean": 0.8280419433227713,
+        "rel_err_sem": 0.031076150410321208,
+        "hat_mean": 1.3987253395692574,
+        "true_mean": 4.0,
+        "time_mean": 0.06039210319519043
+      },
+      "fado_probe_hetero_p3_15_mixed": {
+        "n": 100,
+        "rel_err_mean": 0.9258166442165897,
+        "rel_err_sem": 0.009225079292978486,
+        "hat_mean": 0.29673342313364065,
+        "true_mean": 4.0,
+        "time_mean": 0.060844945907592776
+      },
+      "fado_probe_large_p13_30k": {
+        "n": 100,
+        "rel_err_mean": 0.31389520696552997,
+        "rel_err_sem": 0.026249412133953078,
+        "hat_mean": 4.17740636958812,
+        "true_mean": 4.0,
+        "time_mean": 0.1390515398979187
+      },
+      "fado_probe_seed1_p13_20k": {
+        "n": 100,
+        "rel_err_mean": 0.7554710947364961,
+        "rel_err_sem": 0.02659177689146497,
+        "hat_mean": 0.9781156210540147,
+        "true_mean": 4.0,
+        "time_mean": 0.060542285442352295
+      },
+      "fado_probe_main_p5_50k": {
+        "n": 100,
+        "rel_err_mean": 0.8912748738719316,
+        "rel_err_sem": 0.014850890601103204,
+        "hat_mean": 0.43490050451227336,
+        "true_mean": 4.0,
+        "time_mean": 0.041118662357330325
+      }
+    }
+  },
+  "lalonde_cps": {
+    "dataset": "lalonde_cps",
+    "methods": {
+      "fado_probe_default_mixture_hetero_p2_15_30k": {
+        "n": 100,
+        "rel_err_mean": 0.7984422889571229,
+        "rel_err_sem": 0.0056514478331745,
+        "hat_mean": -1416.3355510407773,
+        "true_mean": -7028.249306640625,
+        "time_mean": 0.022060163021087646
+      },
+      "fado_probe_hetero_p3_15_linear": {
+        "n": 100,
+        "rel_err_mean": 2.5246371015164737,
+        "rel_err_sem": 0.011847022274073044,
+        "hat_mean": 10713.73548345153,
+        "true_mean": -7028.249306640625,
+        "time_mean": 0.021933867931365966
+      },
+      "fado_probe_hetero_p3_15_mixed": {
+        "n": 100,
+        "rel_err_mean": 3.1778952362298396,
+        "rel_err_sem": 0.03059868808535008,
+        "hat_mean": 15306.469928364064,
+        "true_mean": -7028.249306640625,
+        "time_mean": 0.022096586227416993
+      },
+      "fado_probe_large_p13_30k": {
+        "n": 100,
+        "rel_err_mean": 2.137626546120785,
+        "rel_err_sem": 0.012500941110147528,
+        "hat_mean": 7995.181845820371,
+        "true_mean": -7028.249306640625,
+        "time_mean": 0.04961756706237793
+      },
+      "fado_probe_seed1_p13_20k": {
+        "n": 100,
+        "rel_err_mean": 3.6709896563762108,
+        "rel_err_sem": 0.04133897252929471,
+        "hat_mean": -32824.64783878435,
+        "true_mean": -7028.249306640625,
+        "time_mean": 0.021983139514923096
+      },
+      "fado_probe_main_p5_50k": {
+        "n": 100,
+        "rel_err_mean": 2.117822640478201,
+        "rel_err_sem": 0.03907901325036861,
+        "hat_mean": -21911.59246174131,
+        "true_mean": -7028.249306640625,
+        "time_mean": 0.015165302753448486
+      }
+    }
+  },
+  "lalonde_psid": {
+    "dataset": "lalonde_psid",
+    "methods": {
+      "fado_probe_default_mixture_hetero_p2_15_30k": {
+        "n": 100,
+        "rel_err_mean": 0.7684408699796659,
+        "rel_err_sem": 0.011243603421873295,
+        "hat_mean": -3092.3932201136404,
+        "true_mean": -13346.99947265625,
+        "time_mean": 0.02108816385269165
+      },
+      "fado_probe_hetero_p3_15_linear": {
+        "n": 100,
+        "rel_err_mean": 1.0478931774781512,
+        "rel_err_sem": 0.023160850977871343,
+        "hat_mean": 649.9789524561728,
+        "true_mean": -13346.99947265625,
+        "time_mean": 0.02096423864364624
+      },
+      "fado_probe_hetero_p3_15_mixed": {
+        "n": 100,
+        "rel_err_mean": 0.5549282750818699,
+        "rel_err_sem": 0.025329076555577153,
+        "hat_mean": -5941.611578156458,
+        "true_mean": -13346.99947265625,
+        "time_mean": 0.021187138557434083
+      },
+      "fado_probe_large_p13_30k": {
+        "n": 100,
+        "rel_err_mean": 0.4694501029629272,
+        "rel_err_sem": 0.031446086114514285,
+        "hat_mean": -16365.168299632242,
+        "true_mean": -13346.99947265625,
+        "time_mean": 0.04736961603164673
+      },
+      "fado_probe_seed1_p13_20k": {
+        "n": 100,
+        "rel_err_mean": 0.6948323023347744,
+        "rel_err_sem": 0.03092995632206203,
+        "hat_mean": -4139.968928671027,
+        "true_mean": -13346.99947265625,
+        "time_mean": 0.020950164794921875
+      },
+      "fado_probe_main_p5_50k": {
+        "n": 100,
+        "rel_err_mean": 0.22890709504156614,
+        "rel_err_sem": 0.012975287933240437,
+        "hat_mean": -16349.105172857817,
+        "true_mean": -13346.99947265625,
+        "time_mean": 0.014378037452697754
+      }
+    }
+  }
+}

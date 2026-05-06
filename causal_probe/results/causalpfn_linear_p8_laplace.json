@@ -1,0 +1,19 @@
+{
+  "n_scms": 100,
+  "n_failed": 0,
+  "n_features_total": 800,
+  "n_features_finite": 800,
+  "pearson": 0.30824433041165206,
+  "spearman": 0.2710008877452607,
+  "r2": 0.09131925398991736,
+  "mse": 0.48291539517879056,
+  "auroc_nonzero": 0.5648761061266538,
+  "mae_zero": 0.14493319361327608,
+  "config": {
+    "scm_type": "linear",
+    "p": 8,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "method": "notears",
+  "n_scms": 100,
+  "n_failed": 0,
+  "n_features_finite": 1300,
+  "n_features_total": 1300,
+  "pearson": 0.35437144080932076,
+  "spearman": 0.3139592238001523,
+  "r2": -0.002612452819603872,
+  "mse": 0.5975620380824234,
+  "auroc_nonzero": 0.6346372098683671,
+  "mae_zero": 0.24721587194422293,
+  "config": {
+    "method": "notears",
+    "scm_type": "linear",
+    "p": 13,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025
+  }
+}

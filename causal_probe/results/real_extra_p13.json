@@ -1,0 +1,347 @@
+{
+  "ckpt": "causal_probe/results/probe_p13_20k.ckpt",
+  "results": {
+    "friedman1": {
+      "y_name": "friedman1 target (X1-X5 are causal; X6-X10 are noise)",
+      "n_rows_full": 1024,
+      "n_rows_context": 512,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "X1",
+          "tau_hat": 0.0467849001288414,
+          "tau_hat_std": 0.06784182786941528,
+          "assoc": 0.7669116855515562,
+          "multivariate": 0.80383093576889
+        },
+        {
+          "name": "X2",
+          "tau_hat": 0.1678646057844162,
+          "tau_hat_std": 0.18639789521694183,
+          "assoc": 0.7203347797830822,
+          "multivariate": 0.8372352368682449
+        },
+        {
+          "name": "X3",
+          "tau_hat": -0.0455041229724884,
+          "tau_hat_std": 0.047806259244680405,
+          "assoc": -0.06959909455186447,
+          "multivariate": -0.03130954974344362
+        },
+        {
+          "name": "X4",
+          "tau_hat": 0.30524659156799316,
+          "tau_hat_std": 0.33796894550323486,
+          "assoc": 1.0821513435713115,
+          "multivariate": 1.153684849506502
+        },
+        {
+          "name": "X5",
+          "tau_hat": 0.09989625215530396,
+          "tau_hat_std": 0.17290562391281128,
+          "assoc": 0.6206371677753663,
+          "multivariate": 0.6373290012189244
+        },
+        {
+          "name": "X6",
+          "tau_hat": -0.006080227438360453,
+          "tau_hat_std": 0.09422434866428375,
+          "assoc": -0.002385171216780963,
+          "multivariate": -0.015385146208492484
+        },
+        {
+          "name": "X7",
+          "tau_hat": -0.05643815919756889,
+          "tau_hat_std": 0.10470475256443024,
+          "assoc": 0.03018088225582574,
+          "multivariate": 0.11258182197415802
+        },
+        {
+          "name": "X8",
+          "tau_hat": -0.07865866273641586,
+          "tau_hat_std": 0.12081223726272583,
+          "assoc": -0.07496857109398916,
+          "multivariate": 0.04484839532563528
+        },
+        {
+          "name": "X9",
+          "tau_hat": -0.012633590027689934,
+          "tau_hat_std": 0.028040004894137383,
+          "assoc": 0.10409482258130878,
+          "multivariate": 0.03377770494252488
+        },
+        {
+          "name": "X10",
+          "tau_hat": -0.02230331487953663,
+          "tau_hat_std": 0.018845779821276665,
+          "assoc": -0.07132811963796684,
+          "multivariate": 0.010572547909186662
+        }
+      ]
+    },
+    "friedman2": {
+      "y_name": "friedman2 target (all 4 features are causal)",
+      "n_rows_full": 1024,
+      "n_rows_context": 512,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "X1",
+          "tau_hat": 0.043936245143413544,
+          "tau_hat_std": 0.02373526245355606,
+          "assoc": 0.033899416246859534,
+          "multivariate": 0.05285777513838227
+        },
+        {
+          "name": "X2",
+          "tau_hat": 0.9981909990310669,
+          "tau_hat_std": 0.27936017513275146,
+          "assoc": 1.1889189174147028,
+          "multivariate": 1.1948558551450927
+        },
+        {
+          "name": "X3",
+          "tau_hat": 0.41747933626174927,
+          "tau_hat_std": 0.20052146911621094,
+          "assoc": 1.4256936532865587,
+          "multivariate": 1.4290401319414736
+        },
+        {
+          "name": "X4",
+          "tau_hat": -0.004192635416984558,
+          "tau_hat_std": 0.07865480333566666,
+          "assoc": 0.006749396406937657,
+          "multivariate": -0.004509830040588036
+        }
+      ]
+    },
+    "friedman3": {
+      "y_name": "friedman3 target (all 4 features are causal)",
+      "n_rows_full": 1024,
+      "n_rows_context": 512,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "X1",
+          "tau_hat": 0.00045620594755746424,
+          "tau_hat_std": 0.0004754236724693328,
+          "assoc": -0.5971919396197057,
+          "multivariate": -0.5887672466355045
+        },
+        {
+          "name": "X2",
+          "tau_hat": -0.0018574915593490005,
+          "tau_hat_std": 0.0003467313654255122,
+          "assoc": 0.7273088074533015,
+          "multivariate": 0.7150436537633579
+        },
+        {
+          "name": "X3",
+          "tau_hat": -0.0025772235821932554,
+          "tau_hat_std": 0.0004512881860136986,
+          "assoc": 1.1450300271074751,
+          "multivariate": 1.1528772268795715
+        },
+        {
+          "name": "X4",
+          "tau_hat": -0.001189216272905469,
+          "tau_hat_std": 0.00046891739475540817,
+          "assoc": 0.008772914285735994,
+          "multivariate": -0.015195383035048892
+        }
+      ]
+    },
+    "abalone": {
+      "y_name": "Rings (age proxy)",
+      "n_rows_full": 4177,
+      "n_rows_context": 512,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "Length",
+          "tau_hat": -0.19340839982032776,
+          "tau_hat_std": 0.05009903013706207,
+          "assoc": 1.113439153858121,
+          "multivariate": -0.1148274056670872
+        },
+        {
+          "name": "Diameter",
+          "tau_hat": -0.13557884097099304,
+          "tau_hat_std": 0.03726426512002945,
+          "assoc": 1.1493197026106887,
+          "multivariate": 0.8196290249659255
+        },
+        {
+          "name": "Height",
+          "tau_hat": 0.2714739739894867,
+          "tau_hat_std": 0.133544921875,
+          "assoc": 1.1149346489149594,
+          "multivariate": 0.3070957072155166
+        },
+        {
+          "name": "Whole weight",
+          "tau_hat": 0.1622583270072937,
+          "tau_hat_std": 0.04593735560774803,
+          "assoc": 1.0807793538467207,
+          "multivariate": 2.7711564365409833
+        },
+        {
+          "name": "Shucked weight",
+          "tau_hat": -0.13978438079357147,
+          "tau_hat_std": 0.05142040178179741,
+          "assoc": 0.8417673158895871,
+          "multivariate": -2.763400989537221
+        },
+        {
+          "name": "Viscera weight",
+          "tau_hat": 0.18351078033447266,
+          "tau_hat_std": 0.07790546864271164,
+          "assoc": 1.0076384975185348,
+          "multivariate": -0.6586737414833499
+        },
+        {
+          "name": "Shell weight",
+          "tau_hat": 0.5768627524375916,
+          "tau_hat_std": 0.09032278507947922,
+          "assoc": 1.2551480890193878,
+          "multivariate": 0.754553133194236
+        }
+      ]
+    },
+    "auto_mpg": {
+      "y_name": "mpg (fuel efficiency)",
+      "n_rows_full": 392,
+      "n_rows_context": 392,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "cylinders",
+          "tau_hat": -0.011019222438335419,
+          "tau_hat_std": 0.0,
+          "assoc": -1.5552350162504887,
+          "multivariate": -0.14402277805587926
+        },
+        {
+          "name": "displacement",
+          "tau_hat": -0.017838459461927414,
+          "tau_hat_std": 1.862645149230957e-09,
+          "assoc": -1.6102538934193056,
+          "multivariate": 0.2043755392151044
+        },
+        {
+          "name": "horsepower",
+          "tau_hat": -1.788067102432251,
+          "tau_hat_std": 1.1920928955078125e-07,
+          "assoc": -1.5568535677939956,
+          "multivariate": -0.004511381500302088
+        },
+        {
+          "name": "weight",
+          "tau_hat": -0.814581036567688,
+          "tau_hat_std": 5.960464477539063e-08,
+          "assoc": -1.664488429661487,
+          "multivariate": -1.4771334067407995
+        },
+        {
+          "name": "acceleration",
+          "tau_hat": 0.7447341680526733,
+          "tau_hat_std": 5.960464477539063e-08,
+          "assoc": 0.8466570738047279,
+          "multivariate": 0.059868528877029766
+        },
+        {
+          "name": "model_year",
+          "tau_hat": 0.01043692883104086,
+          "tau_hat_std": 9.313225746154785e-10,
+          "assoc": 1.1610819321804098,
+          "multivariate": 0.7109486232866851
+        }
+      ]
+    },
+    "boston": {
+      "y_name": "MEDV (median home value $1000s)",
+      "n_rows_full": 506,
+      "n_rows_context": 506,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "CRIM",
+          "tau_hat": 0.05209633708000183,
+          "tau_hat_std": 0.0,
+          "assoc": -0.7766092171728466,
+          "multivariate": -0.13110597048218664
+        },
+        {
+          "name": "ZN",
+          "tau_hat": 1.0289525985717773,
+          "tau_hat_std": 0.0,
+          "assoc": 0.7208906849003659,
+          "multivariate": 0.20222140262913996
+        },
+        {
+          "name": "INDUS",
+          "tau_hat": 0.0013675177469849586,
+          "tau_hat_std": 0.0,
+          "assoc": -0.9674503200557781,
+          "multivariate": -0.06263213583279845
+        },
+        {
+          "name": "NOX",
+          "tau_hat": 0.006012535188347101,
+          "tau_hat_std": 4.656612873077393e-10,
+          "assoc": -0.8546415447457104,
+          "multivariate": -0.367152890605122
+        },
+        {
+          "name": "RM",
+          "tau_hat": 0.0436977855861187,
+          "tau_hat_std": 3.725290298461914e-09,
+          "assoc": 1.390719894141688,
+          "multivariate": 0.6399584292661916
+        },
+        {
+          "name": "AGE",
+          "tau_hat": 0.0026367909740656614,
+          "tau_hat_std": 2.3283064365386963e-10,
+          "assoc": -0.7539091300084386,
+          "multivariate": -0.011457352420437859
+        },
+        {
+          "name": "DIS",
+          "tau_hat": 0.0017780233174562454,
+          "tau_hat_std": 0.0,
+          "assoc": 0.4998574681713082,
+          "multivariate": -0.6878832938268373
+        },
+        {
+          "name": "TAX",
+          "tau_hat": 0.0009993258863687515,
+          "tau_hat_std": 0.0,
+          "assoc": -0.9370718671345973,
+          "multivariate": 0.030446624424561818
+        },
+        {
+          "name": "PTRATIO",
+          "tau_hat": 0.0029755679424852133,
+          "tau_hat_std": 0.0,
+          "assoc": -1.0155733710741084,
+          "multivariate": -0.41133839622977514
+        },
+        {
+          "name": "B",
+          "tau_hat": 0.7853373885154724,
+          "tau_hat_std": 0.0,
+          "assoc": 0.666921639313466,
+          "multivariate": 0.17555448411066849
+        },
+        {
+          "name": "LSTAT",
+          "tau_hat": 0.0038512758910655975,
+          "tau_hat_std": 0.0,
+          "assoc": -1.475325452346554,
+          "multivariate": -0.8178303846784357
+        }
+      ]
+    }
+  }
+}

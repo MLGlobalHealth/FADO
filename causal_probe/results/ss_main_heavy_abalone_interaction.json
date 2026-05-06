@@ -1,0 +1,29 @@
+{
+  "ckpt": "causal_probe/results/probe_main_p5_50k_mixture.ckpt",
+  "covariate_source": "abalone",
+  "outcome_family": "interaction",
+  "n_scms": 20,
+  "pearson": {
+    "model": 0.2411209179480935,
+    "marginal": 0.20659637820765653,
+    "multivariate": 0.40056145504878127
+  },
+  "spearman_model": 0.2366781627292049,
+  "causal_mse_model": 1.2707690240193663,
+  "causal_mse_marginal": 1.8829069277172075,
+  "fp_proxy": {
+    "model": 0.21950668651552405,
+    "marginal": 1.0030319031607662,
+    "multivariate": 0.01722915389468563
+  },
+  "fp_leak": {
+    "model": 1.1636999160051347,
+    "marginal": 1.9145963279619,
+    "multivariate": 1.5383954150262222
+  },
+  "fp_noise": {
+    "model": 0.007815349682641682,
+    "marginal": 0.02590361877627231,
+    "multivariate": 0.006388638788358698
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "ckpts": [
+    "causal_probe/results/probe_seed1_p5_15k.ckpt",
+    "causal_probe/results/probe_seed2_p5_15k.ckpt",
+    "causal_probe/results/probe_seed3_p5_15k.ckpt"
+  ],
+  "scm_type": "mixed",
+  "p": 5,
+  "noise": "laplace",
+  "K": 3,
+  "n_scms": 150,
+  "pearson_std_err": 0.24308578800651906,
+  "spearman_std_err": 0.6088859180194097,
+  "coverage_2sigma": 0.648,
+  "error_by_std_quintile": [
+    0.12604408462449662,
+    0.1771949541440437,
+    0.26539046306943365,
+    0.37869768889822103,
+    0.45728599070733583
+  ]
+}

@@ -1,0 +1,701 @@
+{
+  "ckpt": "causal_probe/results/probe_p13_20k.ckpt",
+  "n_pairs_evaluated": 99,
+  "direction_accuracy": 0.35353535353535354,
+  "weighted_accuracy": 0.2915443264822829,
+  "per_pair": [
+    {
+      "id": "0001",
+      "tau_AtoB": 0.0011526621878147126,
+      "tau_BtoA": 1.6005075216293334,
+      "correct": false,
+      "weight": 0.166
+    },
+    {
+      "id": "0002",
+      "tau_AtoB": 0.02429030239582062,
+      "tau_BtoA": 1.3493191480636597,
+      "correct": false,
+      "weight": 0.166
+    },
+    {
+      "id": "0003",
+      "tau_AtoB": 0.0011845555156469346,
+      "tau_BtoA": 0.6100637912750244,
+      "correct": false,
+      "weight": 0.167
+    },
+    {
+      "id": "0004",
+      "tau_AtoB": 0.29664044454693794,
+      "tau_BtoA": 0.07766655012965203,
+      "correct": true,
+      "weight": 0.166
+    },
+    {
+      "id": "0005",
+      "tau_AtoB": 1.089689040184021,
+      "tau_BtoA": 0.9770476132631302,
+      "correct": true,
+      "weight": 0.143
+    },
+    {
+      "id": "0006",
+      "tau_AtoB": 1.2295984029769897,
+      "tau_BtoA": 0.197155000269413,
+      "correct": true,
+      "weight": 0.143
+    },
+    {
+      "id": "0007",
+      "tau_AtoB": 1.1828450679779052,
+      "tau_BtoA": 0.5774766808375716,
+      "correct": true,
+      "weight": 0.143
+    },
+    {
+      "id": "0008",
+      "tau_AtoB": 1.065396821498871,
+      "tau_BtoA": 0.9730293825268745,
+      "correct": true,
+      "weight": 0.143
+    },
+    {
+      "id": "0009",
+      "tau_AtoB": 1.1343533992767334,
+      "tau_BtoA": 0.2601942727342248,
+      "correct": true,
+      "weight": 0.143
+    },
+    {
+      "id": "0010",
+      "tau_AtoB": 0.9974713087081909,
+      "tau_BtoA": 0.0891105154529214,
+      "correct": true,
+      "weight": 0.143
+    },
+    {
+      "id": "0011",
+      "tau_AtoB": 1.1164937734603881,
+      "tau_BtoA": 0.16291337218135596,
+      "correct": true,
+      "weight": 0.142
+    },
+    {
+      "id": "0012",
+      "tau_AtoB": 0.005257562361657619,
+      "tau_BtoA": 0.5646394729614258,
+      "correct": false,
+      "weight": 0.5
+    },
+    {
+      "id": "0013",
+      "tau_AtoB": 0.6664074182510376,
+      "tau_BtoA": 1.9043240308761598,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0014",
+      "tau_AtoB": 1.99997079372406,
+      "tau_BtoA": 0.1464764766395092,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0015",
+      "tau_AtoB": 1.6739609718322754,
+      "tau_BtoA": 1.5996050596237184,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0016",
+      "tau_AtoB": 1.322873342037201,
+      "tau_BtoA": 1.8564395189285279,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0017",
+      "tau_AtoB": 0.00046587176620960236,
+      "tau_BtoA": 0.27362598180770875,
+      "correct": false,
+      "weight": 0.5
+    },
+    {
+      "id": "0018",
+      "tau_AtoB": 0.044547445699572565,
+      "tau_BtoA": 1.985852265357971,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0019",
+      "tau_AtoB": 0.2520452290773392,
+      "tau_BtoA": 1.6593735694885254,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0020",
+      "tau_AtoB": 0.002835865691304207,
+      "tau_BtoA": 0.41380717754364016,
+      "correct": false,
+      "weight": 0.166
+    },
+    {
+      "id": "0021",
+      "tau_AtoB": 0.007847847416996956,
+      "tau_BtoA": 0.7569976806640625,
+      "correct": false,
+      "weight": 0.167
+    },
+    {
+      "id": "0022",
+      "tau_AtoB": 0.008249724470078944,
+      "tau_BtoA": 0.19463345110416413,
+      "correct": false,
+      "weight": 0.333
+    },
+    {
+      "id": "0023",
+      "tau_AtoB": 0.08397255763411522,
+      "tau_BtoA": 0.7956507802009583,
+      "correct": false,
+      "weight": 0.333
+    },
+    {
+      "id": "0024",
+      "tau_AtoB": 0.00917351944372058,
+      "tau_BtoA": 0.2836056649684906,
+      "correct": false,
+      "weight": 0.334
+    },
+    {
+      "id": "0025",
+      "tau_AtoB": 0.3818753018975258,
+      "tau_BtoA": 1.227527904510498,
+      "correct": false,
+      "weight": 0.125
+    },
+    {
+      "id": "0026",
+      "tau_AtoB": 0.002496696636080742,
+      "tau_BtoA": 0.7965025305747986,
+      "correct": false,
+      "weight": 0.125
+    },
+    {
+      "id": "0027",
+      "tau_AtoB": 0.0009711936116218566,
+      "tau_BtoA": 0.3652592867612839,
+      "correct": false,
+      "weight": 0.125
+    },
+    {
+      "id": "0028",
+      "tau_AtoB": 0.6723518610000611,
+      "tau_BtoA": 1.054947602748871,
+      "correct": false,
+      "weight": 0.125
+    },
+    {
+      "id": "0029",
+      "tau_AtoB": 0.09068751484155654,
+      "tau_BtoA": 1.3992870807647706,
+      "correct": false,
+      "weight": 0.125
+    },
+    {
+      "id": "0030",
+      "tau_AtoB": 0.688378980755806,
+      "tau_BtoA": 0.8700013518333435,
+      "correct": false,
+      "weight": 0.125
+    },
+    {
+      "id": "0031",
+      "tau_AtoB": 0.5993732929229736,
+      "tau_BtoA": 0.002509276196360588,
+      "correct": true,
+      "weight": 0.125
+    },
+    {
+      "id": "0032",
+      "tau_AtoB": 0.8615158200263977,
+      "tau_BtoA": 0.009595903381705285,
+      "correct": true,
+      "weight": 0.125
+    },
+    {
+      "id": "0033",
+      "tau_AtoB": 0.013473132625222206,
+      "tau_BtoA": 0.9878676772117615,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0034",
+      "tau_AtoB": 0.03364109806716442,
+      "tau_BtoA": 0.478191202878952,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0035",
+      "tau_AtoB": 0.001078297570347786,
+      "tau_BtoA": 0.35959402322769163,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0036",
+      "tau_AtoB": 0.0020209651440382,
+      "tau_BtoA": 0.6901557087898255,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0037",
+      "tau_AtoB": 0.003971602581441402,
+      "tau_BtoA": 0.7852239847183228,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0038",
+      "tau_AtoB": 0.06035320013761521,
+      "tau_BtoA": 1.1344399094581603,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0039",
+      "tau_AtoB": 0.0029668396338820456,
+      "tau_BtoA": 0.8862837433815003,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0040",
+      "tau_AtoB": 0.028189709410071373,
+      "tau_BtoA": 1.0031684637069702,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0041",
+      "tau_AtoB": 0.43569607436656954,
+      "tau_BtoA": 1.1472090840339662,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0042",
+      "tau_AtoB": 0.4422458313405514,
+      "tau_BtoA": 1.0585739374160767,
+      "correct": false,
+      "weight": 0.5
+    },
+    {
+      "id": "0043",
+      "tau_AtoB": 1.0864841222763062,
+      "tau_BtoA": 1.0273037672042846,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0044",
+      "tau_AtoB": 1.5548181772232055,
+      "tau_BtoA": 1.4907830953598022,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0045",
+      "tau_AtoB": 1.6739319801330566,
+      "tau_BtoA": 0.02457653060555458,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0046",
+      "tau_AtoB": 0.9476556777954102,
+      "tau_BtoA": 0.03023552019149065,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0047",
+      "tau_AtoB": 0.0026466477662324905,
+      "tau_BtoA": 1.191856026649475,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0048",
+      "tau_AtoB": 0.029373813420534134,
+      "tau_BtoA": 1.294366145133972,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0049",
+      "tau_AtoB": 0.25318458378314973,
+      "tau_BtoA": 1.589858102798462,
+      "correct": false,
+      "weight": 0.333
+    },
+    {
+      "id": "0050",
+      "tau_AtoB": 0.1975420117378235,
+      "tau_BtoA": 1.7508477687835693,
+      "correct": false,
+      "weight": 0.333
+    },
+    {
+      "id": "0051",
+      "tau_AtoB": 0.08372991681098937,
+      "tau_BtoA": 0.9002895474433898,
+      "correct": false,
+      "weight": 0.334
+    },
+    {
+      "id": "0056",
+      "tau_AtoB": 0.5069770812988281,
+      "tau_BtoA": 0.9355432152748108,
+      "correct": false,
+      "weight": 0.083
+    },
+    {
+      "id": "0057",
+      "tau_AtoB": 0.7686883449554444,
+      "tau_BtoA": 0.6959342956542969,
+      "correct": true,
+      "weight": 0.083
+    },
+    {
+      "id": "0058",
+      "tau_AtoB": 0.5370546579360962,
+      "tau_BtoA": 0.418249249458313,
+      "correct": true,
+      "weight": 0.084
+    },
+    {
+      "id": "0059",
+      "tau_AtoB": 0.7291762709617615,
+      "tau_BtoA": 0.2771043747663498,
+      "correct": true,
+      "weight": 0.083
+    },
+    {
+      "id": "0060",
+      "tau_AtoB": 0.2596294105052948,
+      "tau_BtoA": 1.3188379049301147,
+      "correct": false,
+      "weight": 0.083
+    },
+    {
+      "id": "0061",
+      "tau_AtoB": 0.5808515548706055,
+      "tau_BtoA": 0.7390216708183288,
+      "correct": false,
+      "weight": 0.084
+    },
+    {
+      "id": "0062",
+      "tau_AtoB": 0.08158431425690651,
+      "tau_BtoA": 0.8367236614227295,
+      "correct": false,
+      "weight": 0.083
+    },
+    {
+      "id": "0063",
+      "tau_AtoB": 0.30538269877433777,
+      "tau_BtoA": 0.5053640484809876,
+      "correct": false,
+      "weight": 0.083
+    },
+    {
+      "id": "0064",
+      "tau_AtoB": 1.3666139125823975,
+      "tau_BtoA": 1.3785870552062989,
+      "correct": false,
+      "weight": 0.084
+    },
+    {
+      "id": "0065",
+      "tau_AtoB": 0.3621193040162325,
+      "tau_BtoA": 0.10700400024652482,
+      "correct": true,
+      "weight": 0.333
+    },
+    {
+      "id": "0066",
+      "tau_AtoB": 1.3920055508613587,
+      "tau_BtoA": 0.8796919971704483,
+      "correct": true,
+      "weight": 0.333
+    },
+    {
+      "id": "0067",
+      "tau_AtoB": 0.7221268743276597,
+      "tau_BtoA": 1.3453714847564697,
+      "correct": false,
+      "weight": 0.334
+    },
+    {
+      "id": "0068",
+      "tau_AtoB": 1.37263662815094,
+      "tau_BtoA": 1.1521333932876587,
+      "correct": true,
+      "weight": 1.0
+    },
+    {
+      "id": "0069",
+      "tau_AtoB": 0.973333740234375,
+      "tau_BtoA": 0.4352494843304157,
+      "correct": true,
+      "weight": 1.0
+    },
+    {
+      "id": "0070",
+      "tau_AtoB": 1.3950034379959106,
+      "tau_BtoA": 0.0974555529654026,
+      "correct": true,
+      "weight": 1.0
+    },
+    {
+      "id": "0072",
+      "tau_AtoB": 0.021259280480444433,
+      "tau_BtoA": 0.22093690373003483,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0073",
+      "tau_AtoB": 0.38652486354112625,
+      "tau_BtoA": 1.8045806169509888,
+      "correct": false,
+      "weight": 0.083
+    },
+    {
+      "id": "0074",
+      "tau_AtoB": 0.8297631502151489,
+      "tau_BtoA": 0.03232963476330042,
+      "correct": true,
+      "weight": 0.083
+    },
+    {
+      "id": "0075",
+      "tau_AtoB": 0.9420120239257812,
+      "tau_BtoA": 0.008266535587608814,
+      "correct": true,
+      "weight": 0.084
+    },
+    {
+      "id": "0076",
+      "tau_AtoB": 1.3085881471633911,
+      "tau_BtoA": 1.110224175453186,
+      "correct": true,
+      "weight": 1.0
+    },
+    {
+      "id": "0077",
+      "tau_AtoB": 1.0787829399108886,
+      "tau_BtoA": 1.4345792770385741,
+      "correct": false,
+      "weight": 0.5
+    },
+    {
+      "id": "0078",
+      "tau_AtoB": 0.9243638277053833,
+      "tau_BtoA": 1.6774235725402833,
+      "correct": false,
+      "weight": 0.3333
+    },
+    {
+      "id": "0079",
+      "tau_AtoB": 1.5186819076538085,
+      "tau_BtoA": 1.2950106620788575,
+      "correct": true,
+      "weight": 0.3333
+    },
+    {
+      "id": "0080",
+      "tau_AtoB": 0.2750458985567093,
+      "tau_BtoA": 1.4115228414535523,
+      "correct": false,
+      "weight": 0.3334
+    },
+    {
+      "id": "0084",
+      "tau_AtoB": 0.9801205396652222,
+      "tau_BtoA": 0.8443482041358947,
+      "correct": true,
+      "weight": 1.0
+    },
+    {
+      "id": "0085",
+      "tau_AtoB": 0.0032522022724151612,
+      "tau_BtoA": 0.6787319779396057,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0086",
+      "tau_AtoB": 1.3678645372390748,
+      "tau_BtoA": 1.3911850214004517,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0087",
+      "tau_AtoB": 0.10296758562326432,
+      "tau_BtoA": 0.4925994277000427,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0088",
+      "tau_AtoB": 0.2577496081590652,
+      "tau_BtoA": 1.4734567642211913,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0089",
+      "tau_AtoB": 1.4589078664779662,
+      "tau_BtoA": 1.1137859344482421,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0090",
+      "tau_AtoB": 0.7439594984054565,
+      "tau_BtoA": 0.07882836312055588,
+      "correct": true,
+      "weight": 0.25
+    },
+    {
+      "id": "0091",
+      "tau_AtoB": 0.24463100284337996,
+      "tau_BtoA": 1.7305272579193116,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0092",
+      "tau_AtoB": 0.840521228313446,
+      "tau_BtoA": 1.720908784866333,
+      "correct": false,
+      "weight": 0.25
+    },
+    {
+      "id": "0093",
+      "tau_AtoB": 0.06178597770631313,
+      "tau_BtoA": 1.7713066816329956,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0094",
+      "tau_AtoB": 0.25000710040330887,
+      "tau_BtoA": 0.27991473227739333,
+      "correct": false,
+      "weight": 0.3333
+    },
+    {
+      "id": "0095",
+      "tau_AtoB": 0.0007291600108146667,
+      "tau_BtoA": 0.41939382553100585,
+      "correct": false,
+      "weight": 0.3333
+    },
+    {
+      "id": "0096",
+      "tau_AtoB": 0.001028287410736084,
+      "tau_BtoA": 0.949602735042572,
+      "correct": false,
+      "weight": 0.3333
+    },
+    {
+      "id": "0097",
+      "tau_AtoB": 1.2204030632972718,
+      "tau_BtoA": 0.3216918557882309,
+      "correct": true,
+      "weight": 0.2
+    },
+    {
+      "id": "0098",
+      "tau_AtoB": 1.6726824045181274,
+      "tau_BtoA": 0.4257809340953827,
+      "correct": true,
+      "weight": 0.2
+    },
+    {
+      "id": "0099",
+      "tau_AtoB": 0.3968956291675568,
+      "tau_BtoA": 0.8017266720533371,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0100",
+      "tau_AtoB": 0.7715790152549744,
+      "tau_BtoA": 1.9483256101608277,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0101",
+      "tau_AtoB": 1.5915767192840575,
+      "tau_BtoA": 0.19256135821342468,
+      "correct": true,
+      "weight": 0.5
+    },
+    {
+      "id": "0102",
+      "tau_AtoB": 1.4129356622695923,
+      "tau_BtoA": 0.10929872915148735,
+      "correct": true,
+      "weight": 0.2
+    },
+    {
+      "id": "0103",
+      "tau_AtoB": 0.10366658307611942,
+      "tau_BtoA": 0.236677910387516,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0104",
+      "tau_AtoB": 0.0447821781039238,
+      "tau_BtoA": 1.225555670261383,
+      "correct": false,
+      "weight": 0.2
+    },
+    {
+      "id": "0106",
+      "tau_AtoB": 0.0069857524707913395,
+      "tau_BtoA": 1.923449444770813,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0107",
+      "tau_AtoB": 0.001468396931886673,
+      "tau_BtoA": 0.8304240226745605,
+      "correct": false,
+      "weight": 1.0
+    },
+    {
+      "id": "0108",
+      "tau_AtoB": 0.05950314216315746,
+      "tau_BtoA": 2.032737874984741,
+      "correct": false,
+      "weight": 1.0
+    }
+  ]
+}

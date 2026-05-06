@@ -1,0 +1,22 @@
+{
+  "pearson": 0.4476680708122949,
+  "spearman": 0.33269149996622127,
+  "r2": 0.19912566793981423,
+  "mse": 0.399782054925262,
+  "auroc_nonzero": 0.6252962723550959,
+  "mae_zero": 0.0794447663290891,
+  "n_features_finite": 500,
+  "n_features_total": 500,
+  "method": "ges",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "ges",
+    "scm_type": "mlp",
+    "p": 5,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100
+  }
+}

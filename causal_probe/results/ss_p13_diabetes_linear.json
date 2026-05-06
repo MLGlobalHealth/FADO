@@ -1,0 +1,29 @@
+{
+  "ckpt": "causal_probe/results/probe_p13_20k.ckpt",
+  "covariate_source": "diabetes",
+  "outcome_family": "linear",
+  "n_scms": 30,
+  "pearson": {
+    "model": 0.4394577850171722,
+    "marginal": 0.4956635245606228,
+    "multivariate": 0.704802284902435
+  },
+  "spearman_model": 0.4190431766147327,
+  "causal_mse_model": 0.55460111224192,
+  "causal_mse_marginal": 0.34039961882319053,
+  "fp_proxy": {
+    "model": 0.6567911470153679,
+    "marginal": 0.9680203120449525,
+    "multivariate": 0.044594817110179
+  },
+  "fp_leak": {
+    "model": 1.4560453017552695,
+    "marginal": 1.9226750560707075,
+    "multivariate": 1.0404826429362841
+  },
+  "fp_noise": {
+    "model": 0.037175691280410525,
+    "marginal": 0.06748110906426658,
+    "multivariate": 0.01298829977830419
+  }
+}

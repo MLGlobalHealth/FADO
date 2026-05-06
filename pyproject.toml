@@ -1,0 +1,34 @@
+[project]
+name = "learning-to-explain"
+version = "0.0.0"
+description = "Learning to Explain with a Generative Process"
+requires-python = ">=3.11"
+dependencies = [
+    "tabicl[shap]",
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "torch>=2.2",
+    "shap>=0.42",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+# Causal-discovery and treatment-effect baselines used by `causal_probe/run_baseline.py`
+# and the §4.3 baseline tables. Install with `uv pip install -e '.[baselines]'`.
+# causal-learn is pinned to 0.1.4.5 — earlier versions had a sklearn conflict that
+# made GES error out (see tab:causal-baselines GES column footnote in the paper).
+baselines = [
+    "causal-learn==0.1.4.5",
+    "lingam",
+    "econml",
+    "causalpfn",
+    "lightgbm",
+    "scikit-uplift",
+    "notears @ git+https://github.com/xunzheng/notears",
+]
+
+[tool.uv.sources]
+# Pinned to upstream soda-inria/tabicl v2.1.1 for paper reproducibility.
+# Bump the rev when intentionally adopting a new upstream release.
+tabicl = { git = "https://github.com/soda-inria/tabicl", rev = "59a957cd644be4e1f2e1582757203ecbd630afa2" }

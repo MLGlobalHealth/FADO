@@ -1,0 +1,232 @@
+{
+  "ckpt": "causal_probe/results/probe_p13_20k.ckpt",
+  "results": {
+    "diabetes": {
+      "y_name": "disease progression 1yr (continuous)",
+      "n_rows_full": 442,
+      "n_rows_context": 442,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "age",
+          "tau_hat": 0.028569966554641724,
+          "tau_hat_std": 0.0,
+          "assoc": 0.3757775014374635,
+          "multivariate": -0.012304206748674655
+        },
+        {
+          "name": "sex",
+          "tau_hat": -0.0011827312409877777,
+          "tau_hat_std": 0.0,
+          "assoc": 0.08612399690312492,
+          "multivariate": -0.29616481599509303
+        },
+        {
+          "name": "bmi",
+          "tau_hat": 0.617787778377533,
+          "tau_hat_std": 5.960464477539063e-08,
+          "assoc": 1.172900268948204,
+          "multivariate": 0.6422766701856307
+        },
+        {
+          "name": "bp",
+          "tau_hat": 0.10565739870071411,
+          "tau_hat_std": 0.0,
+          "assoc": 0.8829635171242591,
+          "multivariate": 0.40065978361127297
+        },
+        {
+          "name": "s1",
+          "tau_hat": 0.4208136200904846,
+          "tau_hat_std": 5.960464477539063e-08,
+          "assoc": 0.42404496202867686,
+          "multivariate": -0.9677376776575161
+        },
+        {
+          "name": "s2",
+          "tau_hat": 0.07655930519104004,
+          "tau_hat_std": 0.0,
+          "assoc": 0.34810717393713697,
+          "multivariate": 0.5803066613337009
+        },
+        {
+          "name": "s3",
+          "tau_hat": -0.8160666227340698,
+          "tau_hat_std": 5.960464477539063e-08,
+          "assoc": -0.7895785013410469,
+          "multivariate": 0.12001531844023125
+        },
+        {
+          "name": "s4",
+          "tau_hat": 0.7894174456596375,
+          "tau_hat_std": 5.960464477539063e-08,
+          "assoc": 0.8609057694886837,
+          "multivariate": 0.21742826220276573
+        },
+        {
+          "name": "s5",
+          "tau_hat": 1.0373555421829224,
+          "tau_hat_std": 0.0,
+          "assoc": 1.1317651848843566,
+          "multivariate": 0.9239687798285375
+        },
+        {
+          "name": "s6",
+          "tau_hat": 0.6079187393188477,
+          "tau_hat_std": 0.0,
+          "assoc": 0.7649669684963971,
+          "multivariate": 0.08360890028990449
+        }
+      ]
+    },
+    "california_housing": {
+      "y_name": "MedHouseVal (hundreds of thousands USD)",
+      "n_rows_full": 20640,
+      "n_rows_context": 512,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "MedInc",
+          "tau_hat": 1.8491096496582031,
+          "tau_hat_std": 0.05673561245203018,
+          "assoc": 1.37615041591572,
+          "multivariate": 1.437808630211535
+        },
+        {
+          "name": "HouseAge",
+          "tau_hat": 0.03886530548334122,
+          "tau_hat_std": 0.014991533942520618,
+          "assoc": 0.21124682498620875,
+          "multivariate": 0.20605454094612066
+        },
+        {
+          "name": "AveRooms",
+          "tau_hat": 0.0033216415904462337,
+          "tau_hat_std": 0.05767333507537842,
+          "assoc": 0.3038965794826117,
+          "multivariate": -0.45974845723589447
+        },
+        {
+          "name": "AveBedrms",
+          "tau_hat": -0.44074684381484985,
+          "tau_hat_std": 0.04321088269352913,
+          "assoc": -0.09340102593888029,
+          "multivariate": 0.5292217778697522
+        },
+        {
+          "name": "Population",
+          "tau_hat": -0.21371369063854218,
+          "tau_hat_std": 0.11664576083421707,
+          "assoc": -0.04929935777774047,
+          "multivariate": -0.007722662724364599
+        },
+        {
+          "name": "AveOccup",
+          "tau_hat": -0.26415425539016724,
+          "tau_hat_std": 0.031228311359882355,
+          "assoc": -0.04747482591222122,
+          "multivariate": -0.06817317026664252
+        },
+        {
+          "name": "Latitude",
+          "tau_hat": 0.003149408148601651,
+          "tau_hat_std": 0.009715888649225235,
+          "assoc": -0.28832055374903004,
+          "multivariate": -1.5574777292067636
+        },
+        {
+          "name": "Longitude",
+          "tau_hat": -0.005836291238665581,
+          "tau_hat_std": 0.017843730747699738,
+          "assoc": -0.09193323023586526,
+          "multivariate": -1.506596738143091
+        }
+      ]
+    },
+    "wine_red": {
+      "y_name": "quality (0-10 score)",
+      "n_rows_full": 1599,
+      "n_rows_context": 512,
+      "n_repeats": 10,
+      "features": [
+        {
+          "name": "fixed acidity",
+          "tau_hat": 0.22808372974395752,
+          "tau_hat_std": 0.13150908052921295,
+          "assoc": 0.24810329822620125,
+          "multivariate": 0.10787351235092867
+        },
+        {
+          "name": "volatile acidity",
+          "tau_hat": -0.13239772617816925,
+          "tau_hat_std": 0.11721282452344894,
+          "assoc": -0.7811155605272324,
+          "multivariate": -0.48045119646057816
+        },
+        {
+          "name": "citric acid",
+          "tau_hat": 0.045661576092243195,
+          "tau_hat_std": 0.02601776272058487,
+          "assoc": 0.4527450286356281,
+          "multivariate": -0.08796725215801486
+        },
+        {
+          "name": "residual sugar",
+          "tau_hat": -0.20475849509239197,
+          "tau_hat_std": 0.08124382048845291,
+          "assoc": 0.027463274680105107,
+          "multivariate": 0.05706773838197453
+        },
+        {
+          "name": "chlorides",
+          "tau_hat": -0.40903815627098083,
+          "tau_hat_std": 0.04593716934323311,
+          "assoc": -0.25781311985984795,
+          "multivariate": -0.21844342099029584
+        },
+        {
+          "name": "free sulfur dioxide",
+          "tau_hat": 0.06416510045528412,
+          "tau_hat_std": 0.04320240020751953,
+          "assoc": -0.10131211448845162,
+          "multivariate": 0.11294087385900022
+        },
+        {
+          "name": "total sulfur dioxide",
+          "tau_hat": -0.35231271386146545,
+          "tau_hat_std": 0.16061729192733765,
+          "assoc": -0.3702005778527046,
+          "multivariate": -0.2659218536945004
+        },
+        {
+          "name": "density",
+          "tau_hat": -0.06470713764429092,
+          "tau_hat_std": 0.04367493465542793,
+          "assoc": -0.34983845556634763,
+          "multivariate": -0.08374773988510395
+        },
+        {
+          "name": "pH",
+          "tau_hat": 0.05654364079236984,
+          "tau_hat_std": 0.050176817923784256,
+          "assoc": -0.11546278241064871,
+          "multivariate": -0.1580363741383538
+        },
+        {
+          "name": "sulphates",
+          "tau_hat": 1.2262654304504395,
+          "tau_hat_std": 0.11902426183223724,
+          "assoc": 0.5027941581380194,
+          "multivariate": 0.3846566704132252
+        },
+        {
+          "name": "alcohol",
+          "tau_hat": 1.0580544471740723,
+          "tau_hat_std": 0.2630733549594879,
+          "assoc": 0.952332648001317,
+          "multivariate": 0.7287754569970295
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,699 @@
+{
+  "random": {
+    "n_scms": 150,
+    "p": 13,
+    "n_rows": 512,
+    "noise": "laplace",
+    "pearson": {
+      "model": 0.7130453900814449,
+      "marginal": 0.48604470277515843,
+      "multivariate": 0.15863007598796525
+    },
+    "spearman": {
+      "model": 0.5428473015557227,
+      "marginal": 0.4052945427434044,
+      "multivariate": 0.16780325870315438
+    },
+    "mse": {
+      "model": 0.3215645185606504,
+      "marginal": 1.0983686362920992,
+      "multivariate": 1.7897257676226628,
+      "zero": 0.6505244073492089
+    },
+    "r2": {
+      "model": 0.505680404507144,
+      "marginal": -0.6884485341362228,
+      "multivariate": -1.751225543957248
+    },
+    "sign_acc_signal": {
+      "model": 0.9385171790235082,
+      "marginal": 0.9168173598553345
+    },
+    "auroc_nonzero": {
+      "model": 0.9115891583747658,
+      "marginal": 0.6401356044533558,
+      "multivariate": 0.4246285957638494
+    },
+    "mae_zero_features": {
+      "model": 0.108519158230573,
+      "marginal": 0.8856825180330116
+    },
+    "signal_frac": 0.2835897435897436
+  },
+  "motifs": {
+    "A_direct_cause": {
+      "n_repeats": 30,
+      "rows": [
+        {
+          "feature": 0,
+          "tau_true_mean": 1.6641005886756874,
+          "tau_hat_mean": 1.6550491770108542,
+          "assoc_mean": 1.6608713138224274,
+          "multivariate_mean": 1.6610064936485307,
+          "tau_hat_std": 0.039444683602522464
+        },
+        {
+          "feature": 1,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0003220507021372517,
+          "assoc_mean": 0.013674039352377198,
+          "multivariate_mean": -0.009677796853041076,
+          "tau_hat_std": 0.0017461591743479956
+        },
+        {
+          "feature": 2,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0005049765265236298,
+          "assoc_mean": -0.00762270584095584,
+          "multivariate_mean": -0.018695959887030024,
+          "tau_hat_std": 0.002843828009850523
+        },
+        {
+          "feature": 3,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.00037787684705108403,
+          "assoc_mean": -0.00256803270950104,
+          "multivariate_mean": 0.00021112872391912385,
+          "tau_hat_std": 0.002306021848631135
+        },
+        {
+          "feature": 4,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0009278967976570129,
+          "assoc_mean": -0.001183840907571919,
+          "multivariate_mean": -0.0029623362164570787,
+          "tau_hat_std": 0.0029443142457144054
+        },
+        {
+          "feature": 5,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0010866491124033929,
+          "assoc_mean": 0.02620739740622408,
+          "multivariate_mean": 0.0055059654368781515,
+          "tau_hat_std": 0.0028946276714725367
+        },
+        {
+          "feature": 6,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0004009148959691326,
+          "assoc_mean": 0.011944480050147477,
+          "multivariate_mean": 0.006038014576422544,
+          "tau_hat_std": 0.002212834538695235
+        },
+        {
+          "feature": 7,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -1.1543044820427895e-05,
+          "assoc_mean": -0.014580898521723585,
+          "multivariate_mean": -0.006105374021512388,
+          "tau_hat_std": 0.001610093457137078
+        },
+        {
+          "feature": 8,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0004039071500301361,
+          "assoc_mean": 0.017149927424841862,
+          "multivariate_mean": 0.009273022862292722,
+          "tau_hat_std": 0.00209329726868573
+        },
+        {
+          "feature": 9,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.000545927711452047,
+          "assoc_mean": -0.003540239587674727,
+          "multivariate_mean": 0.011292980942531977,
+          "tau_hat_std": 0.002318262228041855
+        },
+        {
+          "feature": 10,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.00021794887725263835,
+          "assoc_mean": 0.0008476867114828164,
+          "multivariate_mean": -0.01645199944584854,
+          "tau_hat_std": 0.0020473365163041226
+        },
+        {
+          "feature": 11,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0001897444638113181,
+          "assoc_mean": -0.0038656328274431517,
+          "multivariate_mean": -0.005842559853818653,
+          "tau_hat_std": 0.002002190224284368
+        },
+        {
+          "feature": 12,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.00039083495115240413,
+          "assoc_mean": 0.012340725987973096,
+          "multivariate_mean": 0.0017173540820043566,
+          "tau_hat_std": 0.0019122029330189629
+        }
+      ]
+    },
+    "B_proxy": {
+      "n_repeats": 30,
+      "rows": [
+        {
+          "feature": 0,
+          "tau_true_mean": 1.6641005886756874,
+          "tau_hat_mean": 1.678110655148824,
+          "assoc_mean": 1.662860426455262,
+          "multivariate_mean": 1.6622991342886098,
+          "tau_hat_std": 0.022987452885850322
+        },
+        {
+          "feature": 1,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0009847804981594284,
+          "assoc_mean": 1.2853749155431826,
+          "multivariate_mean": 0.0012394515397292727,
+          "tau_hat_std": 0.007496718773082548
+        },
+        {
+          "feature": 2,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.00021243203276147444,
+          "assoc_mean": 0.011253663685365723,
+          "multivariate_mean": 0.015594537198032233,
+          "tau_hat_std": 0.0015275020412725852
+        },
+        {
+          "feature": 3,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0002770340846230586,
+          "assoc_mean": -0.0056446868244980925,
+          "multivariate_mean": -0.015066813899148154,
+          "tau_hat_std": 0.00273973192531028
+        },
+        {
+          "feature": 4,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.00020024642193069062,
+          "assoc_mean": 0.008670806137420968,
+          "multivariate_mean": 0.01224989189036162,
+          "tau_hat_std": 0.0011324329602519585
+        },
+        {
+          "feature": 5,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0002377531568830212,
+          "assoc_mean": -0.007967412106188348,
+          "multivariate_mean": -0.007487249774899859,
+          "tau_hat_std": 0.002072606018298631
+        },
+        {
+          "feature": 6,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0006154288537800312,
+          "assoc_mean": 0.02181663997687277,
+          "multivariate_mean": 0.00654032004489266,
+          "tau_hat_std": 0.001547242184248913
+        },
+        {
+          "feature": 7,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 3.2794879128535585e-05,
+          "assoc_mean": -0.011668923886110483,
+          "multivariate_mean": 0.0024218076785751394,
+          "tau_hat_std": 0.0017988642040508373
+        },
+        {
+          "feature": 8,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0006531243212521076,
+          "assoc_mean": -0.009835747800184208,
+          "multivariate_mean": -0.00675286328441088,
+          "tau_hat_std": 0.0018666208642133461
+        },
+        {
+          "feature": 9,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0006002826771388452,
+          "assoc_mean": -0.013841213601109756,
+          "multivariate_mean": 0.005102374677720472,
+          "tau_hat_std": 0.0010355110075205042
+        },
+        {
+          "feature": 10,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.00020557854635020096,
+          "assoc_mean": -0.0170078232933701,
+          "multivariate_mean": 0.004099146008107533,
+          "tau_hat_std": 0.0013682490803358996
+        },
+        {
+          "feature": 11,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0007450590841472149,
+          "assoc_mean": 0.00610633183784436,
+          "multivariate_mean": 0.0011128859140860671,
+          "tau_hat_std": 0.002556841930501913
+        },
+        {
+          "feature": 12,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0013901916487763326,
+          "assoc_mean": -0.004114391361392677,
+          "multivariate_mean": -0.007917475227368593,
+          "tau_hat_std": 0.0075796666223548895
+        }
+      ]
+    },
+    "C_observed_confounder": {
+      "n_repeats": 30,
+      "rows": [
+        {
+          "feature": 0,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.00017708193821211655,
+          "assoc_mean": 1.2473570151895401,
+          "multivariate_mean": 0.02506057212441236,
+          "tau_hat_std": 0.0065948841443974615
+        },
+        {
+          "feature": 1,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0002579315487916271,
+          "assoc_mean": 0.014845609775878095,
+          "multivariate_mean": 0.006333709335603645,
+          "tau_hat_std": 0.0020501842027084356
+        },
+        {
+          "feature": 2,
+          "tau_true_mean": 1.6274669424134698,
+          "tau_hat_mean": 1.647076177597046,
+          "assoc_mean": 1.632868038404452,
+          "multivariate_mean": 1.6144100085824968,
+          "tau_hat_std": 0.031936207988924124
+        },
+        {
+          "feature": 3,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.00018664059073974688,
+          "assoc_mean": 0.009727875594581029,
+          "multivariate_mean": 0.004032399412945867,
+          "tau_hat_std": 0.003039663198964465
+        },
+        {
+          "feature": 4,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0008224637790893515,
+          "assoc_mean": 0.002970816156699217,
+          "multivariate_mean": -0.008277617263575182,
+          "tau_hat_std": 0.0028565018167263727
+        },
+        {
+          "feature": 5,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.00020189722999930382,
+          "assoc_mean": -0.009855378808849607,
+          "multivariate_mean": 0.0017375165135424357,
+          "tau_hat_std": 0.0023735219564674846
+        },
+        {
+          "feature": 6,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0001198379322886467,
+          "assoc_mean": 0.005051667969125854,
+          "multivariate_mean": 0.0030477531024063263,
+          "tau_hat_std": 0.002057026231324181
+        },
+        {
+          "feature": 7,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -4.905502622326215e-05,
+          "assoc_mean": 0.019235776115119934,
+          "multivariate_mean": 0.01818206533965726,
+          "tau_hat_std": 0.002107431961096065
+        },
+        {
+          "feature": 8,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0006990703986957669,
+          "assoc_mean": -0.0126262361997255,
+          "multivariate_mean": -0.008613285049276055,
+          "tau_hat_std": 0.0014759347820954044
+        },
+        {
+          "feature": 9,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0026262039861952263,
+          "assoc_mean": 0.002197166431033033,
+          "multivariate_mean": -0.006928945648406566,
+          "tau_hat_std": 0.01430308539236265
+        },
+        {
+          "feature": 10,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0007356376852840185,
+          "assoc_mean": -0.03184424525045264,
+          "multivariate_mean": -0.010604578213859638,
+          "tau_hat_std": 0.005723262505629243
+        },
+        {
+          "feature": 11,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.00014020376838743686,
+          "assoc_mean": -0.01661273396837131,
+          "multivariate_mean": 0.015926360696007898,
+          "tau_hat_std": 0.00130224746203207
+        },
+        {
+          "feature": 12,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0002289626281708479,
+          "assoc_mean": 0.024799999570497396,
+          "multivariate_mean": 0.01051153322610638,
+          "tau_hat_std": 0.0017945090561962375
+        }
+      ]
+    },
+    "D_mediator": {
+      "n_repeats": 30,
+      "rows": [
+        {
+          "feature": 0,
+          "tau_true_mean": 1.2792042981336629,
+          "tau_hat_mean": 1.2740807811419168,
+          "assoc_mean": 1.2593827901799879,
+          "multivariate_mean": 0.010143529752373915,
+          "tau_hat_std": 0.051998186677647544
+        },
+        {
+          "feature": 1,
+          "tau_true_mean": 1.8090680674665824,
+          "tau_hat_mean": 1.816920514901479,
+          "assoc_mean": 1.8023327223713954,
+          "multivariate_mean": 1.795482465823335,
+          "tau_hat_std": 0.027314470495978994
+        },
+        {
+          "feature": 2,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.004900220346947511,
+          "assoc_mean": -0.03415808504990281,
+          "multivariate_mean": -0.008374480030535885,
+          "tau_hat_std": 0.015552398265032776
+        },
+        {
+          "feature": 3,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0018057076803719005,
+          "assoc_mean": 0.014878164729957809,
+          "multivariate_mean": 0.00491216967189819,
+          "tau_hat_std": 0.0016220001510290855
+        },
+        {
+          "feature": 4,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.002482258078331749,
+          "assoc_mean": 0.0082221260879145,
+          "multivariate_mean": -0.00796428604639237,
+          "tau_hat_std": 0.002517373228751784
+        },
+        {
+          "feature": 5,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0032357883950074515,
+          "assoc_mean": 0.0031767175142218174,
+          "multivariate_mean": 0.0069676078167907685,
+          "tau_hat_std": 0.004547923278066861
+        },
+        {
+          "feature": 6,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0026300426029289762,
+          "assoc_mean": -0.00638869312969327,
+          "multivariate_mean": -0.002933032845512837,
+          "tau_hat_std": 0.0026029613075327107
+        },
+        {
+          "feature": 7,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0035072247652957835,
+          "assoc_mean": -0.00333596545101443,
+          "multivariate_mean": -0.002627531569639851,
+          "tau_hat_std": 0.004018302646349002
+        },
+        {
+          "feature": 8,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0024008232324073714,
+          "assoc_mean": 0.0053478057509311954,
+          "multivariate_mean": 0.006949618572661354,
+          "tau_hat_std": 0.002462211159015586
+        },
+        {
+          "feature": 9,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.00342906821363916,
+          "assoc_mean": 0.02486214172440064,
+          "multivariate_mean": 0.010276945186048487,
+          "tau_hat_std": 0.004797469044966431
+        },
+        {
+          "feature": 10,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0014475522950912515,
+          "assoc_mean": -0.01447020531268467,
+          "multivariate_mean": 0.0038298850580390795,
+          "tau_hat_std": 0.00136778421818168
+        },
+        {
+          "feature": 11,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0024558924060935775,
+          "assoc_mean": -0.014766122239083893,
+          "multivariate_mean": -0.015686431059371495,
+          "tau_hat_std": 0.0024847200355643828
+        },
+        {
+          "feature": 12,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0015999931221206984,
+          "assoc_mean": 0.03121493444517938,
+          "multivariate_mean": 0.0072229569217920455,
+          "tau_hat_std": 0.0023219244479976784
+        }
+      ]
+    },
+    "E_target_descendant": {
+      "n_repeats": 30,
+      "rows": [
+        {
+          "feature": 0,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.0047548633456851045,
+          "assoc_mean": 1.64481326384946,
+          "multivariate_mean": 1.644475595333486,
+          "tau_hat_std": 0.01362705275491896
+        },
+        {
+          "feature": 1,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0009338705722863476,
+          "assoc_mean": 0.0072515018467160615,
+          "multivariate_mean": -0.0002136635246574953,
+          "tau_hat_std": 0.002161699504279915
+        },
+        {
+          "feature": 2,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0008839830368136366,
+          "assoc_mean": 0.021344551149187027,
+          "multivariate_mean": 0.026853714587965597,
+          "tau_hat_std": 0.0021531467385424385
+        },
+        {
+          "feature": 3,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0012263932110120853,
+          "assoc_mean": 0.010723669225979476,
+          "multivariate_mean": -0.005507470864977645,
+          "tau_hat_std": 0.0013425013861148429
+        },
+        {
+          "feature": 4,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0016715039576714237,
+          "assoc_mean": 0.026108814260873345,
+          "multivariate_mean": 0.00013964553988167667,
+          "tau_hat_std": 0.003031461651172473
+        },
+        {
+          "feature": 5,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0016254197418068847,
+          "assoc_mean": -0.018543244563212657,
+          "multivariate_mean": 0.002022049269854852,
+          "tau_hat_std": 0.0020825579459816793
+        },
+        {
+          "feature": 6,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0011880322825163602,
+          "assoc_mean": 0.01900188021263894,
+          "multivariate_mean": 0.0003275549617522171,
+          "tau_hat_std": 0.0010707198112193184
+        },
+        {
+          "feature": 7,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0018593535137673219,
+          "assoc_mean": -0.011611853901713008,
+          "multivariate_mean": -0.0003059814930194994,
+          "tau_hat_std": 0.001732335206079991
+        },
+        {
+          "feature": 8,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.001842521596699953,
+          "assoc_mean": -0.017361673389759948,
+          "multivariate_mean": -0.009196761880605238,
+          "tau_hat_std": 0.0011566900793691872
+        },
+        {
+          "feature": 9,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0014873187678555648,
+          "assoc_mean": -0.006212853522567383,
+          "multivariate_mean": -0.011959589141233707,
+          "tau_hat_std": 0.0013762767142041971
+        },
+        {
+          "feature": 10,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0006986358746265372,
+          "assoc_mean": -0.010783962623680024,
+          "multivariate_mean": -0.016278647040689834,
+          "tau_hat_std": 0.0016990233425910734
+        },
+        {
+          "feature": 11,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0016094210557639598,
+          "assoc_mean": 0.02117330907511004,
+          "multivariate_mean": 0.007472937646099105,
+          "tau_hat_std": 0.001605370520379284
+        },
+        {
+          "feature": 12,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.001041613418298463,
+          "assoc_mean": -0.01422380215469115,
+          "multivariate_mean": -0.004885486849998905,
+          "tau_hat_std": 0.001650835838883537
+        }
+      ]
+    },
+    "F_collider_leakage": {
+      "n_repeats": 30,
+      "rows": [
+        {
+          "feature": 0,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0018776260626812776,
+          "assoc_mean": -0.0298872563089548,
+          "multivariate_mean": -1.0028445274606297,
+          "tau_hat_std": 0.0011280472060348813
+        },
+        {
+          "feature": 1,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": -0.005341352227454384,
+          "assoc_mean": 1.155986853883768,
+          "multivariate_mean": 1.7387643392342824,
+          "tau_hat_std": 0.0036795083363994853
+        },
+        {
+          "feature": 2,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0015465410038207968,
+          "assoc_mean": 0.014225533758523503,
+          "multivariate_mean": 0.000937868023397384,
+          "tau_hat_std": 0.0016211189249788196
+        },
+        {
+          "feature": 3,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0011666581345101197,
+          "assoc_mean": 0.006033829720417181,
+          "multivariate_mean": 0.006926038585722919,
+          "tau_hat_std": 0.001969126834165172
+        },
+        {
+          "feature": 4,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0009290917621304592,
+          "assoc_mean": -0.011455652429768894,
+          "multivariate_mean": -0.010761317295993925,
+          "tau_hat_std": 0.0013373925849471835
+        },
+        {
+          "feature": 5,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.001829274844688674,
+          "assoc_mean": -0.02295702666907927,
+          "multivariate_mean": 0.002825074377301951,
+          "tau_hat_std": 0.0029545145586927016
+        },
+        {
+          "feature": 6,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0015367275957639019,
+          "assoc_mean": 0.01651348886885088,
+          "multivariate_mean": 0.002814269139191634,
+          "tau_hat_std": 0.0013181366185891711
+        },
+        {
+          "feature": 7,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0012603750685229898,
+          "assoc_mean": 0.009636805998601339,
+          "multivariate_mean": -6.006364503233034e-05,
+          "tau_hat_std": 0.0013342180828541592
+        },
+        {
+          "feature": 8,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0016319779368738332,
+          "assoc_mean": -0.01216096414367466,
+          "multivariate_mean": -0.022459336369688016,
+          "tau_hat_std": 0.0021426057450585297
+        },
+        {
+          "feature": 9,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0016863093090554078,
+          "assoc_mean": -0.026026680894814695,
+          "multivariate_mean": -0.015852266809126762,
+          "tau_hat_std": 0.001793234469594179
+        },
+        {
+          "feature": 10,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0013492090937991938,
+          "assoc_mean": -0.02571454521904827,
+          "multivariate_mean": -0.03164170492772282,
+          "tau_hat_std": 0.0017787453670509335
+        },
+        {
+          "feature": 11,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0008171992764497796,
+          "assoc_mean": -0.002518646008190652,
+          "multivariate_mean": -0.0006739618030166223,
+          "tau_hat_std": 0.0032146283642363
+        },
+        {
+          "feature": 12,
+          "tau_true_mean": 0.0,
+          "tau_hat_mean": 0.0009829199950521191,
+          "assoc_mean": 0.0007676837433325279,
+          "multivariate_mean": -0.014338553336128126,
+          "tau_hat_std": 0.0024134045325407477
+        }
+      ]
+    }
+  }
+}

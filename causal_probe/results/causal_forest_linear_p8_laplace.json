@@ -1,0 +1,22 @@
+{
+  "pearson": 0.2746007489346038,
+  "spearman": 0.2622347515165246,
+  "r2": -1.4044061504113907,
+  "mse": 1.2778137441500796,
+  "auroc_nonzero": 0.5629387027085208,
+  "mae_zero": 0.5807550504309709,
+  "n_features_finite": 800,
+  "n_features_total": 800,
+  "method": "causal_forest",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "causal_forest",
+    "scm_type": "linear",
+    "p": 8,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100
+  }
+}

@@ -1,0 +1,36 @@
+# Python bytecode
+__pycache__/
+*.py[codz]
+*.so
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.hypothesis/
+htmlcov/
+
+# Editors
+.vscode/
+.idea/
+
+# Caches
+.ruff_cache/
+.mypy_cache/
+.cache/
+.sklift_cache/
+
+# Local outputs
+results/        # top-level scratch outputs
+*.tmp
+*.log

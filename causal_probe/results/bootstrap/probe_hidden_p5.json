@@ -1,0 +1,22 @@
+{
+  "pearson": 0.8448491654559253,
+  "spearman": 0.679669671429586,
+  "r2": 0.7097130915849081,
+  "mse": 0.17698429878616928,
+  "auroc_nonzero": 0.934690023318109,
+  "mae_zero": 0.11981644135966812,
+  "n_features_finite": 500,
+  "n_features_total": 500,
+  "method": "probe",
+  "n_scms": 100,
+  "n_failed": 0,
+  "config": {
+    "method": "probe",
+    "scm_type": "hidden",
+    "p": 5,
+    "noise": "laplace",
+    "n_rows": 512,
+    "seed": 2025,
+    "n_scms": 100
+  }
+}

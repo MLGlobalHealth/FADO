@@ -1,0 +1,226 @@
+{
+  "probe_main_p5_15k.ckpt::linear": {
+    "pearson": 0.9449684372911854,
+    "auroc": 0.9888963161021984
+  },
+  "probe_main_p5_15k.ckpt::linear::gaussian": {
+    "pearson": 0.5864349044061865,
+    "auroc": 0.7564780045197357
+  },
+  "probe_main_p5_15k.ckpt::nonlinear": {
+    "pearson": 0.7795432010920862,
+    "auroc": 0.8522717188747893
+  },
+  "probe_main_p5_15k.ckpt::mlp": {
+    "pearson": 0.9267082417857543,
+    "auroc": 0.9160213333333332
+  },
+  "probe_main_p5_15k.ckpt::hidden": {
+    "pearson": 0.7201403366281345,
+    "auroc": 0.8962376854753535
+  },
+  "probe_main_p5_15k.ckpt::mlp_hidden": {
+    "pearson": 0.7212886758243204,
+    "auroc": 0.8382863518710459
+  },
+  "probe_main_p5_15k.ckpt::mixed": {
+    "pearson": 0.6429708754803919,
+    "auroc": 0.7463412417052995
+  },
+  "probe_gauss_control_p5.ckpt::linear": {
+    "pearson": 0.719253870196988,
+    "auroc": 0.9065981786148539
+  },
+  "probe_gauss_control_p5.ckpt::linear::gaussian": {
+    "pearson": 0.7276604064920928,
+    "auroc": 0.8970566616263442
+  },
+  "probe_gauss_control_p5.ckpt::nonlinear": {
+    "pearson": 0.670816433053002,
+    "auroc": 0.8389620218948506
+  },
+  "probe_gauss_control_p5.ckpt::mlp": {
+    "pearson": 0.6650169794515031,
+    "auroc": 0.7884453645597463
+  },
+  "probe_gauss_control_p5.ckpt::hidden": {
+    "pearson": 0.5671057339375086,
+    "auroc": 0.8146201624462494
+  },
+  "probe_gauss_control_p5.ckpt::mlp_hidden": {
+    "pearson": 0.5866254703370022,
+    "auroc": 0.7529329030288494
+  },
+  "probe_gauss_control_p5.ckpt::mixed": {
+    "pearson": 0.5754278880623566,
+    "auroc": 0.8027928315412187
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::linear": {
+    "pearson": 0.921114507923987,
+    "auroc": 0.9866775515875772
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::linear::gaussian": {
+    "pearson": 0.6204299906752232,
+    "auroc": 0.801096133906088
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::nonlinear": {
+    "pearson": 0.9317178798678762,
+    "auroc": 0.9636881006496412
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::mlp": {
+    "pearson": 0.8948458904146256,
+    "auroc": 0.9137118633816989
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::hidden": {
+    "pearson": 0.6476842863422063,
+    "auroc": 0.8512614753919623
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::mlp_hidden": {
+    "pearson": 0.7459288231863018,
+    "auroc": 0.8185393402644076
+  },
+  "probe_nonlinear_p5_20k_v2.ckpt::mixed": {
+    "pearson": 0.6700815475331388,
+    "auroc": 0.7919852157894427
+  },
+  "probe_mlp_p5_20k.ckpt::linear": {
+    "pearson": 0.8480574458637572,
+    "auroc": 0.9334040546911835
+  },
+  "probe_mlp_p5_20k.ckpt::linear::gaussian": {
+    "pearson": 0.5255966606415649,
+    "auroc": 0.6676613843726418
+  },
+  "probe_mlp_p5_20k.ckpt::nonlinear": {
+    "pearson": 0.7973812739459388,
+    "auroc": 0.8717049649091335
+  },
+  "probe_mlp_p5_20k.ckpt::mlp": {
+    "pearson": 0.9784311489282452,
+    "auroc": 0.9655294570658454
+  },
+  "probe_mlp_p5_20k.ckpt::hidden": {
+    "pearson": 0.6991120306915279,
+    "auroc": 0.819116679768341
+  },
+  "probe_mlp_p5_20k.ckpt::mlp_hidden": {
+    "pearson": 0.7744727689977446,
+    "auroc": 0.8353777537505068
+  },
+  "probe_mlp_p5_20k.ckpt::mixed": {
+    "pearson": 0.6815699749828058,
+    "auroc": 0.7871348613642596
+  },
+  "probe_hidden_p5_20k.ckpt::linear": {
+    "pearson": 0.9239627885389013,
+    "auroc": 0.9826689976689977
+  },
+  "probe_hidden_p5_20k.ckpt::linear::gaussian": {
+    "pearson": 0.5593094301135688,
+    "auroc": 0.7571872571872571
+  },
+  "probe_hidden_p5_20k.ckpt::nonlinear": {
+    "pearson": 0.7717183269938916,
+    "auroc": 0.8103968990035908
+  },
+  "probe_hidden_p5_20k.ckpt::mlp": {
+    "pearson": 0.9210920540592852,
+    "auroc": 0.9110583479056038
+  },
+  "probe_hidden_p5_20k.ckpt::hidden": {
+    "pearson": 0.7785770426508124,
+    "auroc": 0.9278592111768144
+  },
+  "probe_hidden_p5_20k.ckpt::mlp_hidden": {
+    "pearson": 0.7802153316344888,
+    "auroc": 0.8144897722182591
+  },
+  "probe_hidden_p5_20k.ckpt::mixed": {
+    "pearson": 0.634363336958664,
+    "auroc": 0.7448945147679326
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::linear": {
+    "pearson": 0.8680236681577802,
+    "auroc": 0.9437651918051063
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::linear::gaussian": {
+    "pearson": 0.5192828632002473,
+    "auroc": 0.7011091037716544
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::nonlinear": {
+    "pearson": 0.7632802917313569,
+    "auroc": 0.8944231766264644
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::mlp": {
+    "pearson": 0.9737533155476085,
+    "auroc": 0.9642041464129492
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::hidden": {
+    "pearson": 0.6331225151161787,
+    "auroc": 0.7948380171740826
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::mlp_hidden": {
+    "pearson": 0.8720393000547234,
+    "auroc": 0.8859298687532413
+  },
+  "probe_mlp_hidden_p5_25k.ckpt::mixed": {
+    "pearson": 0.6776567346808062,
+    "auroc": 0.8196825602208276
+  },
+  "probe_mixed_p5_20k.ckpt::linear": {
+    "pearson": 0.9222988923691396,
+    "auroc": 0.9846761621315193
+  },
+  "probe_mixed_p5_20k.ckpt::linear::gaussian": {
+    "pearson": 0.6214654448774684,
+    "auroc": 0.7811419071210194
+  },
+  "probe_mixed_p5_20k.ckpt::nonlinear": {
+    "pearson": 0.7953874003935482,
+    "auroc": 0.8552692372311828
+  },
+  "probe_mixed_p5_20k.ckpt::mlp": {
+    "pearson": 0.8885724307569062,
+    "auroc": 0.9340735893268033
+  },
+  "probe_mixed_p5_20k.ckpt::hidden": {
+    "pearson": 0.7115040672635781,
+    "auroc": 0.8844903225806452
+  },
+  "probe_mixed_p5_20k.ckpt::mlp_hidden": {
+    "pearson": 0.5762085038395609,
+    "auroc": 0.7851952744328123
+  },
+  "probe_mixed_p5_20k.ckpt::mixed": {
+    "pearson": 0.8666461957816417,
+    "auroc": 0.961728026941224
+  },
+  "probe_main_p5_50k_mixture.ckpt::linear": {
+    "pearson": 0.9408832406433845,
+    "auroc": 0.9879946169926436
+  },
+  "probe_main_p5_50k_mixture.ckpt::linear::gaussian": {
+    "pearson": 0.7200287758627892,
+    "auroc": 0.8933365347236515
+  },
+  "probe_main_p5_50k_mixture.ckpt::nonlinear": {
+    "pearson": 0.927745303025459,
+    "auroc": 0.9863045947584324
+  },
+  "probe_main_p5_50k_mixture.ckpt::mlp": {
+    "pearson": 0.9685214424781667,
+    "auroc": 0.9830969671850504
+  },
+  "probe_main_p5_50k_mixture.ckpt::hidden": {
+    "pearson": 0.7821797321840712,
+    "auroc": 0.9223355263157894
+  },
+  "probe_main_p5_50k_mixture.ckpt::mlp_hidden": {
+    "pearson": 0.7983854486290036,
+    "auroc": 0.854773758347068
+  },
+  "probe_main_p5_50k_mixture.ckpt::mixed": {
+    "pearson": 0.8659724216736091,
+    "auroc": 0.9691749222999223
+  }
+}
