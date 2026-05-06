@@ -692,7 +692,7 @@ TUBINGEN_ROWS = [
     ("Hetero linear",                  "tubingen_hetero_linear"),
     ("$p{=}13$",                       "tubingen_p13"),
     ("MLP $p{=}5$",                    "tubingen_mlp_p5"),
-    ("Mixture heavy (foundation)",     "tubingen_main_p5_50k_mixture_heavy"),
+    ("Mixture heavy (foundation)",     "tubingen_main_p5_100k_mixture_heavy"),
 ]
 
 

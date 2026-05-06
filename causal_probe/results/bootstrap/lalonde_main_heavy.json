@@ -1,7 +1,7 @@
 {
   "control": "cps3",
   "outcome": "re78",
-  "ckpt": "causal_probe/results/probe_main_p5_50k_mixture.ckpt",
+  "ckpt": "causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt",
   "bootstrap_B": 500,
   "tau_T_rct": 0.22058314113121266,
   "tau_hat_T_mean": -0.0347873380924575,

@@ -1,5 +1,5 @@
 {
-  "ckpt": "causal_probe/results/probe_main_p5_50k_mixture.ckpt",
+  "ckpt": "causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt",
   "covariate_source": "diabetes",
   "outcome_family": "mixed_nonlinear",
   "n_scms": 30,

@@ -6,7 +6,7 @@ Outcome: 1978 earnings. Multiple observational comparison controls
 (CPS1/CPS3/PSID) are sold as "confounded" counterparts. Classic
 confounding benchmark — Dehejia & Wahba 1999, Smith & Todd 2005.
 
-Experiment structure (per notes/real_world_causal_probe_experiment_plan.md §2):
+Experiment structure:
 
   1. Observational input = NSW treated + a non-RCT control (CPS3).
   2. Outcome = re78 (earnings in 1978).

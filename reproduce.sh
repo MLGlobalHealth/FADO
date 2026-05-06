@@ -25,14 +25,14 @@ set -euo pipefail
 # uv run python scripts/make_figures.py --which all
 
 # -----------------------------------------------------------------------------
-# Step 1: train the headline foundation probe (fix-100k mixture-heavy)
-# Output: causal_probe/results/probe_main_p5_50k_mixture.ckpt
+# Step 1: train the headline foundation probe (100k-step mixture-heavy)
+# Output: causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt
 # Wall clock: ~5h on 1× L40S
 # -----------------------------------------------------------------------------
 # uv run python -m causal_probe.train \
 #     --regime mixture-heavy \
 #     --p 5 --n 500 --steps 100000 \
-#     --out causal_probe/results/probe_main_p5_50k_mixture.ckpt \
+#     --out causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt \
 #     --seed 2025
 
 # -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ set -euo pipefail
 # Wall clock: ~5 minutes on 1× L40S
 # -----------------------------------------------------------------------------
 # uv run python -m causal_probe.eval \
-#     --ckpt causal_probe/results/probe_main_p5_50k_mixture.ckpt \
+#     --ckpt causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt \
 #     --regime linear-non-gaussian-heavy \
 #     --p 5 --n 500 --seed 2025 \
 #     --out causal_probe/results/eval_main_p5_50k.json
@@ -67,7 +67,7 @@ set -euo pipefail
 # Wall clock: ~30 minutes per regime
 # -----------------------------------------------------------------------------
 # uv run python -m causal_probe.bootstrap_cis \
-#     --ckpt causal_probe/results/probe_main_p5_50k_mixture.ckpt \
+#     --ckpt causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt \
 #     --out-dir causal_probe/results/bootstrap/
 
 # -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ set -euo pipefail
 # Wall clock: ~30 minutes total on CPU
 # -----------------------------------------------------------------------------
 # uv run python -m causal_probe.tubingen \
-#     --ckpt causal_probe/results/probe_main_p5_50k_mixture.ckpt \
+#     --ckpt causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt \
 #     --out causal_probe/results/tubingen.json
 # uv run python -m causal_probe.hillstrom_rct
 # uv run python -m causal_probe.criteo_rct        # respects $SKLIFT_HOME

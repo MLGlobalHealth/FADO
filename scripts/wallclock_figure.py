@@ -2,7 +2,7 @@
 
 Reads causal_probe/results/wallclock_baselines.json (filled by
 scripts/wallclock_baselines.py on local CPU + cluster GPU runs) and writes:
-  - notes/wallclock_baselines.png  — bar chart, log-y per-call latency
+  - paper/figures/wallclock_baselines.png  — bar chart, log-y per-call latency
   - prints a markdown table to stdout
 """
 from __future__ import annotations
@@ -15,7 +15,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 CACHE = REPO / "causal_probe" / "results" / "wallclock_baselines.json"
-OUT_PNG = REPO / "notes" / "wallclock_baselines.png"
+OUT_PNG = REPO / "paper" / "figures" / "wallclock_baselines.png"
 
 # Pretty names + grouping. CausalPFN is omitted from this comparison
 # because its native output is a CATE for a user-designated treatment,

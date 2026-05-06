@@ -37,7 +37,7 @@ TRAIN_ROWS: list[tuple[str, str, tuple[str, str]]] = [
     ("hidden conf.",       "probe_hidden_p5_20k.ckpt",       ("hidden", "laplace")),
     ("MLP+hidden conf.",   "probe_mlp_hidden_p5_25k.ckpt",   ("mlp_hidden", "laplace")),
     ("mixed bin/cont.",    "probe_mixed_p5_20k.ckpt",        ("mixed", "laplace")),
-    ("mixture (foundation)", "probe_main_p5_50k_mixture.ckpt", ("mixture", "laplace")),
+    ("mixture (foundation)", "probe_main_p5_100k_mixture_heavy.ckpt", ("mixture", "laplace")),
 ]
 
 # (col label, scm_type, noise) passed to evaluate_random.

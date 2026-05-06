@@ -1,6 +1,6 @@
 {
   "outcome": "visit",
-  "ckpt": "causal_probe/results/probe_main_p5_50k_mixture.ckpt",
+  "ckpt": "causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt",
   "subsample": 12000,
   "bootstrap_B": 500,
   "tau_T_rct": 0.014374980009790511,

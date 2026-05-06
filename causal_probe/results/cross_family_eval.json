@@ -195,31 +195,31 @@
     "pearson": 0.8666461957816417,
     "auroc": 0.961728026941224
   },
-  "probe_main_p5_50k_mixture.ckpt::linear": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::linear": {
     "pearson": 0.9408832406433845,
     "auroc": 0.9879946169926436
   },
-  "probe_main_p5_50k_mixture.ckpt::linear::gaussian": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::linear::gaussian": {
     "pearson": 0.7200287758627892,
     "auroc": 0.8933365347236515
   },
-  "probe_main_p5_50k_mixture.ckpt::nonlinear": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::nonlinear": {
     "pearson": 0.927745303025459,
     "auroc": 0.9863045947584324
   },
-  "probe_main_p5_50k_mixture.ckpt::mlp": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::mlp": {
     "pearson": 0.9685214424781667,
     "auroc": 0.9830969671850504
   },
-  "probe_main_p5_50k_mixture.ckpt::hidden": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::hidden": {
     "pearson": 0.7821797321840712,
     "auroc": 0.9223355263157894
   },
-  "probe_main_p5_50k_mixture.ckpt::mlp_hidden": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::mlp_hidden": {
     "pearson": 0.7983854486290036,
     "auroc": 0.854773758347068
   },
-  "probe_main_p5_50k_mixture.ckpt::mixed": {
+  "probe_main_p5_100k_mixture_heavy.ckpt::mixed": {
     "pearson": 0.8659724216736091,
     "auroc": 0.9691749222999223
   }

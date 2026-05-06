@@ -1,5 +1,5 @@
 {
-  "ckpt": "causal_probe/results/probe_main_p5_50k_mixture.ckpt",
+  "ckpt": "causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt",
   "n_scms": 500,
   "p": 5,
   "n_rows": 512,

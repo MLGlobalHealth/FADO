@@ -33,8 +33,8 @@ Python ≥ 3.11 is required. The `tabicl` dependency is pinned to upstream
 ## Reproduce paper tables and figures
 
 The headline foundation probe is checked into the repo at
-`causal_probe/results/probe_main_p5_50k_mixture.ckpt` (≈ 5 MB), along with all
-JSONs/NPZs needed by the table-build pipeline. From a fresh clone:
+`causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt` (≈ 5 MB), along
+with all JSONs/NPZs needed by the table-build pipeline. From a fresh clone:
 
 ```bash
 uv run python scripts/build_tables.py        # regenerates 18 .tex tables

@@ -1,8 +1,8 @@
 """SHAP-vs-causal analysis on TabICL's *identifiable* SCM priors.
 
 Where MLPSCM is non-identifiable (its `simulate(intervene_on=...)` is a
-no-op per `notes/PHASE3.md` §Risks), the identifiable SCM families
-(LiNGAM, ANM, TreeSCM_Ident) DO have working interventional simulators.
+no-op), the identifiable SCM families (LiNGAM, ANM, TreeSCM_Ident) DO
+have working interventional simulators.
 This module asks the original "what fraction of features does SHAP rate
 as important but the causal truth says are irrelevant" question on each
 of those families, with our causal probe in the loop as a third column.
