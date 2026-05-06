@@ -208,7 +208,13 @@ def _draw_dag(ax, motif_key, title, nodes, edges, highlight, hidden=()):
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
         s.set_visible(False)
-    ax.set_title(title, fontsize=9)
+    # Motif E's title ("(E) target descendant (label leak)") is wider than
+    # the (E) DAG axes, so it bleeds past the surrounding gray box on the
+    # left. Shift its title slightly right so it stays inside the box.
+    if motif_key == "E_target_descendant":
+        ax.set_title(title, fontsize=9, x=0.62)
+    else:
+        ax.set_title(title, fontsize=9)
 
     color = _MOTIF_COLOR[motif_key]
     radius = 0.16
@@ -244,6 +250,31 @@ def _draw_dag(ax, motif_key, title, nodes, edges, highlight, hidden=()):
         ax.add_patch(ar)
 
 
+def _pack_dag_rows(dag_axes, y_bottom):
+    """Compress the 3x2 DAG grid vertically so it fits inside the same
+    top/bottom span as the square scatter panel.
+
+    We keep the top row fixed and shrink the two inter-row gaps evenly.
+    That lifts the middle row slightly and the bottom row a bit more,
+    removing the excess whitespace that otherwise leaves motif F hanging
+    below the gray background box.
+    """
+    top_row = dag_axes[:2]
+    row_height = top_row[0].get_position().height
+    top_y1 = max(ax.get_position().y1 for ax in top_row)
+    row_gap = (top_y1 - y_bottom - 3.0 * row_height) / 2.0
+    row_gap = max(row_gap, 0.0)
+    row_y0s = [
+        top_y1 - row_height,
+        top_y1 - 2.0 * row_height - row_gap,
+        top_y1 - 3.0 * row_height - 2.0 * row_gap,
+    ]
+    for row_idx in range(3):
+        for ax in dag_axes[2 * row_idx: 2 * row_idx + 2]:
+            pos = ax.get_position()
+            ax.set_position([pos.x0, row_y0s[row_idx], pos.width, pos.height])
+
+
 def main():
     import matplotlib.gridspec as gridspec
 
@@ -266,6 +297,16 @@ def main():
 
     ax_scatter = fig.add_subplot(gs[:, 3])
     _motifs_panel(ax_scatter)
+    # Keep the explainability panel genuinely square instead of letting the
+    # GridSpec cell stretch it vertically with the overall figure canvas.
+    ax_scatter.set_box_aspect(1)
+
+    # Once the scatter panel becomes square, it no longer spans the full
+    # GridSpec cell vertically. Re-pack the DAG rows into that shorter span
+    # so the lower motifs stay inside the gray box without manual per-motif
+    # nudges.
+    fig.canvas.draw()
+    _pack_dag_rows(dag_axes, ax_scatter.get_position().y0)
 
     # "Motifs" header centred over the DAG block. Same font + weight as
     # the scatter title so the two read as siblings; vertical position
@@ -283,19 +324,16 @@ def main():
              fontsize=plt.rcParams["axes.titlesize"],
              fontweight=plt.rcParams["axes.titleweight"])
 
-    # Light gray box surrounding the DAG block + "Motifs" header so the
-    # left half of the figure reads as a single panel.
+    # Light gray box surrounding only the DAG block. Vertical extent
+    # matches the scatter axes (right panel) exactly; "Motifs" header
+    # sits above the box, aligned with the scatter title.
     from matplotlib.patches import Rectangle
     pad_x = 0.018
-    pad_y = 0.025
+    scatter_pos = ax_scatter.get_position()
     box_left = min(ax.get_position().x0 for ax in dag_axes) - pad_x
     box_right = max(ax.get_position().x1 for ax in dag_axes) + pad_x
-    box_bottom = min(ax.get_position().y0 for ax in dag_axes) - pad_y
-    # Top sits above "Motifs" text — re-draw to get its bbox.
-    fig.canvas.draw()
-    motifs_artist = fig.texts[-1]
-    motifs_bbox = motifs_artist.get_window_extent()
-    box_top = fig_inv.transform((0, motifs_bbox.y1))[1] + 0.012
+    box_top = scatter_pos.y1
+    box_bottom = scatter_pos.y0
     rect = Rectangle(
         (box_left, box_bottom),
         box_right - box_left, box_top - box_bottom,
