@@ -1,0 +1,31 @@
+{
+  "ckpt": "causal_probe/results/probe_main_p5_50k_mixture.ckpt",
+  "n_scms": 500,
+  "p": 5,
+  "n_rows": 512,
+  "seed": 100,
+  "noise": "laplace",
+  "results": {
+    "normal": {
+      "pearson_truth": 0.9507144814610535,
+      "spearman_truth": 0.6747203080179932,
+      "mae_zero_features": 0.032433417132443985,
+      "mean_abs_diff_vs_normal": 0.0,
+      "pearson_vs_normal": 1.0
+    },
+    "all_zero": {
+      "pearson_truth": 0.2428401045867423,
+      "spearman_truth": 0.21327335909481043,
+      "mae_zero_features": 0.206893600989472,
+      "mean_abs_diff_vs_normal": 0.4391743242740631,
+      "pearson_vs_normal": 0.2459115833044052
+    },
+    "mispointed": {
+      "pearson_truth": -0.0031697439893311054,
+      "spearman_truth": 0.0012757329581505595,
+      "mae_zero_features": 0.21798781869058792,
+      "mean_abs_diff_vs_normal": 0.5069310665130615,
+      "pearson_vs_normal": -0.008145421743392944
+    }
+  }
+}

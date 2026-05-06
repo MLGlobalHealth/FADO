@@ -107,7 +107,7 @@ def _f3(x: float) -> str:
 
 def _f3sub(point: float, lo: float, hi: float, *, sig: bool = False,
            bold: bool = False) -> str:
-    """$0.921\;[0.88, 0.96]$, with optional bold and signed format."""
+    r"""$0.921\;[0.88, 0.96]$, with optional bold and signed format."""
     if not np.isfinite(point):
         return "---"
     fmt = "+" if sig else ""
@@ -119,29 +119,32 @@ def _f3sub(point: float, lo: float, hi: float, *, sig: bool = False,
 # Table: held-out random DAGs (tab:held-out-dags)
 # ---------------------------------------------------------------------------
 
-HELD_OUT_DAGS_ROWS: list[tuple[str, str]] = [
-    ("Main $p{=}5$, 15k steps",                "eval_main_p5_15k"),
-    ("Main $p{=}5$, 50k steps",                "eval_main_p5_50k"),
-    ("Large $p{=}5$ ($d{=}192$, 4+4)",         "eval_large_p5_30k"),
+HELD_OUT_DAGS_MAIN_ROWS: list[tuple[str, str]] = [
+    ("FADO: $p{=}5$ ($100$k)",                 "eval_main_p5_50k"),
     ("$p{=}8$, 15k",                           "eval_p8_15k"),
     ("$p{=}13$, 20k",                          "eval_p13_20k"),
-    ("Large $p{=}13$ ($d{=}192$, 4+4)",        "eval_large_p13_30k"),
     ("$p{=}20$, 30k",                          "eval_p20_30k"),
     ("Gaussian control $p{=}5$",               "eval_gauss_control_p5"),
-    ("Gaussian control $p{=}8$",               "eval_gauss_p8_15k"),
     ("Polynomial nonlinear $p{=}5$",           "eval_nonlinear_p5_20k_v2"),
     ("Random-MLP nonlinear $p{=}5$",           "eval_mlp_p5_20k"),
-    ("MLP + hidden confounder $p{=}5$",        "eval_mlp_hidden_p5_25k"),
     ("Hidden confounder $p{=}5$",              "eval_hidden_p5_20k"),
-    ("Hidden confounder $p{=}13$",             "eval_hidden_p13_25k"),
     ("Mixed binary/continuous $p{=}5$",        "eval_mixed_p5_20k"),
+]
+
+HELD_OUT_DAGS_EXTENDED_ROWS: list[tuple[str, str]] = [
+    ("Linear $p{=}5$, 15k steps",              "eval_main_p5_15k"),
+    ("Large $p{=}5$ ($d{=}192$, 4+4)",         "eval_large_p5_30k"),
+    ("Large $p{=}13$ ($d{=}192$, 4+4)",        "eval_large_p13_30k"),
+    ("Gaussian control $p{=}8$",               "eval_gauss_p8_15k"),
+    ("MLP + hidden confounder $p{=}5$",        "eval_mlp_hidden_p5_25k"),
+    ("Hidden confounder $p{=}13$",             "eval_hidden_p13_25k"),
     ("Mixed $p{=}13$",                         "eval_mixed_p13_25k"),
 ]
 
 
-def build_held_out_dags() -> None:
+def _held_out_dags_body(rows_spec: list[tuple[str, str]]) -> str:
     rows = []
-    for label, tag in HELD_OUT_DAGS_ROWS:
+    for label, tag in rows_spec:
         d = _load(RESULTS / f"{tag}.json")["random"]
         cells = [
             label,
@@ -151,10 +154,10 @@ def build_held_out_dags() -> None:
             f"${d['pearson']['marginal']:.2f}$",
         ]
         rows.append(" & ".join(cells) + " \\\\")
-    body = (
+    return (
         "\\begin{tabular}{lrrrr}\n"
         "\\toprule\n"
-        " & \\multicolumn{3}{c}{Probe $\\tauhat$ vs $\\tau$} & Marginal baseline \\\\\n"
+        " & \\multicolumn{3}{c}{FADO $\\tauhat$ vs $\\tau$} & Marginal baseline \\\\\n"
         "\\cmidrule(lr){2-4} \\cmidrule(lr){5-5}\n"
         "Training setting & Pearson $r$ & AUROC (nonzero) & MAE (zero) & Pearson $r$ \\\\\n"
         "\\midrule\n"
@@ -162,7 +165,19 @@ def build_held_out_dags() -> None:
         "\\bottomrule\n"
         "\\end{tabular}\n"
     )
-    _write("held_out_dags", body, "tab:held-out-dags — 17 prior families × probe metrics")
+
+
+def build_held_out_dags() -> None:
+    _write(
+        "held_out_dags",
+        _held_out_dags_body(HELD_OUT_DAGS_MAIN_ROWS),
+        f"tab:held-out-dags — {len(HELD_OUT_DAGS_MAIN_ROWS)} rows × FADO metrics",
+    )
+    _write(
+        "held_out_dags_extended",
+        _held_out_dags_body(HELD_OUT_DAGS_EXTENDED_ROWS),
+        f"tab:held-out-dags-extended — {len(HELD_OUT_DAGS_EXTENDED_ROWS)} rows × FADO metrics",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -384,7 +399,7 @@ def build_causal_baselines() -> None:
         "}\n"
     )
     _write("causal_baselines_hidden_delta", delta_body,
-           "Probe - LiNGAM paired Δ on Hidden confounder p=5 row")
+           "FADO - LiNGAM paired Δ on Hidden confounder p=5 row")
 
 
 def build_offlabel_pfn() -> None:
@@ -695,7 +710,7 @@ def build_tubingen() -> None:
     body = (
         "\\begin{tabular}{l r r}\n"
         "\\toprule\n"
-        "Checkpoint & Accuracy & Weighted accuracy \\\\\n"
+        "Model variant & Accuracy & Weighted accuracy \\\\\n"
         "\\midrule\n"
         + "\n".join(rows) + "\n"
         "\\bottomrule\n"
@@ -709,7 +724,7 @@ def build_tubingen() -> None:
 # ---------------------------------------------------------------------------
 
 SACHS_ROWS = [
-    ("Main $p{=}5$, 15k",            "sachs_p5"),
+    ("Linear $p{=}5$, 15k",          "sachs_p5"),
     ("$p{=}8$, 15k",                 "sachs_p8"),
     ("$p{=}13$, 20k",                "sachs_p13"),
     ("Mixture heavy (foundation)",   "sachs_main_heavy"),
@@ -747,7 +762,7 @@ def build_sachs() -> None:
     body = (
         "\\begin{tabular}{l r r r r}\n"
         "\\toprule\n"
-        "Checkpoint     & FADO & $\\Delta$ vs Marg.\\ & Marginal & Multivariate \\\\\n"
+        "Variant        & FADO & $\\Delta$ vs Marg.\\ & Marginal & Multivariate \\\\\n"
         "\\midrule\n"
         + "\n".join(rows) + "\n"
         "\\bottomrule\n"
@@ -875,15 +890,15 @@ def build_ensemble() -> None:
 # ---------------------------------------------------------------------------
 
 ABLATION_ROWS: list[tuple[str, str | None, bool]] = [
-    ("Main (all components)",            "eval_main_p5_15k",                  True),
-    ("$-$ row attention",                "eval_ablation_no_row_attn_p5_15000", False),
-    ("$-$ column attention",             "eval_ablation_no_col_attn_p5_15000", False),
-    ("$-$ type embedding (feature/$Y$)", "eval_ablation_no_type_emb_p5_15000", False),
+    ("Linear $p{=}5$ (all components)",  "eval_main_p5_50k",                  True),
+    ("$-$ row attention",                "eval_ablation_no_row_attn_p5_50000", False),
+    ("$-$ column attention",             "eval_ablation_no_col_attn_p5_50000", False),
+    ("$-$ type embedding (feature/$Y$)", "eval_ablation_no_type_emb_p5_50000", False),
 ]
 
 
 def build_ablations() -> None:
-    main = _load(RESULTS / "eval_main_p5_15k.json")["random"]
+    main = _load(RESULTS / "eval_main_p5_50k.json")["random"]
     main_pearson = main["pearson"]["model"]
     rows = []
     for label, tag, is_main in ABLATION_ROWS:
@@ -919,7 +934,7 @@ def build_ablations() -> None:
 # ---------------------------------------------------------------------------
 
 def build_type_flip() -> None:
-    d = _load(RESULTS / "ablation_type_flip_main_p5_15k.json")["results"]
+    d = _load(RESULTS / "ablation_type_flip_main_p5_50k.json")["results"]
     label_for = {"normal": "Normal (col $p$ marked)",
                  "all_zero": "All zero (no column marked)",
                  "mispointed": "Mispointed (col $0$ marked)"}
