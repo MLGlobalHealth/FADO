@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reproduction script for "Learning to Explain with a Generative Process".
+# Reproduction script for "FADO: Learning to Explain Causal Effects with Prior-Fitted Networks for Explanations".
 #
 # All commands assume:
 #   - the repo root is the current working directory

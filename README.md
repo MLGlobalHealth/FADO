@@ -1,8 +1,8 @@
-# Learning to Explain with a Generative Process
+# FADO: Learning to Explain Causal Effects with Prior-Fitted Networks for Explanations
 
-Code accompanying the NeurIPS submission *Learning to Explain with a Generative
-Process*. **Author and affiliation information has been removed for
-double-blind review.**
+Code accompanying the NeurIPS submission *FADO: Learning to Explain Causal
+Effects with Prior-Fitted Networks for Explanations*. **Author and affiliation information has
+been removed for double-blind review.**
 
 This repository contains:
 

@@ -1,7 +1,7 @@
 [project]
-name = "learning-to-explain"
+name = "fado"
 version = "0.0.0"
-description = "Learning to Explain with a Generative Process"
+description = "FADO: Learning to Explain Causal Effects with Prior-Fitted Networks for Explanations"
 requires-python = ">=3.11"
 dependencies = [
     "tabicl[shap]",
