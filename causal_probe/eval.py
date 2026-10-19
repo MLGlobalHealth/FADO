@@ -33,11 +33,38 @@ _EVAL_SCM_SEED_LO = 2**31
 _EVAL_SCM_SEED_HI = 2**32
 
 
+# Frozen canonical paper-headline mixture for foundation-model eval. Uniform
+# over 10 SCM families (10 _PAPER_MIXTURE_PRIOR families; gp_cde dropped for
+# numerical stability of the held-out draw). Pinned in eval.py, not in
+# train.py, so the eval benchmark stays fixed across training-prior
+# rotations.
+_PAPER_MIXTURE_PRIOR = {
+    "linear": 0.10, "nonlinear": 0.10, "mlp": 0.10,
+    "hidden": 0.10, "mlp_hidden": 0.10, "mixed": 0.10,
+    "treatment": 0.10, "polynomial": 0.10, "spline": 0.10,
+    "discrete_mix": 0.10,
+}
+
+# Single-family list (excluding "mixture" + "gp_cde") used by callers like
+# scripts/cross_family_heatmap*.py and run_baseline.py that want to iterate
+# over the canonical eval families.
+ALL_EVAL_SCM_TYPES = (
+    "linear", "nonlinear", "mlp", "hidden", "mlp_hidden", "mixed",
+    "treatment", "polynomial", "spline", "gp_cde", "discrete_mix",
+)
+
+
 def _make_eval_scm(scm_type: str, p: int, rng: np.random.Generator,
                    noise: str = "laplace", nonlinear_mc: int = 2048):
     """Construct an SCM of the given family for held-out eval."""
     seed = rng.integers(_EVAL_SCM_SEED_LO, _EVAL_SCM_SEED_HI)
     sub_rng = np.random.default_rng(seed)
+    if scm_type == "mixture":
+        families = list(_PAPER_MIXTURE_PRIOR.keys())
+        weights = np.asarray(list(_PAPER_MIXTURE_PRIOR.values()), dtype=np.float64)
+        weights = weights / weights.sum()
+        family = str(sub_rng.choice(families, p=weights))
+        return _make_eval_scm(family, p, sub_rng, noise=noise, nonlinear_mc=nonlinear_mc)
     if scm_type == "linear":
         return LinearNonGaussianSCM(p=p, rng=sub_rng, noise=noise)
     if scm_type == "nonlinear":
@@ -55,6 +82,22 @@ def _make_eval_scm(scm_type: str, p: int, rng: np.random.Generator,
     if scm_type == "mixed":
         from causal_probe.scm_mixed import LinearMixedSCM
         return LinearMixedSCM(p=p, rng=sub_rng, noise=noise)
+    if scm_type == "treatment":
+        from causal_probe.scm_treatment import DesignatedTreatmentSCM
+        return DesignatedTreatmentSCM(p=max(p, 2), rng=sub_rng,
+                                      n_mc=nonlinear_mc, noise=noise)
+    if scm_type == "polynomial":
+        from causal_probe.scm_polynomial import PolynomialSCM
+        return PolynomialSCM(p=p, rng=sub_rng, n_mc=nonlinear_mc, noise=noise)
+    if scm_type == "spline":
+        from causal_probe.scm_spline import SplineAdditiveSCM
+        return SplineAdditiveSCM(p=p, rng=sub_rng, n_mc=nonlinear_mc, noise=noise)
+    if scm_type == "gp_cde":
+        from causal_probe.scm_gp_cde import GPGridSCM
+        return GPGridSCM(p=p, rng=sub_rng, n_mc=nonlinear_mc, noise=noise)
+    if scm_type == "discrete_mix":
+        from causal_probe.scm_discrete import DiscreteMixedSCM
+        return DiscreteMixedSCM(p=p, rng=sub_rng, noise=noise)
     raise ValueError(f"unknown scm_type: {scm_type}")
 
 
@@ -75,10 +118,17 @@ def _auroc(scores: np.ndarray, labels: np.ndarray) -> float:
     return float(roc_auc_score(labels, scores))
 
 
-def _load_model(ckpt_path: str, device: str = "cpu") -> CausalProbe:
+def _load_model(ckpt_path: str, device: str = "cpu"):
+    """Load any checkpoint, handling both legacy `cfg`+CausalProbe ckpts
+    and the new `arch`+`arch_kwargs` format that supports any registered
+    architecture."""
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
-    cfg = ProbeConfig(**ckpt["cfg"])
-    model = CausalProbe(cfg).to(device)
+    if "arch" in ckpt and "arch_kwargs" in ckpt:
+        from causal_probe.models import build_arch
+        model = build_arch(ckpt["arch"], **ckpt["arch_kwargs"]).to(device)
+    else:
+        cfg = ProbeConfig(**ckpt["cfg"])
+        model = CausalProbe(cfg).to(device)
     model.load_state_dict(ckpt["state_dict"])
     model.eval()
     return model
@@ -95,6 +145,7 @@ def evaluate_random(
     scm_type: str = "linear",
     nonlinear_mc: int = 2048,
     raw_out: dict | None = None,
+    p_pad: int | None = None,
 ) -> dict:
     """Run eval on n_scms random held-out SCMs of the given family.
 
@@ -102,17 +153,36 @@ def evaluate_random(
     multivariate; each shape (n_scms, p)) are stashed into it under keys
     ``random_pred / random_true / random_marginal / random_multivariate``
     so the caller can bootstrap-CI metrics over SCMs.
+
+    If ``p_pad`` is set and > p, each X is padded with (p_pad - p) iid
+    standard-normal noise columns and the model is run on the padded
+    input. This matches the variable-p training distribution (which
+    always pads to p_max = 15) and removes the OOD shape mismatch that
+    otherwise penalizes mixed-p foundation models at eval. Metrics are
+    reported over the FIRST p columns (the real features); the padded
+    columns are evaluated separately and reported under "padded".
     """
     preds, truths, assocs, regs = [], [], [], []
+    preds_pad = [] if (p_pad is not None and p_pad > p) else None
     for _ in range(n_scms):
         scm = _make_eval_scm(scm_type, p, rng, noise=noise, nonlinear_mc=nonlinear_mc)
         samp = scm.sample(n=n_rows, rng=np.random.default_rng(rng.integers(_EVAL_SCM_SEED_LO, _EVAL_SCM_SEED_HI)))
-        X_t = torch.from_numpy(samp.X.astype(np.float32)).unsqueeze(0).to(device)
+        X_real = samp.X.astype(np.float32)
+        if p_pad is not None and p_pad > p:
+            n_pad = p_pad - p
+            pad_seed = int(rng.integers(_EVAL_SCM_SEED_LO, _EVAL_SCM_SEED_HI))
+            pad_noise = np.random.default_rng(pad_seed).standard_normal((n_rows, n_pad)).astype(np.float32)
+            X_model = np.concatenate([X_real, pad_noise], axis=1)
+        else:
+            X_model = X_real
+        X_t = torch.from_numpy(X_model).unsqueeze(0).to(device)
         y_t = torch.from_numpy(samp.y.astype(np.float32)).unsqueeze(0).to(device)
         with torch.no_grad():
-            pred = model(X_t, y_t).squeeze(0).cpu().numpy()
-        preds.append(pred)
+            full_pred = model(X_t, y_t).squeeze(0).cpu().numpy()
+        preds.append(full_pred[:p])
         truths.append(samp.tau)
+        if preds_pad is not None:
+            preds_pad.append(full_pred[p:])
         assocs.append(BASELINES["marginal"](samp.X, samp.y))
         regs.append(BASELINES["multivariate"](samp.X, samp.y))
 
@@ -166,7 +236,7 @@ def evaluate_random(
     mae_zero_model = float(np.mean(np.abs(flat_p[zero_mask] - flat_t[zero_mask]))) if zero_mask.any() else float("nan")
     mae_zero_assoc = float(np.mean(np.abs(flat_a[zero_mask] - flat_t[zero_mask]))) if zero_mask.any() else float("nan")
 
-    return {
+    out = {
         "n_scms": n_scms, "p": p, "n_rows": n_rows, "noise": noise,
         "scm_type": scm_type,
         "pearson": {"model": pe_model, "marginal": pe_assoc, "multivariate": pe_reg},
@@ -178,6 +248,22 @@ def evaluate_random(
         "mae_zero_features": {"model": mae_zero_model, "marginal": mae_zero_assoc},
         "signal_frac": float(signal_mask.mean()),
     }
+    if preds_pad is not None:
+        pp = np.stack(preds_pad).reshape(-1)
+        out["p_pad"] = p_pad
+        # Padded columns are pure-noise: ground truth tau is exactly 0 by
+        # construction (the SCM doesn't see them). Report how tight the
+        # model's predictions are around zero — the foundation-model
+        # "doesn't confuse correlation for causation" stress test.
+        out["padded_features"] = {
+            "n_padded": int(p_pad - p),
+            "mae": float(np.mean(np.abs(pp))),
+            "rmse": float(np.sqrt(np.mean(pp ** 2))),
+            "max_abs": float(np.max(np.abs(pp))),
+            "frac_within_0_05": float(np.mean(np.abs(pp) < 0.05)),
+            "frac_within_0_1": float(np.mean(np.abs(pp) < 0.1)),
+        }
+    return out
 
 
 def evaluate_motifs(
@@ -198,6 +284,21 @@ def evaluate_motifs(
     """
     out = {}
     for name, make in ALL_MOTIFS.items():
+        # Skip motifs that can't construct at this p (e.g.
+        # J_latent_clique_3x3 needs p>=10). Probe by constructing one
+        # spec inside a try; if it raises, log and continue. Also skip
+        # if n_repeats==0 so downstream array-shape arithmetic stays
+        # 2D.
+        if n_repeats <= 0:
+            out[name] = {"n_repeats": 0, "rows": [], "skipped": "n_repeats=0"}
+            continue
+        try:
+            _probe_spec = make(p=p, rng=np.random.default_rng(rng.integers(0, 2**31)))
+            del _probe_spec
+        except (ValueError, AssertionError) as e:
+            print(f"  skipping motif {name}: {e}", flush=True)
+            out[name] = {"n_repeats": 0, "rows": [], "skipped": str(e)}
+            continue
         per_feat = defaultdict(list)
         # Per-instance raw arrays for bootstrap.
         raw_pred = np.empty((n_repeats, p), dtype=np.float32)
@@ -247,14 +348,23 @@ def main():
     ap.add_argument("--n-random-scms", type=int, default=500)
     ap.add_argument("--motif-repeats", type=int, default=30)
     ap.add_argument("--p", type=int, default=5)
+    ap.add_argument("--p-pad", type=int, default=None,
+                    help="If set and > --p, pad each random-SCM X with (p-pad - p) "
+                         "iid standard-normal noise columns before feeding to the "
+                         "model. Matches the variable-p training distribution "
+                         "(which pads to p_max). Metrics on real columns; padded "
+                         "columns reported separately under 'padded_features'.")
     ap.add_argument("--n-rows", type=int, default=512)
     ap.add_argument("--seed", type=int, default=100)
     ap.add_argument("--scm-type",
-                    choices=["linear", "nonlinear", "mlp", "hidden", "mlp_hidden", "mixed"],
+                    choices=["linear", "nonlinear", "mlp", "hidden", "mlp_hidden", "mixed",
+                             "treatment", "polynomial", "spline", "gp_cde", "discrete_mix",
+                             "mixture"],
                     default="linear",
                     help="SCM family used for held-out random eval. "
-                         "Should match the family the probe was trained on for "
-                         "in-distribution generalization claims.")
+                         "'mixture' draws each held-out SCM from the frozen "
+                         "_PAPER_MIXTURE_PRIOR (10 families) — the paper's "
+                         "foundation-model headline benchmark.")
     ap.add_argument("--noise", choices=["laplace", "gaussian", "heavy"], default="laplace",
                     help="Noise distribution for linear and hidden SCM families "
                          "(ignored by nonlinear / mlp / mlp_hidden / mixed).")
@@ -277,7 +387,8 @@ def main():
                                  rng=rng, device=args.device,
                                  noise=args.noise, scm_type=args.scm_type,
                                  nonlinear_mc=args.nonlinear_mc,
-                                 raw_out=raw)
+                                 raw_out=raw,
+                                 p_pad=args.p_pad)
     motif_res = evaluate_motifs(model, args.p, args.n_rows, rng=rng,
                                 device=args.device, n_repeats=args.motif_repeats,
                                 raw_out=raw)

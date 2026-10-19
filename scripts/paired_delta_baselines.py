@@ -1,9 +1,11 @@
 """Paired-Δ Pearson CIs for `paper/tables/all_baselines.tex`.
 
-Sweeps every (method, setting) cell in the table and emits a markdown
-paired-Δ table: Δ = Pearson(FADO) − Pearson(baseline), bootstrap CI on
-the same SCM stream. Reads `causal_probe/results/bootstrap/{probe,<m>}_<tag>.npz`
-produced by `causal_probe.run_baseline --out-npz` at matching --seed.
+Sweeps every (method, setting) cell in the table and emits both a
+markdown paired-Δ table (stdout) and the LaTeX table written to
+`paper/tables/all_baselines_paired_ci.tex`. Δ = Pearson(FADO) −
+Pearson(baseline), bootstrap CI on the same SCM stream. Reads
+`causal_probe/results/bootstrap/{probe,<m>}_<tag>.npz` produced by
+`causal_probe.run_baseline --out-npz` at matching --seed.
 
 Run from repo root:
 
@@ -16,6 +18,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path("causal_probe/results/bootstrap")
+TEX_OUT = Path("paper/tables/all_baselines_paired_ci.tex")
 
 SETTINGS = [
     ("gauss_p5",  "LinG p5"),
@@ -37,7 +40,7 @@ METHODS = [
     ("doubleml",      "DML"),
     ("causal_forest", "CausalForest"),
     ("marginal",      "Marginal corr."),
-    ("ridge",         "Lin. regression"),
+    ("ridge",         "Multivariate regression"),
     ("permutation",   "Permutation"),
     ("shap",          "SHAP"),
 ]
@@ -94,6 +97,75 @@ def paired_delta(npz_a: Path, npz_b: Path):
     return point_a, point_b, delta, lo, hi, n, n_total
 
 
+METHOD_LATEX = {
+    "lingam":        r"\quad LiNGAM",
+    "notears":       r"\quad NOTEARS",
+    "pc":            r"\quad PC",
+    "ges":           r"\quad GES",
+    "fci":           r"\quad FCI",
+    "doubleml":      r"\quad DML",
+    "causal_forest": r"\quad CausalForest",
+    "marginal":      r"\quad Marginal corr.",
+    "ridge":         r"\quad Multivariate regression",
+    "permutation":   r"\quad Permutation",
+    "shap":          r"\quad SHAP",
+}
+
+GROUPS = [
+    ("Causal discovery", ["lingam", "notears", "pc", "ges", "fci"]),
+    (r"Treatment effect (per-column)$^\dagger$", ["doubleml", "causal_forest"]),
+    ("Predictive attribution", ["marginal", "ridge", "permutation", "shap"]),
+]
+
+
+def _fmt_num(x: float) -> str:
+    """Two decimal places; drop the leading '+' on non-negative values."""
+    s = f"{x:.2f}"
+    return s if s.startswith("-") else s.lstrip("+")
+
+
+def _fmt_latex_cell(delta, lo, hi):
+    if np.isnan(delta):
+        return "---"
+    return (
+        f"${_fmt_num(delta)}\\,"
+        f"{{\\scriptstyle [{_fmt_num(lo)},{_fmt_num(hi)}]}}$"
+    )
+
+
+def _write_latex(cells: dict[tuple[str, str], tuple[float, float, float]]) -> None:
+    lines = [
+        "% Paired-Δ Pearson CIs: FADO − each baseline.",
+        "% Bootstrap: 5000 resamples of the SCM index, seed=0; same SCM stream",
+        "% (--seed 2025, --n-scms 100, --n-rows 512) as tab:all-baselines.",
+        "%",
+        "% Generator: scripts/paired_delta_baselines.py",
+        r"\begin{tabular}{l c c c c c c c c}",
+        r"\toprule",
+        r"& \multicolumn{4}{c}{Linear} & \multicolumn{2}{c}{Nonlinear} & Hidden & Mixed \\",
+        r"\cmidrule(lr){2-5} \cmidrule(lr){6-7}",
+        r"& Gauss. & \multicolumn{3}{c}{Non-Gaussian} & Poly. & MLP & conf. & bin/cts \\",
+        r"& $p{=}5$ & $p{=}5$ & $p{=}8$ & $p{=}13$ & $p{=}5$ & $p{=}5$ & $p{=}5$ & $p{=}5$ \\",
+        r"\midrule",
+    ]
+    for gi, (group_label, keys) in enumerate(GROUPS):
+        if gi > 0:
+            lines.append(r"\addlinespace")
+        lines.append(rf"\multicolumn{{9}}{{l}}{{\emph{{{group_label}}}}} \\")
+        for m_key in keys:
+            row_cells = []
+            for tag, _ in SETTINGS:
+                delta, lo, hi = cells[(m_key, tag)]
+                row_cells.append(_fmt_latex_cell(delta, lo, hi))
+            lines.append(
+                f"{METHOD_LATEX[m_key]} & " + " & ".join(row_cells) + r" \\"
+            )
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    TEX_OUT.write_text("\n".join(lines) + "\n")
+    print(f"\nWrote {TEX_OUT}")
+
+
 def main():
     print("# Paired-Δ Pearson CI: FADO (probe) − baseline")
     print()
@@ -107,6 +179,7 @@ def main():
     print(f"| Method | {cols} |")
     print("|" + "---|" * (len(SETTINGS) + 1))
     skipped = []
+    cells: dict[tuple[str, str], tuple[float, float, float]] = {}
     for m_key, m_label in METHODS:
         delta_cells = []
         ci_cells = []
@@ -114,6 +187,7 @@ def main():
             a = ROOT / f"probe_{tag}.npz"
             b = ROOT / f"{m_key}_{tag}.npz"
             _, _, delta, lo, hi, n, n_total = paired_delta(a, b)
+            cells[(m_key, tag)] = (delta, lo, hi)
             if np.isnan(delta):
                 delta_cells.append("—")
                 ci_cells.append("—")
@@ -135,6 +209,7 @@ def main():
         print("## Skipped cells")
         for s in skipped:
             print(f"- {s}")
+    _write_latex(cells)
 
 
 if __name__ == "__main__":

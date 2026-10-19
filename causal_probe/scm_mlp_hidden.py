@@ -17,7 +17,7 @@ from causal_probe.scm import SCMSample
 from causal_probe.scm_mlp import _sample_mlp_params, _mlp_forward
 from causal_probe.scm_utils import (
     monte_carlo_tau,
-    sample_laplace_unit as _laplace_unit,
+    sample_noise as _sample_noise,
     select_y_and_features,
     standardize_for_sample,
 )
@@ -34,9 +34,11 @@ class MLPSCMHidden:
         n_mc: int = 8192,
         n_hidden: int = 1,
         hidden_children: int = 3,
+        noise: str = "laplace",
     ):
         self.p = p
         self.n_mc = n_mc
+        self.noise = noise
         self.n_hidden = n_hidden
         N_obs = p + 1
         N = N_obs + n_hidden
@@ -89,7 +91,7 @@ class MLPSCMHidden:
 
     def _simulate_raw(self, n: int, rng: np.random.Generator) -> np.ndarray:
         N = self.p + 1 + self.n_hidden
-        eps = _laplace_unit((n, N), rng)
+        eps = _sample_noise((n, N), rng, self.noise)
         Z = np.zeros((n, N), dtype=np.float64)
         for node in self._topo_order.tolist():
             Z[:, int(node)] = np.clip(self._structural(int(node), Z) + eps[:, int(node)], -15.0, 15.0)
@@ -98,12 +100,25 @@ class MLPSCMHidden:
     def _simulate_intervention(self, n: int, rng: np.random.Generator,
                                intervene_idx: int, intervene_val: float) -> np.ndarray:
         N = self.p + 1 + self.n_hidden
-        eps = _laplace_unit((n, N), rng)
+        eps = _sample_noise((n, N), rng, self.noise)
         Z = np.zeros((n, N), dtype=np.float64)
         for node in self._topo_order.tolist():
             node = int(node)
             if node == intervene_idx:
                 Z[:, node] = intervene_val
+            else:
+                Z[:, node] = np.clip(self._structural(node, Z) + eps[:, node], -15.0, 15.0)
+        return Z
+
+    def simulate_do(self, n: int, rng: np.random.Generator, clamp: dict) -> np.ndarray:
+        """do() on a SET of nodes; mirrors _simulate_intervention for coalitions."""
+        N = self.p + 1 + self.n_hidden
+        eps = _sample_noise((n, N), rng, self.noise)
+        Z = np.zeros((n, N), dtype=np.float64)
+        for node in self._topo_order.tolist():
+            node = int(node)
+            if node in clamp:
+                Z[:, node] = clamp[node]
             else:
                 Z[:, node] = np.clip(self._structural(node, Z) + eps[:, node], -15.0, 15.0)
         return Z

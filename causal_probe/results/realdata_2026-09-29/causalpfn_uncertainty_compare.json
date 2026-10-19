@@ -1,0 +1,100 @@
+{
+  "results": {
+    "linear:laplace": {
+      "regime": "linear:laplace",
+      "n_scms": 100,
+      "fado_bootstrap_sigma": {
+        "n_pairs": 500,
+        "spearman_sigma_err": 0.8738493513974055,
+        "pearson_sigma_err": 0.7479526207311571,
+        "mean_abs_err": 0.13247808648809675,
+        "mean_sigma": 0.09566977043644388,
+        "err_low_uncert_half": 0.004496748700821765,
+        "err_high_uncert_half": 0.2604594242753717,
+        "selective_gain": 0.25596267557454994,
+        "n_scms_failed": 0
+      },
+      "causalpfn_native": {
+        "n_pairs": 500,
+        "spearman_sigma_err": -0.10443084972339889,
+        "pearson_sigma_err": -0.17648253023605556,
+        "mean_abs_err": 0.40253107677230515,
+        "mean_sigma": 0.055551751637817316,
+        "err_low_uncert_half": 0.4525366971629372,
+        "err_high_uncert_half": 0.35252545638167304,
+        "selective_gain": -0.10001124078126417,
+        "n_scms_failed": 0
+      }
+    },
+    "hidden:laplace": {
+      "regime": "hidden:laplace",
+      "n_scms": 100,
+      "fado_bootstrap_sigma": {
+        "n_pairs": 500,
+        "spearman_sigma_err": 0.8931701966807867,
+        "pearson_sigma_err": 0.5527240064889821,
+        "mean_abs_err": 0.24723713266024303,
+        "mean_sigma": 0.13454542307440864,
+        "err_low_uncert_half": 0.02322735110344496,
+        "err_high_uncert_half": 0.471246914217041,
+        "selective_gain": 0.44801956311359603,
+        "n_scms_failed": 0
+      },
+      "causalpfn_native": {
+        "n_pairs": 500,
+        "spearman_sigma_err": 0.003476653906615626,
+        "pearson_sigma_err": -0.09133225630932351,
+        "mean_abs_err": 0.48981117944060243,
+        "mean_sigma": 0.05267307891237137,
+        "err_low_uncert_half": 0.5170240218755617,
+        "err_high_uncert_half": 0.46259833700564307,
+        "selective_gain": -0.05442568486991867,
+        "n_scms_failed": 0
+      }
+    },
+    "mlp:laplace": {
+      "regime": "mlp:laplace",
+      "n_scms": 100,
+      "fado_bootstrap_sigma": {
+        "n_pairs": 500,
+        "spearman_sigma_err": 0.7162662570650282,
+        "pearson_sigma_err": 0.7152073559670472,
+        "mean_abs_err": 0.24019389091958698,
+        "mean_sigma": 0.0898484718866161,
+        "err_low_uncert_half": 0.03474595939844161,
+        "err_high_uncert_half": 0.4456418224407323,
+        "selective_gain": 0.4108958630422907,
+        "n_scms_failed": 0
+      },
+      "causalpfn_native": {
+        "n_pairs": 500,
+        "spearman_sigma_err": -0.09066842667370668,
+        "pearson_sigma_err": -0.19904362965009495,
+        "mean_abs_err": 0.32972572504774506,
+        "mean_sigma": 0.06193587551052586,
+        "err_low_uncert_half": 0.3897112674729243,
+        "err_high_uncert_half": 0.2697401826225659,
+        "selective_gain": -0.1199710848503584,
+        "n_scms_failed": 0
+      }
+    }
+  },
+  "config": {
+    "ckpt": "causal_probe/results/probe_foundation_intersample_L_p3_15_intersample_L_seed0.ckpt",
+    "device": "cuda",
+    "seed": 100,
+    "n_scms": 100,
+    "n_rows": 512,
+    "n_boot": 200,
+    "n_posterior_samples": 1000,
+    "p": 5,
+    "regimes": [
+      "linear:laplace",
+      "hidden:laplace",
+      "mlp:laplace"
+    ],
+    "fado_uncertainty": "row-bootstrap std of a single checkpoint (bootstrap_uncertainty.py)",
+    "causalpfn_uncertainty": "ATE 95% posterior-CI half-width / 1.96, rescaled 2*std_X/(gap*std_y); from CATEEstimator._estimate_ate_cate_CI",
+    "caveat": "Per-column median-cut protocol is OUT OF DISTRIBUTION for CausalPFN (its prior generates the treatment via a propensity model conditional on covariates; a median-cut is deterministic, non-confounded, and violates conditioning). This compares uncertainty-tracking UNDER OUR EVAL SETUP, not on CausalPFN's home turf (IHDP/ACIC/Lalonde designated-treatment CATE). Defensive comparison for the uncertainty section only."
+  }
+}

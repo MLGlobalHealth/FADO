@@ -17,24 +17,90 @@ from causal_probe.baselines import BASELINES
 from causal_probe.eval import _load_model
 
 
+# Direct mirrors for the full Criteo uplift v2.1 release (~297 MB gz,
+# 13,979,592 rows). The canonical http://go.criteo.net/criteo-research-uplift-v2.1.csv.gz
+# and sklift's criteo10 S3 bucket both 404 (observed 2026-09-29).
+_CRITEO_V21_URLS = [
+    "https://criteostorage.blob.core.windows.net/criteo-research-datasets/criteo-uplift-v2.1.csv.gz",
+    "https://huggingface.co/datasets/criteo/criteo-uplift/resolve/main/criteo-research-uplift-v2.1.csv.gz",
+]
+
+
+def _fetch_criteo10_fallback(outcome: str, data_home: str):
+    """Fallback when sklift's fetch_criteo() download 404s.
+
+    Downloads the full v2.1 csv.gz from a Criteo-operated mirror, then takes
+    a deterministic (seed-0 Bernoulli) 10% row subsample so memory stays in
+    line with sklift's percent10=True (~1.4M rows). Column schema is identical
+    to sklift's criteo10 (f0..f11, treatment, conversion, visit, exposure),
+    but the sampled rows are our own seeded draw, not sklift's hosted subset.
+    The subsample is cached under data_home so the 300 MB download and the
+    full-file scan happen once.
+    """
+    import os
+    import urllib.request
+
+    import pandas as pd
+
+    sub_path = os.path.join(data_home, "criteo10_v2.1_seed0.csv.gz")
+    if not os.path.exists(sub_path):
+        full_path = os.path.join(data_home, "criteo-research-uplift-v2.1.csv.gz")
+        if not os.path.exists(full_path):
+            last_err = None
+            for url in _CRITEO_V21_URLS:
+                try:
+                    print(f"downloading Criteo uplift v2.1 from {url} ...", flush=True)
+                    urllib.request.urlretrieve(url, full_path + ".part")
+                    os.replace(full_path + ".part", full_path)
+                    last_err = None
+                    break
+                except Exception as e:  # noqa: BLE001 — try next mirror
+                    last_err = e
+                    print(f"  mirror failed: {type(e).__name__}: {e}", flush=True)
+            if last_err is not None:
+                raise RuntimeError(
+                    "all Criteo v2.1 mirrors failed"
+                ) from last_err
+        rng10 = np.random.default_rng(0)
+        parts = []
+        for chunk in pd.read_csv(full_path, chunksize=1_000_000):
+            parts.append(chunk.loc[rng10.random(len(chunk)) < 0.1])
+        df10 = pd.concat(parts, ignore_index=True)
+        df10.to_csv(sub_path + ".part", index=False, compression="gzip")
+        os.replace(sub_path + ".part", sub_path)
+    else:
+        df10 = pd.read_csv(sub_path)
+    feat_cols = [c for c in df10.columns if c.startswith("f") and c[1:].isdigit()]
+    return df10[feat_cols], df10[outcome], df10["treatment"]
+
+
 def _load_criteo_subsample(n: int, seed: int, outcome: str):
     """Use scikit-uplift's fetch_criteo(). We subsample to n rows.
 
-    Override the cache location with SKLIFT_HOME if the default is not writable;
-    uses percent10=True (~1M rows) to keep the download tractable.
+    Redirects the cache to scratch to avoid home-directory quota limits,
+    and uses percent10=True (~1M rows) to keep the download tractable.
+    If sklift's hosted criteo10 file is unavailable (its S3 bucket 404s),
+    falls back to a direct download of the full v2.1 release plus a seeded
+    10% subsample — see _fetch_criteo10_fallback.
     """
     import os
-    from sklift.datasets import fetch_criteo
-    data_home = os.environ.get("SKLIFT_HOME", os.path.expanduser("~/.cache/sklift"))
+    data_home = os.environ.get("SKLIFT_HOME", os.path.expanduser("~/.sklift_cache"))
     os.makedirs(data_home, exist_ok=True)
-    bunch = fetch_criteo(target_col=outcome, data_home=data_home, percent10=True)
-    X_all = bunch.data.values.astype(np.float64)
-    y_all = bunch.target.values.astype(np.float64)
-    T_all = bunch.treatment.values.astype(np.float64)
+    try:
+        from sklift.datasets import fetch_criteo
+        bunch = fetch_criteo(target_col=outcome, data_home=data_home, percent10=True)
+        data, target, treatment = bunch.data, bunch.target, bunch.treatment
+    except Exception as e:  # noqa: BLE001 — sklift criteo10 bucket is gone
+        print(f"sklift fetch_criteo failed ({type(e).__name__}: {e}); "
+              f"falling back to direct v2.1 download", flush=True)
+        data, target, treatment = _fetch_criteo10_fallback(outcome, data_home)
+    X_all = data.values.astype(np.float64)
+    y_all = target.values.astype(np.float64)
+    T_all = treatment.values.astype(np.float64)
     rng = np.random.default_rng(seed)
     n_use = min(n, len(y_all))
     idx = rng.choice(len(y_all), size=n_use, replace=False)
-    names = list(bunch.data.columns)
+    names = list(data.columns)
     return X_all[idx], y_all[idx], T_all[idx], names
 
 

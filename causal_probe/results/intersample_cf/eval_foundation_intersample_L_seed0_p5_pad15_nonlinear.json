@@ -1,0 +1,105 @@
+{
+  "random": {
+    "n_scms": 200,
+    "p": 5,
+    "n_rows": 512,
+    "noise": "heavy",
+    "scm_type": "nonlinear",
+    "pearson": {
+      "model": 0.972279523904796,
+      "marginal": 0.6045684201183394,
+      "multivariate": 0.48304131283233526
+    },
+    "spearman": {
+      "model": 0.5767588687588688,
+      "marginal": 0.4227370227370228,
+      "multivariate": 0.33901464301464307
+    },
+    "mse": {
+      "model": 0.016362025067639032,
+      "marginal": 0.4283029053373325,
+      "multivariate": 0.4520418154354804,
+      "zero": 0.29803773289217167
+    },
+    "r2": {
+      "model": 0.9450971274400546,
+      "marginal": -0.437172949655128,
+      "multivariate": -0.516829003868635
+    },
+    "sign_acc_signal": {
+      "model": 0.9960159362549801,
+      "marginal": 0.952191235059761
+    },
+    "auroc_nonzero": {
+      "model": 0.9908297384560556,
+      "marginal": 0.7528869834414013,
+      "multivariate": 0.6472162085968542
+    },
+    "mae_zero_features": {
+      "model": 0.040264521638137686,
+      "marginal": 0.5177677102720474
+    },
+    "signal_frac": 0.251,
+    "p_pad": 15,
+    "padded_features": {
+      "n_padded": 10,
+      "mae": 0.0020722041372209787,
+      "rmse": 0.003138900501653552,
+      "max_abs": 0.035466212779283524,
+      "frac_within_0_05": 1.0,
+      "frac_within_0_1": 1.0
+    }
+  },
+  "motifs": {
+    "A_direct_cause": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "B_proxy": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "C_observed_confounder": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "D_mediator": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "E_target_descendant": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "F_collider_leakage": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "G_chained_mediators_k3": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "H_chained_mediators_k5": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "I_latent_clique_2x2": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    },
+    "J_latent_clique_3x3": {
+      "n_repeats": 0,
+      "rows": [],
+      "skipped": "n_repeats=0"
+    }
+  }
+}

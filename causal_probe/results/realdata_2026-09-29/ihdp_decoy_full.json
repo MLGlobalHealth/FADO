@@ -1,0 +1,1736 @@
+{
+  "no_confounding": [
+    {
+      "source": "ihdp",
+      "family": "linear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": false,
+      "fado_pearson": 0.448,
+      "fado_ci": [
+        0.365,
+        0.524
+      ],
+      "marginal_pearson": 0.606,
+      "marginal_ci": [
+        0.586,
+        0.624
+      ],
+      "multivariate_pearson": 0.696,
+      "multivariate_ci": [
+        0.672,
+        0.715
+      ],
+      "fado_fp_proxy": 0.457,
+      "fado_fp_proxy_ci": [
+        0.36,
+        0.555
+      ],
+      "fado_fp_leak": 0.7899,
+      "fado_fp_leak_ci": [
+        0.646,
+        0.932
+      ],
+      "fado_fp_noise": 0.0126,
+      "fado_fp_noise_ci": [
+        0.009,
+        0.017
+      ],
+      "marginal_fp_proxy": 0.8693,
+      "marginal_fp_proxy_ci": [
+        0.774,
+        0.961
+      ],
+      "marginal_fp_leak": 1.935,
+      "marginal_fp_leak_ci": [
+        1.9,
+        1.961
+      ],
+      "marginal_fp_noise": 0.0588,
+      "marginal_fp_noise_ci": [
+        0.052,
+        0.065
+      ],
+      "multivariate_fp_proxy": 0.0372,
+      "multivariate_fp_proxy_ci": [
+        0.028,
+        0.051
+      ],
+      "multivariate_fp_leak": 1.0347,
+      "multivariate_fp_leak_ci": [
+        1.013,
+        1.061
+      ],
+      "multivariate_fp_noise": 0.0091,
+      "multivariate_fp_noise_ci": [
+        0.007,
+        0.012
+      ],
+      "shap_n_scms": 40,
+      "shap_pearson": 0.255,
+      "shap_ci": [
+        0.173,
+        0.344
+      ],
+      "shap_fp_proxy": 0.0383,
+      "shap_fp_proxy_ci": [
+        0.03,
+        0.048
+      ],
+      "shap_fp_leak": 0.5982,
+      "shap_fp_leak_ci": [
+        0.544,
+        0.652
+      ],
+      "shap_fp_noise": 0.0159,
+      "shap_fp_noise_ci": [
+        0.013,
+        0.02
+      ],
+      "permutation_n_scms": 40,
+      "permutation_pearson": 0.128,
+      "permutation_ci": [
+        0.062,
+        0.203
+      ],
+      "permutation_fp_proxy": 0.0271,
+      "permutation_fp_proxy_ci": [
+        0.008,
+        0.06
+      ],
+      "permutation_fp_leak": 1.1678,
+      "permutation_fp_leak_ci": [
+        1.014,
+        1.322
+      ],
+      "permutation_fp_noise": 0.0015,
+      "permutation_fp_noise_ci": [
+        0.001,
+        0.003
+      ],
+      "lingam_n_scms": 40,
+      "lingam_pearson": 0.895,
+      "lingam_ci": [
+        0.872,
+        0.919
+      ],
+      "lingam_fp_proxy": 0.014,
+      "lingam_fp_proxy_ci": [
+        0.0,
+        0.04
+      ],
+      "lingam_fp_leak": 0.5109,
+      "lingam_fp_leak_ci": [
+        0.354,
+        0.667
+      ],
+      "lingam_fp_noise": 0.0004,
+      "lingam_fp_noise_ci": [
+        0.0,
+        0.001
+      ],
+      "doubleml_n_scms": 40,
+      "doubleml_pearson": 0.022,
+      "doubleml_ci": [
+        -0.15,
+        0.145
+      ],
+      "doubleml_fp_proxy": 0.0827,
+      "doubleml_fp_proxy_ci": [
+        0.06,
+        0.109
+      ],
+      "doubleml_fp_leak": 1.4024,
+      "doubleml_fp_leak_ci": [
+        1.334,
+        1.472
+      ],
+      "doubleml_fp_noise": 0.014,
+      "doubleml_fp_noise_ci": [
+        0.011,
+        0.017
+      ],
+      "causal_forest_n_scms": 40,
+      "causal_forest_pearson": 0.278,
+      "causal_forest_ci": [
+        0.104,
+        0.427
+      ],
+      "causal_forest_fp_proxy": 0.0481,
+      "causal_forest_fp_proxy_ci": [
+        0.036,
+        0.063
+      ],
+      "causal_forest_fp_leak": 1.0375,
+      "causal_forest_fp_leak_ci": [
+        1.015,
+        1.063
+      ],
+      "causal_forest_fp_noise": 0.0121,
+      "causal_forest_fp_noise_ci": [
+        0.009,
+        0.016
+      ],
+      "causalpfn_n_scms": 40,
+      "causalpfn_pearson": 0.667,
+      "causalpfn_ci": [
+        0.618,
+        0.71
+      ],
+      "causalpfn_fp_proxy": 0.1258,
+      "causalpfn_fp_proxy_ci": [
+        0.102,
+        0.15
+      ],
+      "causalpfn_fp_leak": 0.7578,
+      "causalpfn_fp_leak_ci": [
+        0.678,
+        0.842
+      ],
+      "causalpfn_fp_noise": 0.0158,
+      "causalpfn_fp_noise_ci": [
+        0.012,
+        0.02
+      ],
+      "dopfn_n_scms": 39,
+      "dopfn_errors": {
+        "0": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+      },
+      "dopfn_pearson": NaN,
+      "dopfn_ci": [
+        NaN,
+        NaN
+      ],
+      "do_shapley_n_scms": 10,
+      "do_shapley_pearson": 1.0,
+      "do_shapley_ci": [
+        1.0,
+        1.0
+      ],
+      "do_shapley_fp_proxy": 0.0,
+      "do_shapley_fp_proxy_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_leak": 0.0,
+      "do_shapley_fp_leak_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_noise": 0.0,
+      "do_shapley_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "causal_shapley_n_scms": 10,
+      "causal_shapley_pearson": 0.835,
+      "causal_shapley_ci": [
+        0.828,
+        0.84
+      ],
+      "causal_shapley_fp_proxy": 0.008,
+      "causal_shapley_fp_proxy_ci": [
+        0.006,
+        0.011
+      ],
+      "causal_shapley_fp_leak": 1.0131,
+      "causal_shapley_fp_leak_ci": [
+        1.001,
+        1.026
+      ],
+      "causal_shapley_fp_noise": 0.0026,
+      "causal_shapley_fp_noise_ci": [
+        0.002,
+        0.003
+      ]
+    },
+    {
+      "source": "ihdp",
+      "family": "mixed_nonlinear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": false,
+      "fado_pearson": 0.356,
+      "fado_ci": [
+        0.265,
+        0.437
+      ],
+      "marginal_pearson": 0.376,
+      "marginal_ci": [
+        0.303,
+        0.436
+      ],
+      "multivariate_pearson": 0.263,
+      "multivariate_ci": [
+        0.187,
+        0.343
+      ],
+      "fado_fp_proxy": 0.3291,
+      "fado_fp_proxy_ci": [
+        0.252,
+        0.419
+      ],
+      "fado_fp_leak": 1.0155,
+      "fado_fp_leak_ci": [
+        0.868,
+        1.165
+      ],
+      "fado_fp_noise": 0.0174,
+      "fado_fp_noise_ci": [
+        0.012,
+        0.024
+      ],
+      "marginal_fp_proxy": 0.9663,
+      "marginal_fp_proxy_ci": [
+        0.871,
+        1.056
+      ],
+      "marginal_fp_leak": 1.9643,
+      "marginal_fp_leak_ci": [
+        1.951,
+        1.975
+      ],
+      "marginal_fp_noise": 0.0644,
+      "marginal_fp_noise_ci": [
+        0.056,
+        0.072
+      ],
+      "multivariate_fp_proxy": 0.0304,
+      "multivariate_fp_proxy_ci": [
+        0.024,
+        0.038
+      ],
+      "multivariate_fp_leak": 1.3109,
+      "multivariate_fp_leak_ci": [
+        1.201,
+        1.426
+      ],
+      "multivariate_fp_noise": 0.0086,
+      "multivariate_fp_noise_ci": [
+        0.007,
+        0.01
+      ],
+      "shap_n_scms": 40,
+      "shap_pearson": 0.167,
+      "shap_ci": [
+        0.093,
+        0.26
+      ],
+      "shap_fp_proxy": 0.0427,
+      "shap_fp_proxy_ci": [
+        0.025,
+        0.068
+      ],
+      "shap_fp_leak": 0.5481,
+      "shap_fp_leak_ci": [
+        0.476,
+        0.618
+      ],
+      "shap_fp_noise": 0.0121,
+      "shap_fp_noise_ci": [
+        0.01,
+        0.014
+      ],
+      "permutation_n_scms": 40,
+      "permutation_pearson": 0.112,
+      "permutation_ci": [
+        0.042,
+        0.195
+      ],
+      "permutation_fp_proxy": 0.0081,
+      "permutation_fp_proxy_ci": [
+        0.004,
+        0.014
+      ],
+      "permutation_fp_leak": 1.1182,
+      "permutation_fp_leak_ci": [
+        0.944,
+        1.303
+      ],
+      "permutation_fp_noise": 0.0012,
+      "permutation_fp_noise_ci": [
+        0.001,
+        0.002
+      ],
+      "lingam_n_scms": 40,
+      "lingam_pearson": 0.472,
+      "lingam_ci": [
+        0.346,
+        0.586
+      ],
+      "lingam_fp_proxy": 0.0008,
+      "lingam_fp_proxy_ci": [
+        0.0,
+        0.002
+      ],
+      "lingam_fp_leak": 0.2269,
+      "lingam_fp_leak_ci": [
+        0.099,
+        0.377
+      ],
+      "lingam_fp_noise": 0.0008,
+      "lingam_fp_noise_ci": [
+        0.0,
+        0.002
+      ],
+      "doubleml_n_scms": 40,
+      "doubleml_pearson": 0.134,
+      "doubleml_ci": [
+        -0.136,
+        0.344
+      ],
+      "doubleml_fp_proxy": 0.1288,
+      "doubleml_fp_proxy_ci": [
+        0.093,
+        0.172
+      ],
+      "doubleml_fp_leak": 1.4935,
+      "doubleml_fp_leak_ci": [
+        1.404,
+        1.582
+      ],
+      "doubleml_fp_noise": 0.017,
+      "doubleml_fp_noise_ci": [
+        0.014,
+        0.021
+      ],
+      "causal_forest_n_scms": 40,
+      "causal_forest_pearson": 0.284,
+      "causal_forest_ci": [
+        0.055,
+        0.46
+      ],
+      "causal_forest_fp_proxy": 0.037,
+      "causal_forest_fp_proxy_ci": [
+        0.027,
+        0.048
+      ],
+      "causal_forest_fp_leak": 1.1302,
+      "causal_forest_fp_leak_ci": [
+        1.066,
+        1.202
+      ],
+      "causal_forest_fp_noise": 0.0109,
+      "causal_forest_fp_noise_ci": [
+        0.009,
+        0.013
+      ],
+      "causalpfn_n_scms": 40,
+      "causalpfn_pearson": 0.364,
+      "causalpfn_ci": [
+        0.251,
+        0.469
+      ],
+      "causalpfn_fp_proxy": 0.16,
+      "causalpfn_fp_proxy_ci": [
+        0.137,
+        0.184
+      ],
+      "causalpfn_fp_leak": 0.8118,
+      "causalpfn_fp_leak_ci": [
+        0.761,
+        0.862
+      ],
+      "causalpfn_fp_noise": 0.0131,
+      "causalpfn_fp_noise_ci": [
+        0.01,
+        0.016
+      ],
+      "dopfn_n_scms": 40,
+      "dopfn_pearson": NaN,
+      "dopfn_ci": [
+        NaN,
+        NaN
+      ],
+      "do_shapley_n_scms": 10,
+      "do_shapley_pearson": 1.0,
+      "do_shapley_ci": [
+        1.0,
+        1.0
+      ],
+      "do_shapley_fp_proxy": 0.0,
+      "do_shapley_fp_proxy_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_leak": 0.0,
+      "do_shapley_fp_leak_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_noise": 0.0,
+      "do_shapley_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "causal_shapley_n_scms": 10,
+      "causal_shapley_pearson": 0.577,
+      "causal_shapley_ci": [
+        0.434,
+        0.7
+      ],
+      "causal_shapley_fp_proxy": 0.0084,
+      "causal_shapley_fp_proxy_ci": [
+        0.006,
+        0.011
+      ],
+      "causal_shapley_fp_leak": 1.2546,
+      "causal_shapley_fp_leak_ci": [
+        1.07,
+        1.464
+      ],
+      "causal_shapley_fp_noise": 0.0024,
+      "causal_shapley_fp_noise_ci": [
+        0.001,
+        0.003
+      ]
+    },
+    {
+      "source": "ihdp",
+      "family": "interaction",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": false,
+      "fado_pearson": 0.342,
+      "fado_ci": [
+        0.257,
+        0.423
+      ],
+      "marginal_pearson": 0.541,
+      "marginal_ci": [
+        0.51,
+        0.566
+      ],
+      "multivariate_pearson": 0.306,
+      "multivariate_ci": [
+        0.229,
+        0.383
+      ],
+      "fado_fp_proxy": 0.2719,
+      "fado_fp_proxy_ci": [
+        0.2,
+        0.347
+      ],
+      "fado_fp_leak": 0.8269,
+      "fado_fp_leak_ci": [
+        0.676,
+        0.98
+      ],
+      "fado_fp_noise": 0.0085,
+      "fado_fp_noise_ci": [
+        0.006,
+        0.012
+      ],
+      "marginal_fp_proxy": 0.7111,
+      "marginal_fp_proxy_ci": [
+        0.611,
+        0.808
+      ],
+      "marginal_fp_leak": 1.9206,
+      "marginal_fp_leak_ci": [
+        1.889,
+        1.943
+      ],
+      "marginal_fp_noise": 0.0558,
+      "marginal_fp_noise_ci": [
+        0.049,
+        0.063
+      ],
+      "multivariate_fp_proxy": 0.0453,
+      "multivariate_fp_proxy_ci": [
+        0.034,
+        0.059
+      ],
+      "multivariate_fp_leak": 1.5399,
+      "multivariate_fp_leak_ci": [
+        1.43,
+        1.653
+      ],
+      "multivariate_fp_noise": 0.0132,
+      "multivariate_fp_noise_ci": [
+        0.01,
+        0.017
+      ],
+      "shap_n_scms": 40,
+      "shap_pearson": 0.162,
+      "shap_ci": [
+        0.101,
+        0.234
+      ],
+      "shap_fp_proxy": 0.0478,
+      "shap_fp_proxy_ci": [
+        0.038,
+        0.059
+      ],
+      "shap_fp_leak": 0.5946,
+      "shap_fp_leak_ci": [
+        0.541,
+        0.645
+      ],
+      "shap_fp_noise": 0.0183,
+      "shap_fp_noise_ci": [
+        0.015,
+        0.022
+      ],
+      "permutation_n_scms": 40,
+      "permutation_pearson": 0.078,
+      "permutation_ci": [
+        0.028,
+        0.142
+      ],
+      "permutation_fp_proxy": 0.0226,
+      "permutation_fp_proxy_ci": [
+        0.014,
+        0.033
+      ],
+      "permutation_fp_leak": 1.3572,
+      "permutation_fp_leak_ci": [
+        1.218,
+        1.49
+      ],
+      "permutation_fp_noise": 0.002,
+      "permutation_fp_noise_ci": [
+        0.001,
+        0.003
+      ],
+      "lingam_n_scms": 40,
+      "lingam_pearson": 0.793,
+      "lingam_ci": [
+        0.716,
+        0.861
+      ],
+      "lingam_fp_proxy": 0.0176,
+      "lingam_fp_proxy_ci": [
+        0.003,
+        0.035
+      ],
+      "lingam_fp_leak": 0.291,
+      "lingam_fp_leak_ci": [
+        0.126,
+        0.475
+      ],
+      "lingam_fp_noise": 0.0001,
+      "lingam_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "doubleml_n_scms": 40,
+      "doubleml_pearson": 0.019,
+      "doubleml_ci": [
+        -0.142,
+        0.166
+      ],
+      "doubleml_fp_proxy": 0.111,
+      "doubleml_fp_proxy_ci": [
+        0.082,
+        0.146
+      ],
+      "doubleml_fp_leak": 1.5094,
+      "doubleml_fp_leak_ci": [
+        1.419,
+        1.594
+      ],
+      "doubleml_fp_noise": 0.0238,
+      "doubleml_fp_noise_ci": [
+        0.019,
+        0.029
+      ],
+      "causal_forest_n_scms": 40,
+      "causal_forest_pearson": 0.114,
+      "causal_forest_ci": [
+        0.028,
+        0.2
+      ],
+      "causal_forest_fp_proxy": 0.0597,
+      "causal_forest_fp_proxy_ci": [
+        0.045,
+        0.076
+      ],
+      "causal_forest_fp_leak": 1.2222,
+      "causal_forest_fp_leak_ci": [
+        1.148,
+        1.305
+      ],
+      "causal_forest_fp_noise": 0.0175,
+      "causal_forest_fp_noise_ci": [
+        0.013,
+        0.023
+      ],
+      "causalpfn_n_scms": 40,
+      "causalpfn_pearson": 0.51,
+      "causalpfn_ci": [
+        0.429,
+        0.583
+      ],
+      "causalpfn_fp_proxy": 0.1169,
+      "causalpfn_fp_proxy_ci": [
+        0.095,
+        0.141
+      ],
+      "causalpfn_fp_leak": 0.9931,
+      "causalpfn_fp_leak_ci": [
+        0.908,
+        1.082
+      ],
+      "causalpfn_fp_noise": 0.0195,
+      "causalpfn_fp_noise_ci": [
+        0.015,
+        0.025
+      ],
+      "dopfn_n_scms": 40,
+      "dopfn_pearson": NaN,
+      "dopfn_ci": [
+        NaN,
+        NaN
+      ],
+      "do_shapley_n_scms": 10,
+      "do_shapley_pearson": 0.999,
+      "do_shapley_ci": [
+        0.999,
+        1.0
+      ],
+      "do_shapley_fp_proxy": 0.0,
+      "do_shapley_fp_proxy_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_leak": 0.0,
+      "do_shapley_fp_leak_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_noise": 0.0,
+      "do_shapley_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "causal_shapley_n_scms": 10,
+      "causal_shapley_pearson": 0.571,
+      "causal_shapley_ci": [
+        0.436,
+        0.689
+      ],
+      "causal_shapley_fp_proxy": 0.0074,
+      "causal_shapley_fp_proxy_ci": [
+        0.004,
+        0.01
+      ],
+      "causal_shapley_fp_leak": 1.5524,
+      "causal_shapley_fp_leak_ci": [
+        1.322,
+        1.784
+      ],
+      "causal_shapley_fp_noise": 0.0035,
+      "causal_shapley_fp_noise_ci": [
+        0.002,
+        0.005
+      ]
+    },
+    {
+      "SUMMARY": true,
+      "source": "ihdp",
+      "hidden_confound": false,
+      "n_scms": 40,
+      "n_families": 3,
+      "n_boot": 2000,
+      "mean_pearson": {
+        "fado": 0.382,
+        "marginal": 0.508,
+        "multivariate": 0.422
+      },
+      "mean_ci": {
+        "fado": [
+          0.333,
+          0.429
+        ],
+        "marginal": [
+          0.484,
+          0.532
+        ],
+        "multivariate": [
+          0.385,
+          0.459
+        ]
+      },
+      "fado_minus_marginal": {
+        "point": -0.126,
+        "ci": [
+          -0.175,
+          -0.079
+        ],
+        "excludes_0": false
+      },
+      "replication_all_pass": null,
+      "comparator_mean_pearson": {
+        "shap": 0.195,
+        "permutation": 0.106,
+        "lingam": 0.72,
+        "doubleml": 0.058,
+        "causal_forest": 0.225,
+        "causalpfn": 0.514,
+        "dopfn": NaN,
+        "do_shapley": 1.0,
+        "causal_shapley": 0.661
+      },
+      "n_scms_oracle": 10
+    }
+  ],
+  "hidden_confounder": [
+    {
+      "source": "ihdp",
+      "family": "linear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": true,
+      "fado_pearson": 0.453,
+      "fado_ci": [
+        0.37,
+        0.527
+      ],
+      "marginal_pearson": 0.515,
+      "marginal_ci": [
+        0.485,
+        0.54
+      ],
+      "multivariate_pearson": 0.399,
+      "multivariate_ci": [
+        0.374,
+        0.42
+      ],
+      "fado_fp_proxy": 0.3699,
+      "fado_fp_proxy_ci": [
+        0.288,
+        0.458
+      ],
+      "fado_fp_leak": 0.7527,
+      "fado_fp_leak_ci": [
+        0.628,
+        0.878
+      ],
+      "fado_fp_noise": 0.0104,
+      "fado_fp_noise_ci": [
+        0.008,
+        0.014
+      ],
+      "fado_fp_conf": 0.6804,
+      "fado_fp_conf_ci": [
+        0.547,
+        0.814
+      ],
+      "marginal_fp_proxy": 0.7622,
+      "marginal_fp_proxy_ci": [
+        0.675,
+        0.843
+      ],
+      "marginal_fp_leak": 1.9695,
+      "marginal_fp_leak_ci": [
+        1.964,
+        1.974
+      ],
+      "marginal_fp_noise": 0.0585,
+      "marginal_fp_noise_ci": [
+        0.052,
+        0.065
+      ],
+      "marginal_fp_conf": 0.9992,
+      "marginal_fp_conf_ci": [
+        0.898,
+        1.114
+      ],
+      "multivariate_fp_proxy": 0.023,
+      "multivariate_fp_proxy_ci": [
+        0.019,
+        0.028
+      ],
+      "multivariate_fp_leak": 1.3309,
+      "multivariate_fp_leak_ci": [
+        1.321,
+        1.341
+      ],
+      "multivariate_fp_noise": 0.008,
+      "multivariate_fp_noise_ci": [
+        0.007,
+        0.01
+      ],
+      "multivariate_fp_conf": 0.3632,
+      "multivariate_fp_conf_ci": [
+        0.334,
+        0.395
+      ],
+      "shap_n_scms": 40,
+      "shap_pearson": 0.062,
+      "shap_ci": [
+        0.034,
+        0.095
+      ],
+      "shap_fp_proxy": 0.023,
+      "shap_fp_proxy_ci": [
+        0.02,
+        0.026
+      ],
+      "shap_fp_leak": 0.7055,
+      "shap_fp_leak_ci": [
+        0.671,
+        0.735
+      ],
+      "shap_fp_noise": 0.0109,
+      "shap_fp_noise_ci": [
+        0.01,
+        0.012
+      ],
+      "shap_fp_conf": 0.0534,
+      "shap_fp_conf_ci": [
+        0.034,
+        0.082
+      ],
+      "permutation_n_scms": 40,
+      "permutation_pearson": 0.022,
+      "permutation_ci": [
+        -0.004,
+        0.055
+      ],
+      "permutation_fp_proxy": 0.0047,
+      "permutation_fp_proxy_ci": [
+        0.003,
+        0.008
+      ],
+      "permutation_fp_leak": 1.5534,
+      "permutation_fp_leak_ci": [
+        1.438,
+        1.642
+      ],
+      "permutation_fp_noise": 0.0006,
+      "permutation_fp_noise_ci": [
+        0.0,
+        0.001
+      ],
+      "permutation_fp_conf": 0.0342,
+      "permutation_fp_conf_ci": [
+        0.009,
+        0.074
+      ],
+      "lingam_n_scms": 40,
+      "lingam_pearson": 0.725,
+      "lingam_ci": [
+        0.675,
+        0.771
+      ],
+      "lingam_fp_proxy": 0.0284,
+      "lingam_fp_proxy_ci": [
+        0.005,
+        0.068
+      ],
+      "lingam_fp_leak": 0.6124,
+      "lingam_fp_leak_ci": [
+        0.398,
+        0.815
+      ],
+      "lingam_fp_noise": 0.0003,
+      "lingam_fp_noise_ci": [
+        0.0,
+        0.001
+      ],
+      "lingam_fp_conf": 0.7718,
+      "lingam_fp_conf_ci": [
+        0.631,
+        0.921
+      ],
+      "doubleml_n_scms": 40,
+      "doubleml_pearson": 0.012,
+      "doubleml_ci": [
+        -0.136,
+        0.127
+      ],
+      "doubleml_fp_proxy": 0.0569,
+      "doubleml_fp_proxy_ci": [
+        0.044,
+        0.073
+      ],
+      "doubleml_fp_leak": 1.5812,
+      "doubleml_fp_leak_ci": [
+        1.511,
+        1.643
+      ],
+      "doubleml_fp_noise": 0.0153,
+      "doubleml_fp_noise_ci": [
+        0.013,
+        0.018
+      ],
+      "doubleml_fp_conf": 0.1679,
+      "doubleml_fp_conf_ci": [
+        0.135,
+        0.205
+      ],
+      "causal_forest_n_scms": 40,
+      "causal_forest_pearson": 0.204,
+      "causal_forest_ci": [
+        0.163,
+        0.274
+      ],
+      "causal_forest_fp_proxy": 0.0291,
+      "causal_forest_fp_proxy_ci": [
+        0.024,
+        0.034
+      ],
+      "causal_forest_fp_leak": 1.1691,
+      "causal_forest_fp_leak_ci": [
+        1.116,
+        1.218
+      ],
+      "causal_forest_fp_noise": 0.0097,
+      "causal_forest_fp_noise_ci": [
+        0.008,
+        0.011
+      ],
+      "causal_forest_fp_conf": 0.2525,
+      "causal_forest_fp_conf_ci": [
+        0.21,
+        0.293
+      ],
+      "causalpfn_n_scms": 40,
+      "causalpfn_pearson": 0.573,
+      "causalpfn_ci": [
+        0.514,
+        0.627
+      ],
+      "causalpfn_fp_proxy": 0.0881,
+      "causalpfn_fp_proxy_ci": [
+        0.071,
+        0.106
+      ],
+      "causalpfn_fp_leak": 0.7386,
+      "causalpfn_fp_leak_ci": [
+        0.672,
+        0.808
+      ],
+      "causalpfn_fp_noise": 0.013,
+      "causalpfn_fp_noise_ci": [
+        0.011,
+        0.015
+      ],
+      "causalpfn_fp_conf": 0.2159,
+      "causalpfn_fp_conf_ci": [
+        0.182,
+        0.251
+      ],
+      "dopfn_n_scms": 40,
+      "dopfn_pearson": NaN,
+      "dopfn_ci": [
+        NaN,
+        NaN
+      ],
+      "do_shapley_n_scms": 10,
+      "do_shapley_pearson": 1.0,
+      "do_shapley_ci": [
+        1.0,
+        1.0
+      ],
+      "do_shapley_fp_proxy": 0.0,
+      "do_shapley_fp_proxy_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_leak": 0.0,
+      "do_shapley_fp_leak_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_noise": 0.0,
+      "do_shapley_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_conf": 0.0,
+      "do_shapley_fp_conf_ci": [
+        0.0,
+        0.0
+      ],
+      "causal_shapley_n_scms": 10,
+      "causal_shapley_pearson": 0.666,
+      "causal_shapley_ci": [
+        0.638,
+        0.689
+      ],
+      "causal_shapley_fp_proxy": 0.0076,
+      "causal_shapley_fp_proxy_ci": [
+        0.005,
+        0.01
+      ],
+      "causal_shapley_fp_leak": 1.3252,
+      "causal_shapley_fp_leak_ci": [
+        1.318,
+        1.333
+      ],
+      "causal_shapley_fp_noise": 0.0022,
+      "causal_shapley_fp_noise_ci": [
+        0.002,
+        0.003
+      ],
+      "causal_shapley_fp_conf": 0.3374,
+      "causal_shapley_fp_conf_ci": [
+        0.292,
+        0.382
+      ]
+    },
+    {
+      "source": "ihdp",
+      "family": "mixed_nonlinear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": true,
+      "fado_pearson": 0.386,
+      "fado_ci": [
+        0.296,
+        0.465
+      ],
+      "marginal_pearson": 0.332,
+      "marginal_ci": [
+        0.261,
+        0.392
+      ],
+      "multivariate_pearson": 0.17,
+      "multivariate_ci": [
+        0.124,
+        0.218
+      ],
+      "fado_fp_proxy": 0.3406,
+      "fado_fp_proxy_ci": [
+        0.262,
+        0.423
+      ],
+      "fado_fp_leak": 0.7784,
+      "fado_fp_leak_ci": [
+        0.648,
+        0.921
+      ],
+      "fado_fp_noise": 0.0116,
+      "fado_fp_noise_ci": [
+        0.008,
+        0.015
+      ],
+      "fado_fp_conf": 0.6736,
+      "fado_fp_conf_ci": [
+        0.532,
+        0.821
+      ],
+      "marginal_fp_proxy": 0.816,
+      "marginal_fp_proxy_ci": [
+        0.731,
+        0.897
+      ],
+      "marginal_fp_leak": 1.9779,
+      "marginal_fp_leak_ci": [
+        1.973,
+        1.982
+      ],
+      "marginal_fp_noise": 0.0585,
+      "marginal_fp_noise_ci": [
+        0.051,
+        0.066
+      ],
+      "marginal_fp_conf": 0.8607,
+      "marginal_fp_conf_ci": [
+        0.752,
+        0.965
+      ],
+      "multivariate_fp_proxy": 0.0226,
+      "multivariate_fp_proxy_ci": [
+        0.019,
+        0.027
+      ],
+      "multivariate_fp_leak": 1.4979,
+      "multivariate_fp_leak_ci": [
+        1.428,
+        1.574
+      ],
+      "multivariate_fp_noise": 0.0069,
+      "multivariate_fp_noise_ci": [
+        0.006,
+        0.008
+      ],
+      "multivariate_fp_conf": 0.2373,
+      "multivariate_fp_conf_ci": [
+        0.196,
+        0.28
+      ],
+      "shap_n_scms": 40,
+      "shap_pearson": 0.05,
+      "shap_ci": [
+        0.024,
+        0.08
+      ],
+      "shap_fp_proxy": 0.0208,
+      "shap_fp_proxy_ci": [
+        0.018,
+        0.024
+      ],
+      "shap_fp_leak": 0.6586,
+      "shap_fp_leak_ci": [
+        0.609,
+        0.701
+      ],
+      "shap_fp_noise": 0.0092,
+      "shap_fp_noise_ci": [
+        0.008,
+        0.01
+      ],
+      "shap_fp_conf": 0.0463,
+      "shap_fp_conf_ci": [
+        0.032,
+        0.066
+      ],
+      "permutation_n_scms": 40,
+      "permutation_pearson": 0.01,
+      "permutation_ci": [
+        -0.011,
+        0.031
+      ],
+      "permutation_fp_proxy": 0.0047,
+      "permutation_fp_proxy_ci": [
+        0.002,
+        0.009
+      ],
+      "permutation_fp_leak": 1.53,
+      "permutation_fp_leak_ci": [
+        1.413,
+        1.634
+      ],
+      "permutation_fp_noise": 0.0006,
+      "permutation_fp_noise_ci": [
+        0.0,
+        0.001
+      ],
+      "permutation_fp_conf": 0.0117,
+      "permutation_fp_conf_ci": [
+        0.006,
+        0.019
+      ],
+      "lingam_n_scms": 40,
+      "lingam_pearson": 0.415,
+      "lingam_ci": [
+        0.304,
+        0.514
+      ],
+      "lingam_fp_proxy": 0.0059,
+      "lingam_fp_proxy_ci": [
+        0.001,
+        0.011
+      ],
+      "lingam_fp_leak": 0.4098,
+      "lingam_fp_leak_ci": [
+        0.234,
+        0.601
+      ],
+      "lingam_fp_noise": 0.0005,
+      "lingam_fp_noise_ci": [
+        0.0,
+        0.001
+      ],
+      "lingam_fp_conf": 0.7853,
+      "lingam_fp_conf_ci": [
+        0.674,
+        0.901
+      ],
+      "doubleml_n_scms": 40,
+      "doubleml_pearson": -0.046,
+      "doubleml_ci": [
+        -0.23,
+        0.112
+      ],
+      "doubleml_fp_proxy": 0.1125,
+      "doubleml_fp_proxy_ci": [
+        0.08,
+        0.148
+      ],
+      "doubleml_fp_leak": 1.6651,
+      "doubleml_fp_leak_ci": [
+        1.598,
+        1.726
+      ],
+      "doubleml_fp_noise": 0.0143,
+      "doubleml_fp_noise_ci": [
+        0.012,
+        0.017
+      ],
+      "doubleml_fp_conf": 0.125,
+      "doubleml_fp_conf_ci": [
+        0.105,
+        0.146
+      ],
+      "causal_forest_n_scms": 40,
+      "causal_forest_pearson": 0.093,
+      "causal_forest_ci": [
+        0.013,
+        0.201
+      ],
+      "causal_forest_fp_proxy": 0.0325,
+      "causal_forest_fp_proxy_ci": [
+        0.026,
+        0.04
+      ],
+      "causal_forest_fp_leak": 1.2681,
+      "causal_forest_fp_leak_ci": [
+        1.195,
+        1.345
+      ],
+      "causal_forest_fp_noise": 0.009,
+      "causal_forest_fp_noise_ci": [
+        0.008,
+        0.01
+      ],
+      "causal_forest_fp_conf": 0.1556,
+      "causal_forest_fp_conf_ci": [
+        0.12,
+        0.195
+      ],
+      "causalpfn_n_scms": 40,
+      "causalpfn_pearson": 0.331,
+      "causalpfn_ci": [
+        0.231,
+        0.423
+      ],
+      "causalpfn_fp_proxy": 0.1211,
+      "causalpfn_fp_proxy_ci": [
+        0.1,
+        0.143
+      ],
+      "causalpfn_fp_leak": 0.8267,
+      "causalpfn_fp_leak_ci": [
+        0.778,
+        0.876
+      ],
+      "causalpfn_fp_noise": 0.0108,
+      "causalpfn_fp_noise_ci": [
+        0.009,
+        0.012
+      ],
+      "causalpfn_fp_conf": 0.1826,
+      "causalpfn_fp_conf_ci": [
+        0.15,
+        0.217
+      ],
+      "dopfn_n_scms": 40,
+      "dopfn_pearson": NaN,
+      "dopfn_ci": [
+        NaN,
+        NaN
+      ],
+      "do_shapley_n_scms": 10,
+      "do_shapley_pearson": 1.0,
+      "do_shapley_ci": [
+        1.0,
+        1.0
+      ],
+      "do_shapley_fp_proxy": 0.0,
+      "do_shapley_fp_proxy_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_leak": 0.0,
+      "do_shapley_fp_leak_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_noise": 0.0,
+      "do_shapley_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_conf": 0.0,
+      "do_shapley_fp_conf_ci": [
+        0.0,
+        0.0
+      ],
+      "causal_shapley_n_scms": 10,
+      "causal_shapley_pearson": 0.483,
+      "causal_shapley_ci": [
+        0.398,
+        0.556
+      ],
+      "causal_shapley_fp_proxy": 0.0083,
+      "causal_shapley_fp_proxy_ci": [
+        0.006,
+        0.011
+      ],
+      "causal_shapley_fp_leak": 1.4712,
+      "causal_shapley_fp_leak_ci": [
+        1.354,
+        1.606
+      ],
+      "causal_shapley_fp_noise": 0.0021,
+      "causal_shapley_fp_noise_ci": [
+        0.001,
+        0.003
+      ],
+      "causal_shapley_fp_conf": 0.249,
+      "causal_shapley_fp_conf_ci": [
+        0.172,
+        0.319
+      ]
+    },
+    {
+      "source": "ihdp",
+      "family": "interaction",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": true,
+      "fado_pearson": 0.308,
+      "fado_ci": [
+        0.226,
+        0.385
+      ],
+      "marginal_pearson": 0.402,
+      "marginal_ci": [
+        0.362,
+        0.437
+      ],
+      "multivariate_pearson": 0.173,
+      "multivariate_ci": [
+        0.125,
+        0.217
+      ],
+      "fado_fp_proxy": 0.2503,
+      "fado_fp_proxy_ci": [
+        0.181,
+        0.322
+      ],
+      "fado_fp_leak": 0.7921,
+      "fado_fp_leak_ci": [
+        0.662,
+        0.918
+      ],
+      "fado_fp_noise": 0.008,
+      "fado_fp_noise_ci": [
+        0.005,
+        0.012
+      ],
+      "fado_fp_conf": 0.7705,
+      "fado_fp_conf_ci": [
+        0.589,
+        0.945
+      ],
+      "marginal_fp_proxy": 0.5501,
+      "marginal_fp_proxy_ci": [
+        0.472,
+        0.623
+      ],
+      "marginal_fp_leak": 1.9635,
+      "marginal_fp_leak_ci": [
+        1.958,
+        1.969
+      ],
+      "marginal_fp_noise": 0.0583,
+      "marginal_fp_noise_ci": [
+        0.05,
+        0.067
+      ],
+      "marginal_fp_conf": 1.1527,
+      "marginal_fp_conf_ci": [
+        1.061,
+        1.251
+      ],
+      "multivariate_fp_proxy": 0.0297,
+      "multivariate_fp_proxy_ci": [
+        0.024,
+        0.035
+      ],
+      "multivariate_fp_leak": 1.6398,
+      "multivariate_fp_leak_ci": [
+        1.563,
+        1.719
+      ],
+      "multivariate_fp_noise": 0.0107,
+      "multivariate_fp_noise_ci": [
+        0.009,
+        0.012
+      ],
+      "multivariate_fp_conf": 0.2526,
+      "multivariate_fp_conf_ci": [
+        0.195,
+        0.31
+      ],
+      "shap_n_scms": 40,
+      "shap_pearson": 0.042,
+      "shap_ci": [
+        0.021,
+        0.064
+      ],
+      "shap_fp_proxy": 0.0242,
+      "shap_fp_proxy_ci": [
+        0.021,
+        0.027
+      ],
+      "shap_fp_leak": 0.6871,
+      "shap_fp_leak_ci": [
+        0.65,
+        0.72
+      ],
+      "shap_fp_noise": 0.0122,
+      "shap_fp_noise_ci": [
+        0.011,
+        0.013
+      ],
+      "shap_fp_conf": 0.0579,
+      "shap_fp_conf_ci": [
+        0.035,
+        0.093
+      ],
+      "permutation_n_scms": 40,
+      "permutation_pearson": 0.008,
+      "permutation_ci": [
+        -0.008,
+        0.025
+      ],
+      "permutation_fp_proxy": 0.006,
+      "permutation_fp_proxy_ci": [
+        0.004,
+        0.009
+      ],
+      "permutation_fp_leak": 1.5859,
+      "permutation_fp_leak_ci": [
+        1.475,
+        1.672
+      ],
+      "permutation_fp_noise": 0.001,
+      "permutation_fp_noise_ci": [
+        0.001,
+        0.001
+      ],
+      "permutation_fp_conf": 0.0441,
+      "permutation_fp_conf_ci": [
+        0.01,
+        0.101
+      ],
+      "lingam_n_scms": 40,
+      "lingam_pearson": 0.556,
+      "lingam_ci": [
+        0.49,
+        0.614
+      ],
+      "lingam_fp_proxy": 0.0337,
+      "lingam_fp_proxy_ci": [
+        0.009,
+        0.062
+      ],
+      "lingam_fp_leak": 0.3461,
+      "lingam_fp_leak_ci": [
+        0.171,
+        0.529
+      ],
+      "lingam_fp_noise": 0.0008,
+      "lingam_fp_noise_ci": [
+        0.0,
+        0.002
+      ],
+      "lingam_fp_conf": 1.1556,
+      "lingam_fp_conf_ci": [
+        1.065,
+        1.25
+      ],
+      "doubleml_n_scms": 40,
+      "doubleml_pearson": 0.147,
+      "doubleml_ci": [
+        -0.034,
+        0.311
+      ],
+      "doubleml_fp_proxy": 0.0703,
+      "doubleml_fp_proxy_ci": [
+        0.056,
+        0.086
+      ],
+      "doubleml_fp_leak": 1.631,
+      "doubleml_fp_leak_ci": [
+        1.556,
+        1.703
+      ],
+      "doubleml_fp_noise": 0.0188,
+      "doubleml_fp_noise_ci": [
+        0.015,
+        0.024
+      ],
+      "doubleml_fp_conf": 0.1761,
+      "doubleml_fp_conf_ci": [
+        0.144,
+        0.213
+      ],
+      "causal_forest_n_scms": 40,
+      "causal_forest_pearson": -0.053,
+      "causal_forest_ci": [
+        -0.148,
+        0.1
+      ],
+      "causal_forest_fp_proxy": 0.0408,
+      "causal_forest_fp_proxy_ci": [
+        0.033,
+        0.049
+      ],
+      "causal_forest_fp_leak": 1.3575,
+      "causal_forest_fp_leak_ci": [
+        1.269,
+        1.451
+      ],
+      "causal_forest_fp_noise": 0.0137,
+      "causal_forest_fp_noise_ci": [
+        0.012,
+        0.016
+      ],
+      "causal_forest_fp_conf": 0.1474,
+      "causal_forest_fp_conf_ci": [
+        0.111,
+        0.186
+      ],
+      "causalpfn_n_scms": 40,
+      "causalpfn_pearson": 0.386,
+      "causalpfn_ci": [
+        0.314,
+        0.452
+      ],
+      "causalpfn_fp_proxy": 0.0691,
+      "causalpfn_fp_proxy_ci": [
+        0.054,
+        0.084
+      ],
+      "causalpfn_fp_leak": 0.935,
+      "causalpfn_fp_leak_ci": [
+        0.872,
+        0.996
+      ],
+      "causalpfn_fp_noise": 0.0152,
+      "causalpfn_fp_noise_ci": [
+        0.013,
+        0.017
+      ],
+      "causalpfn_fp_conf": 0.2245,
+      "causalpfn_fp_conf_ci": [
+        0.185,
+        0.266
+      ],
+      "dopfn_n_scms": 40,
+      "dopfn_pearson": 0.498,
+      "dopfn_ci": [
+        0.296,
+        0.726
+      ],
+      "dopfn_fp_proxy": 0.1186,
+      "dopfn_fp_proxy_ci": [
+        0.044,
+        0.229
+      ],
+      "dopfn_fp_leak": 0.6121,
+      "dopfn_fp_leak_ci": [
+        0.423,
+        0.78
+      ],
+      "dopfn_fp_noise": 0.056,
+      "dopfn_fp_noise_ci": [
+        0.033,
+        0.079
+      ],
+      "dopfn_fp_conf": 0.156,
+      "dopfn_fp_conf_ci": [
+        0.055,
+        0.283
+      ],
+      "do_shapley_n_scms": 10,
+      "do_shapley_pearson": 0.999,
+      "do_shapley_ci": [
+        0.997,
+        1.0
+      ],
+      "do_shapley_fp_proxy": 0.0,
+      "do_shapley_fp_proxy_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_leak": 0.0,
+      "do_shapley_fp_leak_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_noise": 0.0,
+      "do_shapley_fp_noise_ci": [
+        0.0,
+        0.0
+      ],
+      "do_shapley_fp_conf": 0.0,
+      "do_shapley_fp_conf_ci": [
+        0.0,
+        0.0
+      ],
+      "causal_shapley_n_scms": 10,
+      "causal_shapley_pearson": 0.436,
+      "causal_shapley_ci": [
+        0.339,
+        0.531
+      ],
+      "causal_shapley_fp_proxy": 0.0104,
+      "causal_shapley_fp_proxy_ci": [
+        0.007,
+        0.013
+      ],
+      "causal_shapley_fp_leak": 1.6642,
+      "causal_shapley_fp_leak_ci": [
+        1.51,
+        1.821
+      ],
+      "causal_shapley_fp_noise": 0.003,
+      "causal_shapley_fp_noise_ci": [
+        0.002,
+        0.004
+      ],
+      "causal_shapley_fp_conf": 0.2244,
+      "causal_shapley_fp_conf_ci": [
+        0.116,
+        0.332
+      ]
+    },
+    {
+      "SUMMARY": true,
+      "source": "ihdp",
+      "hidden_confound": true,
+      "n_scms": 40,
+      "n_families": 3,
+      "n_boot": 2000,
+      "mean_pearson": {
+        "fado": 0.382,
+        "marginal": 0.416,
+        "multivariate": 0.247
+      },
+      "mean_ci": {
+        "fado": [
+          0.335,
+          0.428
+        ],
+        "marginal": [
+          0.391,
+          0.443
+        ],
+        "multivariate": [
+          0.224,
+          0.271
+        ]
+      },
+      "fado_minus_marginal": {
+        "point": -0.034,
+        "ci": [
+          -0.081,
+          0.012
+        ],
+        "excludes_0": false
+      },
+      "replication_all_pass": null,
+      "comparator_mean_pearson": {
+        "shap": 0.051,
+        "permutation": 0.013,
+        "lingam": 0.565,
+        "doubleml": 0.038,
+        "causal_forest": 0.081,
+        "causalpfn": 0.43,
+        "dopfn": 0.498,
+        "do_shapley": 1.0,
+        "causal_shapley": 0.528
+      },
+      "n_scms_oracle": 10
+    }
+  ]
+}

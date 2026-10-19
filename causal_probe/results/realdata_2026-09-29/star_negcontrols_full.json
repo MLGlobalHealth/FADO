@@ -1,0 +1,204 @@
+{
+  "dataset": "STAR (AER, kindergarten cross-section) \u2014 negative controls",
+  "meta": {
+    "n_raw_csv": 11598,
+    "n_with_stark_and_k_scores": 5786,
+    "n_after_covariate_dropna": 5765,
+    "n_analysis": 5765,
+    "largest_school_only": false,
+    "largest_school_id": null
+  },
+  "n": 5765,
+  "n_rows": 512,
+  "n_repeats": 5,
+  "seed": 2025,
+  "per_covariate": {
+    "girl": {
+      "assoc_T": -0.0008026949833779717,
+      "diff_in_means_probe_scale": -0.0008026949833787693,
+      "tau_hat_T": -6.717762153130025e-05,
+      "tau_hat_T_std": 0.003423120593652129,
+      "tau_hat_T_perm": -0.0014008734142407775,
+      "comparators": {
+        "marginal": {
+          "tau_hat_T": -0.0008026949833779717,
+          "tau_hat_T_perm": 0.0158540139076275
+        },
+        "shap": {
+          "tau_hat_T": -0.023354853462439446,
+          "tau_hat_T_perm": 0.022609403214332243
+        },
+        "permutation": {
+          "tau_hat_T": 0.005335580076340163,
+          "tau_hat_T_perm": -0.0007003595372130133
+        },
+        "lingam": {
+          "tau_hat_T": 0.0,
+          "tau_hat_T_perm": 0.0
+        },
+        "doubleml": {
+          "tau_hat_T": 0.0011875728458727412
+        },
+        "causal_forest": {
+          "tau_hat_T": 0.00821689350362263
+        },
+        "drlearner": {
+          "tau_hat_T": -0.010735424082394729
+        },
+        "causalpfn": {
+          "tau_hat_T": 0.006780608721289427
+        },
+        "dopfn": {
+          "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+        }
+      }
+    },
+    "afam": {
+      "assoc_T": -0.027859531760637924,
+      "diff_in_means_probe_scale": -0.027859531760665565,
+      "tau_hat_T": 0.025828320533037186,
+      "tau_hat_T_std": 0.04634485021233559,
+      "tau_hat_T_perm": 0.018922194838523865,
+      "comparators": {
+        "marginal": {
+          "tau_hat_T": -0.027859531760637924,
+          "tau_hat_T_perm": -0.034345622507644905
+        },
+        "shap": {
+          "tau_hat_T": -0.012602713530774553,
+          "tau_hat_T_perm": -0.009880216075372816
+        },
+        "permutation": {
+          "tau_hat_T": 0.002314040221448166,
+          "tau_hat_T_perm": -0.0009413906959772622
+        },
+        "lingam": {
+          "tau_hat_T": 0.0,
+          "tau_hat_T_perm": 0.0
+        },
+        "doubleml": {
+          "tau_hat_T": -0.0020279391366816862
+        },
+        "causal_forest": {
+          "tau_hat_T": -0.004524229282235329
+        },
+        "drlearner": {
+          "tau_hat_T": 0.005866015807301952
+        },
+        "causalpfn": {
+          "tau_hat_T": 0.014198068587423677
+        },
+        "dopfn": {
+          "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+        }
+      }
+    },
+    "birth_time": {
+      "assoc_T": -0.015299958609701961,
+      "diff_in_means_probe_scale": -0.015299958609749316,
+      "tau_hat_T": 0.010489270091056824,
+      "tau_hat_T_std": 0.00998311210423708,
+      "tau_hat_T_perm": 0.018831059336662292,
+      "comparators": {
+        "marginal": {
+          "tau_hat_T": -0.015299958609701961,
+          "tau_hat_T_perm": -0.018570558427452026
+        },
+        "shap": {
+          "tau_hat_T": -0.01739378770449042,
+          "tau_hat_T_perm": -0.021968231270471903
+        },
+        "permutation": {
+          "tau_hat_T": 0.010251857858383983,
+          "tau_hat_T_perm": -0.005684575279064829
+        },
+        "lingam": {
+          "tau_hat_T": 0.0,
+          "tau_hat_T_perm": 0.0
+        },
+        "doubleml": {
+          "tau_hat_T": -0.01324036942096229
+        },
+        "causal_forest": {
+          "tau_hat_T": -0.011223969280290019
+        },
+        "drlearner": {
+          "tau_hat_T": -0.010607445551885525
+        },
+        "causalpfn": {
+          "tau_hat_T": -0.013249195205006472
+        },
+        "dopfn": {
+          "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+        }
+      }
+    },
+    "free_lunch": {
+      "assoc_T": -0.027148207022574027,
+      "diff_in_means_probe_scale": -0.027148207022600918,
+      "tau_hat_T": -0.005033504217863083,
+      "tau_hat_T_std": 0.004500535782426596,
+      "tau_hat_T_perm": -0.006366742309182882,
+      "comparators": {
+        "marginal": {
+          "tau_hat_T": -0.027148207022574027,
+          "tau_hat_T_perm": -0.03623579175664809
+        },
+        "shap": {
+          "tau_hat_T": -0.0162940447957618,
+          "tau_hat_T_perm": -0.01631408776479224
+        },
+        "permutation": {
+          "tau_hat_T": 0.009002517313249003,
+          "tau_hat_T_perm": 0.0058469956420772904
+        },
+        "lingam": {
+          "tau_hat_T": 0.0,
+          "tau_hat_T_perm": 0.0
+        },
+        "doubleml": {
+          "tau_hat_T": -0.00770610676379105
+        },
+        "causal_forest": {
+          "tau_hat_T": -0.0036667144791392814
+        },
+        "drlearner": {
+          "tau_hat_T": -0.022036820223370907
+        },
+        "causalpfn": {
+          "tau_hat_T": 0.01470465117913467
+        },
+        "dopfn": {
+          "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+        }
+      }
+    }
+  },
+  "negative_control_MAE": 0.010354568115872098,
+  "negative_control_MAE_comparators": {
+    "marginal": 0.01777759809407297,
+    "shap": 0.017411349873366556,
+    "permutation": 0.006725998867355329,
+    "lingam": 0.0,
+    "doubleml": 0.006040497041826942,
+    "causal_forest": 0.0069079516363218145,
+    "drlearner": 0.012311426416238277,
+    "causalpfn": 0.012233130923213561,
+    "dopfn": null
+  },
+  "caveats": {
+    "randomization": "within-school randomization: afam/free_lunch vary across schools, so T may carry a small marginal association with them even under valid randomization; use --largest-school for a clean single-school subset"
+  },
+  "ckpt": "causal_probe/results/probe_foundation_intersample_L_p3_15_intersample_L_seed0.ckpt",
+  "comparator_methods": [
+    "marginal",
+    "shap",
+    "permutation",
+    "lingam",
+    "doubleml",
+    "causal_forest",
+    "drlearner",
+    "causalpfn",
+    "dopfn"
+  ]
+}

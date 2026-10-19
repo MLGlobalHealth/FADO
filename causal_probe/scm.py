@@ -265,7 +265,8 @@ class LinearNonGaussianSCM:
         return instance
 
     def _draw_eps(self, n: int, rng: np.random.Generator) -> np.ndarray:
-        N = self.p + 1
+        # Trust B's shape so motifs with hidden confounder nodes work.
+        N = self.B.shape[0]
         if self.noise == "laplace":
             return _sample_laplace((n, N), rng)
         if self.noise == "mixture":
@@ -282,7 +283,9 @@ class LinearNonGaussianSCM:
         Standardization uses population stds (self.std_Z), not sample stds,
         to keep tau labels well-calibrated.
         """
-        N = self.p + 1
+        # B may exceed (p+1, p+1) when motif_scm built this with hidden
+        # confounder nodes; trust B's shape over self.p.
+        N = self.B.shape[0]
         eps = self._draw_eps(n, rng)
         # Topological forward sim: Z_c = B[c, :parents] Z_parents + eps_c.
         Z = np.zeros((n, N), dtype=np.float64)

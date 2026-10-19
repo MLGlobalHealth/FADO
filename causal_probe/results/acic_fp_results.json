@@ -1,0 +1,531 @@
+{
+  "no_confounding": [
+    {
+      "source": "acic2016",
+      "family": "linear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": false,
+      "fado_pearson": 0.609,
+      "fado_ci": [
+        0.519,
+        0.688
+      ],
+      "marginal_pearson": 0.608,
+      "marginal_ci": [
+        0.598,
+        0.619
+      ],
+      "multivariate_pearson": 0.693,
+      "multivariate_ci": [
+        0.67,
+        0.709
+      ],
+      "fado_fp_proxy": 0.4847,
+      "fado_fp_proxy_ci": [
+        0.387,
+        0.589
+      ],
+      "fado_fp_leak": 0.5759,
+      "fado_fp_leak_ci": [
+        0.422,
+        0.729
+      ],
+      "fado_fp_noise": 0.0051,
+      "fado_fp_noise_ci": [
+        0.004,
+        0.006
+      ],
+      "marginal_fp_proxy": 0.9594,
+      "marginal_fp_proxy_ci": [
+        0.876,
+        1.038
+      ],
+      "marginal_fp_leak": 1.9353,
+      "marginal_fp_leak_ci": [
+        1.9,
+        1.961
+      ],
+      "marginal_fp_noise": 0.0239,
+      "marginal_fp_noise_ci": [
+        0.021,
+        0.027
+      ],
+      "multivariate_fp_proxy": 0.0127,
+      "multivariate_fp_proxy_ci": [
+        0.01,
+        0.016
+      ],
+      "multivariate_fp_leak": 1.0348,
+      "multivariate_fp_leak_ci": [
+        1.017,
+        1.059
+      ],
+      "multivariate_fp_noise": 0.0037,
+      "multivariate_fp_noise_ci": [
+        0.003,
+        0.005
+      ],
+      "replication_check": "PASS"
+    },
+    {
+      "source": "acic2016",
+      "family": "mixed_nonlinear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": false,
+      "fado_pearson": 0.412,
+      "fado_ci": [
+        0.276,
+        0.535
+      ],
+      "marginal_pearson": 0.311,
+      "marginal_ci": [
+        0.236,
+        0.382
+      ],
+      "multivariate_pearson": 0.076,
+      "multivariate_ci": [
+        0.035,
+        0.126
+      ],
+      "fado_fp_proxy": 0.1955,
+      "fado_fp_proxy_ci": [
+        0.135,
+        0.262
+      ],
+      "fado_fp_leak": 1.1735,
+      "fado_fp_leak_ci": [
+        0.986,
+        1.357
+      ],
+      "fado_fp_noise": 0.009,
+      "fado_fp_noise_ci": [
+        0.006,
+        0.013
+      ],
+      "marginal_fp_proxy": 0.737,
+      "marginal_fp_proxy_ci": [
+        0.619,
+        0.844
+      ],
+      "marginal_fp_leak": 1.9844,
+      "marginal_fp_leak_ci": [
+        1.978,
+        1.99
+      ],
+      "marginal_fp_noise": 0.0243,
+      "marginal_fp_noise_ci": [
+        0.021,
+        0.027
+      ],
+      "multivariate_fp_proxy": 0.008,
+      "multivariate_fp_proxy_ci": [
+        0.006,
+        0.01
+      ],
+      "multivariate_fp_leak": 1.8441,
+      "multivariate_fp_leak_ci": [
+        1.771,
+        1.905
+      ],
+      "multivariate_fp_noise": 0.0028,
+      "multivariate_fp_noise_ci": [
+        0.002,
+        0.003
+      ],
+      "replication_check": "PASS"
+    },
+    {
+      "source": "acic2016",
+      "family": "interaction",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": false,
+      "fado_pearson": 0.533,
+      "fado_ci": [
+        0.42,
+        0.629
+      ],
+      "marginal_pearson": 0.544,
+      "marginal_ci": [
+        0.513,
+        0.569
+      ],
+      "multivariate_pearson": 0.268,
+      "multivariate_ci": [
+        0.191,
+        0.344
+      ],
+      "fado_fp_proxy": 0.2612,
+      "fado_fp_proxy_ci": [
+        0.193,
+        0.33
+      ],
+      "fado_fp_leak": 0.4172,
+      "fado_fp_leak_ci": [
+        0.305,
+        0.534
+      ],
+      "fado_fp_noise": 0.004,
+      "fado_fp_noise_ci": [
+        0.003,
+        0.005
+      ],
+      "marginal_fp_proxy": 0.7238,
+      "marginal_fp_proxy_ci": [
+        0.616,
+        0.827
+      ],
+      "marginal_fp_leak": 1.9363,
+      "marginal_fp_leak_ci": [
+        1.922,
+        1.95
+      ],
+      "marginal_fp_noise": 0.0256,
+      "marginal_fp_noise_ci": [
+        0.022,
+        0.029
+      ],
+      "multivariate_fp_proxy": 0.0168,
+      "multivariate_fp_proxy_ci": [
+        0.014,
+        0.02
+      ],
+      "multivariate_fp_leak": 1.6122,
+      "multivariate_fp_leak_ci": [
+        1.507,
+        1.716
+      ],
+      "multivariate_fp_noise": 0.0046,
+      "multivariate_fp_noise_ci": [
+        0.004,
+        0.006
+      ],
+      "replication_check": "PASS"
+    },
+    {
+      "SUMMARY": true,
+      "source": "acic2016",
+      "hidden_confound": false,
+      "n_scms": 40,
+      "n_families": 3,
+      "n_boot": 2000,
+      "mean_pearson": {
+        "fado": 0.518,
+        "marginal": 0.488,
+        "multivariate": 0.346
+      },
+      "mean_ci": {
+        "fado": [
+          0.454,
+          0.576
+        ],
+        "marginal": [
+          0.461,
+          0.513
+        ],
+        "multivariate": [
+          0.315,
+          0.376
+        ]
+      },
+      "fado_minus_marginal": {
+        "point": 0.03,
+        "ci": [
+          -0.031,
+          0.087
+        ],
+        "excludes_0": false
+      },
+      "replication_all_pass": true
+    }
+  ],
+  "hidden_confounder": [
+    {
+      "source": "acic2016",
+      "family": "linear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": true,
+      "fado_pearson": 0.597,
+      "fado_ci": [
+        0.514,
+        0.67
+      ],
+      "marginal_pearson": 0.531,
+      "marginal_ci": [
+        0.508,
+        0.549
+      ],
+      "multivariate_pearson": 0.394,
+      "multivariate_ci": [
+        0.367,
+        0.416
+      ],
+      "fado_fp_proxy": 0.4578,
+      "fado_fp_proxy_ci": [
+        0.363,
+        0.555
+      ],
+      "fado_fp_leak": 0.3881,
+      "fado_fp_leak_ci": [
+        0.282,
+        0.503
+      ],
+      "fado_fp_noise": 0.006,
+      "fado_fp_noise_ci": [
+        0.005,
+        0.008
+      ],
+      "fado_fp_conf": 0.635,
+      "fado_fp_conf_ci": [
+        0.48,
+        0.792
+      ],
+      "marginal_fp_proxy": 0.8327,
+      "marginal_fp_proxy_ci": [
+        0.742,
+        0.92
+      ],
+      "marginal_fp_leak": 1.9708,
+      "marginal_fp_leak_ci": [
+        1.966,
+        1.975
+      ],
+      "marginal_fp_noise": 0.0267,
+      "marginal_fp_noise_ci": [
+        0.023,
+        0.031
+      ],
+      "marginal_fp_conf": 1.058,
+      "marginal_fp_conf_ci": [
+        0.974,
+        1.151
+      ],
+      "multivariate_fp_proxy": 0.0111,
+      "multivariate_fp_proxy_ci": [
+        0.009,
+        0.013
+      ],
+      "multivariate_fp_leak": 1.3302,
+      "multivariate_fp_leak_ci": [
+        1.325,
+        1.336
+      ],
+      "multivariate_fp_noise": 0.0029,
+      "multivariate_fp_noise_ci": [
+        0.002,
+        0.003
+      ],
+      "multivariate_fp_conf": 0.3666,
+      "multivariate_fp_conf_ci": [
+        0.337,
+        0.399
+      ],
+      "replication_check": "PASS"
+    },
+    {
+      "source": "acic2016",
+      "family": "mixed_nonlinear",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": true,
+      "fado_pearson": 0.382,
+      "fado_ci": [
+        0.27,
+        0.487
+      ],
+      "marginal_pearson": 0.288,
+      "marginal_ci": [
+        0.219,
+        0.352
+      ],
+      "multivariate_pearson": 0.059,
+      "multivariate_ci": [
+        0.027,
+        0.094
+      ],
+      "fado_fp_proxy": 0.1919,
+      "fado_fp_proxy_ci": [
+        0.136,
+        0.255
+      ],
+      "fado_fp_leak": 1.0943,
+      "fado_fp_leak_ci": [
+        0.885,
+        1.299
+      ],
+      "fado_fp_noise": 0.0064,
+      "fado_fp_noise_ci": [
+        0.005,
+        0.008
+      ],
+      "fado_fp_conf": 0.3882,
+      "fado_fp_conf_ci": [
+        0.27,
+        0.506
+      ],
+      "marginal_fp_proxy": 0.7298,
+      "marginal_fp_proxy_ci": [
+        0.634,
+        0.822
+      ],
+      "marginal_fp_leak": 1.9884,
+      "marginal_fp_leak_ci": [
+        1.985,
+        1.992
+      ],
+      "marginal_fp_noise": 0.0215,
+      "marginal_fp_noise_ci": [
+        0.019,
+        0.024
+      ],
+      "marginal_fp_conf": 0.5837,
+      "marginal_fp_conf_ci": [
+        0.487,
+        0.69
+      ],
+      "multivariate_fp_proxy": 0.0069,
+      "multivariate_fp_proxy_ci": [
+        0.005,
+        0.008
+      ],
+      "multivariate_fp_leak": 1.8652,
+      "multivariate_fp_leak_ci": [
+        1.811,
+        1.912
+      ],
+      "multivariate_fp_noise": 0.0021,
+      "multivariate_fp_noise_ci": [
+        0.002,
+        0.003
+      ],
+      "multivariate_fp_conf": 0.0538,
+      "multivariate_fp_conf_ci": [
+        0.033,
+        0.076
+      ],
+      "replication_check": "PASS"
+    },
+    {
+      "source": "acic2016",
+      "family": "interaction",
+      "n_scms": 40,
+      "p_real_cap": 10,
+      "hidden_confound": true,
+      "fado_pearson": 0.466,
+      "fado_ci": [
+        0.371,
+        0.552
+      ],
+      "marginal_pearson": 0.43,
+      "marginal_ci": [
+        0.394,
+        0.457
+      ],
+      "multivariate_pearson": 0.145,
+      "multivariate_ci": [
+        0.1,
+        0.191
+      ],
+      "fado_fp_proxy": 0.2316,
+      "fado_fp_proxy_ci": [
+        0.17,
+        0.297
+      ],
+      "fado_fp_leak": 0.3705,
+      "fado_fp_leak_ci": [
+        0.263,
+        0.489
+      ],
+      "fado_fp_noise": 0.0037,
+      "fado_fp_noise_ci": [
+        0.003,
+        0.004
+      ],
+      "fado_fp_conf": 0.7453,
+      "fado_fp_conf_ci": [
+        0.566,
+        0.923
+      ],
+      "marginal_fp_proxy": 0.5399,
+      "marginal_fp_proxy_ci": [
+        0.469,
+        0.609
+      ],
+      "marginal_fp_leak": 1.966,
+      "marginal_fp_leak_ci": [
+        1.961,
+        1.971
+      ],
+      "marginal_fp_noise": 0.0244,
+      "marginal_fp_noise_ci": [
+        0.021,
+        0.027
+      ],
+      "marginal_fp_conf": 1.1494,
+      "marginal_fp_conf_ci": [
+        1.069,
+        1.233
+      ],
+      "multivariate_fp_proxy": 0.0123,
+      "multivariate_fp_proxy_ci": [
+        0.01,
+        0.015
+      ],
+      "multivariate_fp_leak": 1.6944,
+      "multivariate_fp_leak_ci": [
+        1.624,
+        1.766
+      ],
+      "multivariate_fp_noise": 0.0038,
+      "multivariate_fp_noise_ci": [
+        0.003,
+        0.004
+      ],
+      "multivariate_fp_conf": 0.2161,
+      "multivariate_fp_conf_ci": [
+        0.163,
+        0.269
+      ],
+      "replication_check": "PASS"
+    },
+    {
+      "SUMMARY": true,
+      "source": "acic2016",
+      "hidden_confound": true,
+      "n_scms": 40,
+      "n_families": 3,
+      "n_boot": 2000,
+      "mean_pearson": {
+        "fado": 0.482,
+        "marginal": 0.416,
+        "multivariate": 0.199
+      },
+      "mean_ci": {
+        "fado": [
+          0.427,
+          0.531
+        ],
+        "marginal": [
+          0.39,
+          0.441
+        ],
+        "multivariate": [
+          0.178,
+          0.219
+        ]
+      },
+      "fado_minus_marginal": {
+        "point": 0.066,
+        "ci": [
+          0.015,
+          0.111
+        ],
+        "excludes_0": true
+      },
+      "replication_all_pass": true
+    }
+  ]
+}

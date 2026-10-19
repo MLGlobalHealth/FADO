@@ -1,0 +1,1862 @@
+{
+  "ckpt": "causal_probe/results/probe_foundation_intersample_L_p3_15_intersample_L_seed0.ckpt",
+  "seed": 2025,
+  "n_rows": 512,
+  "n_repeats": 5,
+  "comparator_methods": [
+    "marginal",
+    "shap",
+    "permutation",
+    "lingam",
+    "doubleml",
+    "causal_forest",
+    "drlearner",
+    "causalpfn",
+    "dopfn"
+  ],
+  "exclude_near_constant": false,
+  "datasets": {
+    "hillstrom": {
+      "treatment": "Mens E-Mail vs No E-Mail",
+      "n_total": 42613,
+      "controls": [
+        {
+          "control": "recency",
+          "p": 11,
+          "T_idx": 2,
+          "feature_names": [
+            "mens",
+            "womens",
+            "T",
+            "channel_Web",
+            "history",
+            "channel_Multichannel",
+            "newbie",
+            "channel_Phone",
+            "zip_Rural",
+            "zip_Urban",
+            "zip_Surburban"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.13925327951564076,
+          "marginal_2corr_T": 0.006831652555882928,
+          "tau_hat_T_mean": -0.006107189133763314,
+          "tau_hat_T_sd": 0.03618501232754973,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.006831652555882928
+            },
+            "shap": {
+              "tau_hat_T": 0.008615029700037557
+            },
+            "permutation": {
+              "tau_hat_T": 0.0010865162351263557
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.008629247223873144
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.007752213672379826
+            },
+            "drlearner": {
+              "tau_hat_T": 0.005255107350350335
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "history",
+          "p": 11,
+          "T_idx": 7,
+          "feature_names": [
+            "recency",
+            "newbie",
+            "zip_Rural",
+            "zip_Urban",
+            "womens",
+            "zip_Surburban",
+            "mens",
+            "T",
+            "channel_Phone",
+            "channel_Web",
+            "channel_Multichannel"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.12364771313918288,
+          "marginal_2corr_T": 0.0076129891711295685,
+          "tau_hat_T_mean": -0.0061396334785968065,
+          "tau_hat_T_sd": 0.0017701733109392285,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.0076129891711295685
+            },
+            "shap": {
+              "tau_hat_T": 0.008398391680327228
+            },
+            "permutation": {
+              "tau_hat_T": -9.743875140845182e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.011471027352470207
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.014223979460172051
+            },
+            "drlearner": {
+              "tau_hat_T": 0.009980235933909131
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "mens",
+          "p": 11,
+          "T_idx": 7,
+          "feature_names": [
+            "recency",
+            "newbie",
+            "channel_Phone",
+            "zip_Urban",
+            "womens",
+            "channel_Web",
+            "zip_Rural",
+            "T",
+            "channel_Multichannel",
+            "history",
+            "zip_Surburban"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5520850444699974,
+          "marginal_2corr_T": -0.004582421119620081,
+          "tau_hat_T_mean": 0.009579722583293915,
+          "tau_hat_T_sd": 0.026026053072630742,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.004582421119620081
+            },
+            "shap": {
+              "tau_hat_T": -0.003631851880123445
+            },
+            "permutation": {
+              "tau_hat_T": 5.257712536174131e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.0033635916937976005
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.002508672212420969
+            },
+            "drlearner": {
+              "tau_hat_T": 0.0029953169447681323
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "womens",
+          "p": 11,
+          "T_idx": 2,
+          "feature_names": [
+            "zip_Urban",
+            "channel_Web",
+            "T",
+            "newbie",
+            "history",
+            "channel_Phone",
+            "recency",
+            "channel_Multichannel",
+            "zip_Surburban",
+            "zip_Rural",
+            "mens"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5495271396052848,
+          "marginal_2corr_T": 0.007589053217049308,
+          "tau_hat_T_mean": -0.001291366945952177,
+          "tau_hat_T_sd": 0.01559689773960405,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.007589053217049308
+            },
+            "shap": {
+              "tau_hat_T": 0.003384849771122061
+            },
+            "permutation": {
+              "tau_hat_T": -0.00039424233054869974
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.0008523474698861539
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.0022220027951978224
+            },
+            "drlearner": {
+              "tau_hat_T": 0.00015599804120643252
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "newbie",
+          "p": 11,
+          "T_idx": 7,
+          "feature_names": [
+            "channel_Web",
+            "zip_Surburban",
+            "zip_Rural",
+            "channel_Multichannel",
+            "zip_Urban",
+            "recency",
+            "womens",
+            "T",
+            "channel_Phone",
+            "history",
+            "mens"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5017482927745054,
+          "marginal_2corr_T": -0.0008919162115432822,
+          "tau_hat_T_mean": -0.005735745001584291,
+          "tau_hat_T_sd": 0.005632807369346907,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.0008919162115432822
+            },
+            "shap": {
+              "tau_hat_T": -0.006035099965194848
+            },
+            "permutation": {
+              "tau_hat_T": -0.0001390590363223976
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.0020532201042400356
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.005283254727168004
+            },
+            "drlearner": {
+              "tau_hat_T": 0.0011543583971523334
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "zip_Rural",
+          "p": 11,
+          "T_idx": 1,
+          "feature_names": [
+            "channel_Multichannel",
+            "T",
+            "womens",
+            "history",
+            "recency",
+            "newbie",
+            "mens",
+            "channel_Web",
+            "channel_Phone",
+            "zip_Urban",
+            "zip_Surburban"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.8502334968202192,
+          "marginal_2corr_T": 0.013659000240790132,
+          "tau_hat_T_mean": 0.015028278529644012,
+          "tau_hat_T_sd": 0.007163813306165114,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.013659000240790132
+            },
+            "shap": {
+              "tau_hat_T": 3.510984364440446e-18
+            },
+            "permutation": {
+              "tau_hat_T": 0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -2.5375361913436234e-16
+            },
+            "causal_forest": {
+              "tau_hat_T": 1.2577018334566177e-18
+            },
+            "drlearner": {
+              "tau_hat_T": -1.8898516301377613e-16
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "zip_Surburban",
+          "p": 11,
+          "T_idx": 3,
+          "feature_names": [
+            "newbie",
+            "recency",
+            "womens",
+            "T",
+            "history",
+            "zip_Urban",
+            "channel_Multichannel",
+            "zip_Rural",
+            "mens",
+            "channel_Phone",
+            "channel_Web"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5511698308028067,
+          "marginal_2corr_T": -0.011743430035985616,
+          "tau_hat_T_mean": 0.011668474320322276,
+          "tau_hat_T_sd": 0.01043838852715223,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.011743430035985616
+            },
+            "shap": {
+              "tau_hat_T": -2.0226157362512384e-20
+            },
+            "permutation": {
+              "tau_hat_T": -0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 9.65068128337177e-17
+            },
+            "causal_forest": {
+              "tau_hat_T": -1.1083674678947246e-17
+            },
+            "drlearner": {
+              "tau_hat_T": 1.0669401409199791e-16
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "zip_Urban",
+          "p": 11,
+          "T_idx": 9,
+          "feature_names": [
+            "channel_Phone",
+            "mens",
+            "zip_Rural",
+            "channel_Multichannel",
+            "womens",
+            "zip_Surburban",
+            "newbie",
+            "channel_Web",
+            "history",
+            "T",
+            "recency"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5985966723769741,
+          "marginal_2corr_T": 0.0019722768921562363,
+          "tau_hat_T_mean": 0.025052752520423383,
+          "tau_hat_T_sd": 0.027456209889540662,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.0019722768921562363
+            },
+            "shap": {
+              "tau_hat_T": 3.652033559817463e-24
+            },
+            "permutation": {
+              "tau_hat_T": 0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 6.456957227535969e-18
+            },
+            "causal_forest": {
+              "tau_hat_T": 1.6000693660713305e-19
+            },
+            "drlearner": {
+              "tau_hat_T": -4.978653633624339e-16
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "channel_Multichannel",
+          "p": 11,
+          "T_idx": 6,
+          "feature_names": [
+            "zip_Urban",
+            "zip_Surburban",
+            "mens",
+            "zip_Rural",
+            "history",
+            "newbie",
+            "T",
+            "channel_Web",
+            "channel_Phone",
+            "womens",
+            "recency"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.8783704503320583,
+          "marginal_2corr_T": -0.0041816256476220545,
+          "tau_hat_T_mean": 0.06421031914651394,
+          "tau_hat_T_sd": 0.0268609789171394,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.0041816256476220545
+            },
+            "shap": {
+              "tau_hat_T": -9.803999694685592e-05
+            },
+            "permutation": {
+              "tau_hat_T": -0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -7.3192222664694666e-06
+            },
+            "causal_forest": {
+              "tau_hat_T": -6.72017012613184e-08
+            },
+            "drlearner": {
+              "tau_hat_T": -8.924769586096886e-05
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "channel_Phone",
+          "p": 11,
+          "T_idx": 8,
+          "feature_names": [
+            "channel_Multichannel",
+            "womens",
+            "zip_Surburban",
+            "newbie",
+            "zip_Urban",
+            "channel_Web",
+            "history",
+            "mens",
+            "T",
+            "zip_Rural",
+            "recency"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5642878933658743,
+          "marginal_2corr_T": -0.008276115769683049,
+          "tau_hat_T_mean": 0.008454729698132723,
+          "tau_hat_T_sd": 0.01134687483151032,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.008276115769683049
+            },
+            "shap": {
+              "tau_hat_T": -1.3876492958349504e-22
+            },
+            "permutation": {
+              "tau_hat_T": -0.0
+            },
+            "lingam": {
+              "tau_hat_T": -0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 4.881386174380541e-17
+            },
+            "causal_forest": {
+              "tau_hat_T": -2.536024334496525e-18
+            },
+            "drlearner": {
+              "tau_hat_T": 9.116596811453071e-18
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "channel_Web",
+          "p": 11,
+          "T_idx": 1,
+          "feature_names": [
+            "womens",
+            "T",
+            "zip_Urban",
+            "mens",
+            "channel_Phone",
+            "newbie",
+            "channel_Multichannel",
+            "history",
+            "zip_Rural",
+            "zip_Surburban",
+            "recency"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5573416563020674,
+          "marginal_2corr_T": 0.011013679651933438,
+          "tau_hat_T_mean": 0.004579997528344393,
+          "tau_hat_T_sd": 0.0057786215677035286,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.011013679651933438
+            },
+            "shap": {
+              "tau_hat_T": 1.0690220982335541e-18
+            },
+            "permutation": {
+              "tau_hat_T": 0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -1.2295089954162403e-16
+            },
+            "causal_forest": {
+              "tau_hat_T": -6.791615383288727e-18
+            },
+            "drlearner": {
+              "tau_hat_T": 4.024416253800761e-18
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        }
+      ],
+      "summary": {
+        "n_controls": 11,
+        "n_excluded_near_constant": 0,
+        "mean_abs_marginal_2corr_T": 0.007123105501217791,
+        "max_abs_marginal_2corr_T": 0.013659000240790132,
+        "mean_abs_tau_hat_T": 0.014349837171506475,
+        "max_abs_tau_hat_T": 0.06421031914651394,
+        "comparators": {
+          "marginal": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.007123105501217791,
+            "max_abs_tau_hat_T": 0.013659000240790132,
+            "n_errors": 0
+          },
+          "shap": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.0027421148176138177,
+            "max_abs_tau_hat_T": 0.008615029700037557,
+            "n_errors": 0
+          },
+          "permutation": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.00016089395261524055,
+            "max_abs_tau_hat_T": 0.0010865162351263557,
+            "n_errors": 0
+          },
+          "lingam": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.0,
+            "max_abs_tau_hat_T": 0.0,
+            "n_errors": 0
+          },
+          "doubleml": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.0023978866424121943,
+            "max_abs_tau_hat_T": 0.011471027352470207,
+            "n_errors": 0
+          },
+          "causal_forest": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.00290819909718545,
+            "max_abs_tau_hat_T": 0.014223979460172051,
+            "n_errors": 0
+          },
+          "drlearner": {
+            "n": 11,
+            "mean_abs_tau_hat_T": 0.0017845694875680128,
+            "max_abs_tau_hat_T": 0.009980235933909131,
+            "n_errors": 0
+          },
+          "causalpfn": {
+            "n": 0,
+            "mean_abs_tau_hat_T": null,
+            "max_abs_tau_hat_T": null,
+            "n_errors": 0
+          },
+          "dopfn": {
+            "n": 0,
+            "mean_abs_tau_hat_T": null,
+            "max_abs_tau_hat_T": null,
+            "n_errors": 0
+          }
+        }
+      }
+    },
+    "lalonde": {
+      "treatment": "NSW training program (experimental sample)",
+      "n_total": 445,
+      "controls": [
+        {
+          "control": "age",
+          "p": 8,
+          "T_idx": 2,
+          "feature_names": [
+            "re75",
+            "educ",
+            "T",
+            "black",
+            "re74",
+            "married",
+            "nodegr",
+            "hisp"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.0898876404494382,
+          "marginal_2corr_T": 0.10595495158671595,
+          "tau_hat_T_mean": -0.004542688373476267,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.10595495158671595
+            },
+            "shap": {
+              "tau_hat_T": 0.031350401405856286
+            },
+            "permutation": {
+              "tau_hat_T": -0.09762679128458593
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.039362721604196446
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.021720567504731395
+            },
+            "drlearner": {
+              "tau_hat_T": 0.07449094133282472
+            },
+            "causalpfn": {
+              "tau_hat_T": 0.052525170405807696
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "educ",
+          "p": 8,
+          "T_idx": 0,
+          "feature_names": [
+            "T",
+            "black",
+            "re75",
+            "hisp",
+            "nodegr",
+            "re74",
+            "age",
+            "married"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.25617977528089886,
+          "marginal_2corr_T": 0.1417800316411852,
+          "tau_hat_T_mean": 0.09136807918548584,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.1417800316411852
+            },
+            "shap": {
+              "tau_hat_T": 0.04234815193338177
+            },
+            "permutation": {
+              "tau_hat_T": 0.004517055278030191
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.064112374641408
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.09559492382144524
+            },
+            "drlearner": {
+              "tau_hat_T": 0.1325280288724953
+            },
+            "causalpfn": {
+              "tau_hat_T": -0.0352248755459997
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "black",
+          "p": 8,
+          "T_idx": 5,
+          "feature_names": [
+            "age",
+            "re75",
+            "re74",
+            "married",
+            "educ",
+            "T",
+            "hisp",
+            "nodegr"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.8337078651685393,
+          "marginal_2corr_T": 0.04320403403675246,
+          "tau_hat_T_mean": -0.10767225921154022,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.04320403403675246
+            },
+            "shap": {
+              "tau_hat_T": 0.03854438446348356
+            },
+            "permutation": {
+              "tau_hat_T": -0.00469360750464406
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.0033086477860152772
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.006458967120465773
+            },
+            "drlearner": {
+              "tau_hat_T": 0.010378555024706963
+            },
+            "causalpfn": {
+              "tau_hat_T": -0.0726646592725765
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "hisp",
+          "p": 8,
+          "T_idx": 0,
+          "feature_names": [
+            "T",
+            "re74",
+            "educ",
+            "nodegr",
+            "black",
+            "re75",
+            "married",
+            "age"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9123595505617977,
+          "marginal_2corr_T": -0.16813190048467003,
+          "tau_hat_T_mean": -0.04823686182498932,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.16813190048467003
+            },
+            "shap": {
+              "tau_hat_T": -0.051783040027783014
+            },
+            "permutation": {
+              "tau_hat_T": 0.01969630643450724
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.07803396319752715
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.08061919653874061
+            },
+            "drlearner": {
+              "tau_hat_T": -0.14544786601751675
+            },
+            "causalpfn": {
+              "tau_hat_T": -0.10403528715332969
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "married",
+          "p": 8,
+          "T_idx": 0,
+          "feature_names": [
+            "T",
+            "nodegr",
+            "hisp",
+            "re75",
+            "re74",
+            "black",
+            "age",
+            "educ"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.8314606741573034,
+          "marginal_2corr_T": 0.09306253643462142,
+          "tau_hat_T_mean": -0.01504137646406889,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.09306253643462142
+            },
+            "shap": {
+              "tau_hat_T": 0.04512731381024539
+            },
+            "permutation": {
+              "tau_hat_T": 0.02571799472264068
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.0833225701112771
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.01799984743862978
+            },
+            "drlearner": {
+              "tau_hat_T": 0.07950413486550688
+            },
+            "causalpfn": {
+              "tau_hat_T": 0.07328252941811012
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "nodegr",
+          "p": 8,
+          "T_idx": 3,
+          "feature_names": [
+            "married",
+            "re75",
+            "black",
+            "T",
+            "age",
+            "hisp",
+            "re74",
+            "educ"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.7820224719101123,
+          "marginal_2corr_T": -0.30202476211651264,
+          "tau_hat_T_mean": 0.011012175120413303,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.30202476211651264
+            },
+            "shap": {
+              "tau_hat_T": -0.0
+            },
+            "permutation": {
+              "tau_hat_T": -0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -6.847654252810452e-17
+            },
+            "causal_forest": {
+              "tau_hat_T": 5.15437280206227e-32
+            },
+            "drlearner": {
+              "tau_hat_T": -0.20653632790498314
+            },
+            "causalpfn": {
+              "tau_hat_T": -0.0021305784285975834
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "re74",
+          "p": 8,
+          "T_idx": 4,
+          "feature_names": [
+            "hisp",
+            "married",
+            "nodegr",
+            "black",
+            "T",
+            "age",
+            "educ",
+            "re75"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.7325842696629213,
+          "marginal_2corr_T": -0.002107143934362302,
+          "tau_hat_T_mean": 0.00232198485173285,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.002107143934362302
+            },
+            "shap": {
+              "tau_hat_T": -0.008750072949414567
+            },
+            "permutation": {
+              "tau_hat_T": 0.014500158117714369
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.0560030488563635
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.08048409816280015
+            },
+            "drlearner": {
+              "tau_hat_T": -0.038187362229628985
+            },
+            "causalpfn": {
+              "tau_hat_T": -0.07584022016267247
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        },
+        {
+          "control": "re75",
+          "p": 8,
+          "T_idx": 6,
+          "feature_names": [
+            "black",
+            "married",
+            "age",
+            "re74",
+            "hisp",
+            "educ",
+            "T",
+            "nodegr"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.6494382022471911,
+          "marginal_2corr_T": 0.08303737976286261,
+          "tau_hat_T_mean": -0.0003587089595384896,
+          "tau_hat_T_sd": 0.0,
+          "n_repeats_effective": 1,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.08303737976286261
+            },
+            "shap": {
+              "tau_hat_T": 0.030545651150635008
+            },
+            "permutation": {
+              "tau_hat_T": 0.006237512805661238
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.08845816294825641
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.08132640248136695
+            },
+            "drlearner": {
+              "tau_hat_T": 0.0807958242346131
+            },
+            "causalpfn": {
+              "tau_hat_T": 0.07375768496801487
+            },
+            "dopfn": {
+              "error": "ImportError: cannot import name 'Optional' from 'torch.nn.modules.transformer' (<venv>/site-packages/torch/nn/modules/transformer.py)"
+            }
+          }
+        }
+      ],
+      "summary": {
+        "n_controls": 8,
+        "n_excluded_near_constant": 0,
+        "mean_abs_marginal_2corr_T": 0.11741284249971032,
+        "max_abs_marginal_2corr_T": 0.30202476211651264,
+        "mean_abs_tau_hat_T": 0.03506926674890565,
+        "max_abs_tau_hat_T": 0.10767225921154022,
+        "comparators": {
+          "marginal": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.11741284249971032,
+            "max_abs_tau_hat_T": 0.30202476211651264,
+            "n_errors": 0
+          },
+          "shap": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.031056126967599948,
+            "max_abs_tau_hat_T": 0.051783040027783014,
+            "n_errors": 0
+          },
+          "permutation": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.02162367826847296,
+            "max_abs_tau_hat_T": 0.09762679128458593,
+            "n_errors": 0
+          },
+          "lingam": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.0,
+            "max_abs_tau_hat_T": 0.0,
+            "n_errors": 0
+          },
+          "doubleml": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.05157518614313049,
+            "max_abs_tau_hat_T": 0.08845816294825641,
+            "n_errors": 0
+          },
+          "causal_forest": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.04802550038352249,
+            "max_abs_tau_hat_T": 0.09559492382144524,
+            "n_errors": 0
+          },
+          "drlearner": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.09598363006028449,
+            "max_abs_tau_hat_T": 0.20653632790498314,
+            "n_errors": 0
+          },
+          "causalpfn": {
+            "n": 8,
+            "mean_abs_tau_hat_T": 0.06118262566938858,
+            "max_abs_tau_hat_T": 0.10403528715332969,
+            "n_errors": 0
+          },
+          "dopfn": {
+            "n": 0,
+            "mean_abs_tau_hat_T": null,
+            "max_abs_tau_hat_T": null,
+            "n_errors": 8
+          }
+        }
+      }
+    },
+    "criteo": {
+      "treatment": "Criteo randomized ad exposure",
+      "n_total": 12000,
+      "subsample": 12000,
+      "controls": [
+        {
+          "control": "f0",
+          "p": 12,
+          "T_idx": 4,
+          "feature_names": [
+            "f10",
+            "f6",
+            "f7",
+            "f2",
+            "T",
+            "f8",
+            "f1",
+            "f11",
+            "f3",
+            "f5",
+            "f4",
+            "f9"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.2613333333333333,
+          "marginal_2corr_T": -0.03282825582785094,
+          "tau_hat_T_mean": -0.031109190359711648,
+          "tau_hat_T_sd": 0.0123533257058665,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.03282825582785094
+            },
+            "shap": {
+              "tau_hat_T": -0.005028145528329265
+            },
+            "permutation": {
+              "tau_hat_T": 6.978941879396406e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.016165311370257555
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.02035298795682902
+            },
+            "drlearner": {
+              "tau_hat_T": -0.01575168043411323
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f1",
+          "p": 12,
+          "T_idx": 1,
+          "feature_names": [
+            "f11",
+            "T",
+            "f7",
+            "f6",
+            "f5",
+            "f4",
+            "f2",
+            "f0",
+            "f3",
+            "f8",
+            "f10",
+            "f9"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9863333333333333,
+          "marginal_2corr_T": 0.010388128964788645,
+          "tau_hat_T_mean": -0.25890614092350006,
+          "tau_hat_T_sd": 0.16195861430080458,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.010388128964788645
+            },
+            "shap": {
+              "tau_hat_T": 2.7626261919014756e-20
+            },
+            "permutation": {
+              "tau_hat_T": 0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.003662339003227062
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.008891789985650175
+            },
+            "drlearner": {
+              "tau_hat_T": -0.0072334056753188564
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f2",
+          "p": 12,
+          "T_idx": 5,
+          "feature_names": [
+            "f4",
+            "f5",
+            "f1",
+            "f11",
+            "f9",
+            "T",
+            "f6",
+            "f8",
+            "f7",
+            "f10",
+            "f0",
+            "f3"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5250833333333333,
+          "marginal_2corr_T": 0.014229935671978694,
+          "tau_hat_T_mean": -0.03432031869888306,
+          "tau_hat_T_sd": 0.011736849934019232,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.014229935671978694
+            },
+            "shap": {
+              "tau_hat_T": 0.000625107133290974
+            },
+            "permutation": {
+              "tau_hat_T": 3.2312165487935474e-06
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.0020118216803097838
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.004675169862214945
+            },
+            "drlearner": {
+              "tau_hat_T": -0.0014777700312634651
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f3",
+          "p": 12,
+          "T_idx": 1,
+          "feature_names": [
+            "f5",
+            "T",
+            "f8",
+            "f6",
+            "f1",
+            "f7",
+            "f9",
+            "f11",
+            "f2",
+            "f4",
+            "f0",
+            "f10"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.8164166666666667,
+          "marginal_2corr_T": -0.03521301550203216,
+          "tau_hat_T_mean": -0.0026230347342789174,
+          "tau_hat_T_sd": 0.007926470360600542,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.03521301550203216
+            },
+            "shap": {
+              "tau_hat_T": -0.00117763502983389
+            },
+            "permutation": {
+              "tau_hat_T": -0.0010237598488056388
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.01009016413441406
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.011890911209449774
+            },
+            "drlearner": {
+              "tau_hat_T": 0.015777247620394286
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f4",
+          "p": 12,
+          "T_idx": 5,
+          "feature_names": [
+            "f3",
+            "f0",
+            "f1",
+            "f7",
+            "f8",
+            "T",
+            "f9",
+            "f5",
+            "f11",
+            "f2",
+            "f10",
+            "f6"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9555833333333333,
+          "marginal_2corr_T": 0.045614167889798954,
+          "tau_hat_T_mean": -0.10130564272403716,
+          "tau_hat_T_sd": 0.020450130416611118,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.045614167889798954
+            },
+            "shap": {
+              "tau_hat_T": 0.00010714378167306615
+            },
+            "permutation": {
+              "tau_hat_T": -1.993593276550243e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.006048504453199261
+            },
+            "causal_forest": {
+              "tau_hat_T": -2.9062422770099786e-06
+            },
+            "drlearner": {
+              "tau_hat_T": 0.006649591307633867
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f5",
+          "p": 12,
+          "T_idx": 9,
+          "feature_names": [
+            "f1",
+            "f3",
+            "f0",
+            "f9",
+            "f11",
+            "f8",
+            "f6",
+            "f2",
+            "f7",
+            "T",
+            "f4",
+            "f10"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9410833333333334,
+          "marginal_2corr_T": -0.01673072461201836,
+          "tau_hat_T_mean": 0.10878154635429382,
+          "tau_hat_T_sd": 0.051849020079480015,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.01673072461201836
+            },
+            "shap": {
+              "tau_hat_T": -0.0001319582954694379
+            },
+            "permutation": {
+              "tau_hat_T": 0.0012733948651255322
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": 0.0021165392451788665
+            },
+            "causal_forest": {
+              "tau_hat_T": 0.004056713531730622
+            },
+            "drlearner": {
+              "tau_hat_T": -0.0014184497640531684
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f6",
+          "p": 12,
+          "T_idx": 8,
+          "feature_names": [
+            "f9",
+            "f8",
+            "f7",
+            "f11",
+            "f1",
+            "f4",
+            "f2",
+            "f5",
+            "T",
+            "f0",
+            "f3",
+            "f10"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.2613333333333333,
+          "marginal_2corr_T": -0.044100598572865045,
+          "tau_hat_T_mean": -0.013167435117065907,
+          "tau_hat_T_sd": 0.0025100324924681,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.044100598572865045
+            },
+            "shap": {
+              "tau_hat_T": -0.00552667840716068
+            },
+            "permutation": {
+              "tau_hat_T": 0.0002855529291637793
+            },
+            "lingam": {
+              "tau_hat_T": -0.030361278857865017
+            },
+            "doubleml": {
+              "tau_hat_T": -0.019442841546139754
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.02064737525381986
+            },
+            "drlearner": {
+              "tau_hat_T": -0.023116367119063674
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f7",
+          "p": 12,
+          "T_idx": 4,
+          "feature_names": [
+            "f5",
+            "f9",
+            "f6",
+            "f3",
+            "T",
+            "f0",
+            "f4",
+            "f2",
+            "f10",
+            "f1",
+            "f8",
+            "f11"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9410833333333334,
+          "marginal_2corr_T": 0.0028618458199595755,
+          "tau_hat_T_mean": -0.3239309310913086,
+          "tau_hat_T_sd": 0.07204409330248653,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.0028618458199595755
+            },
+            "shap": {
+              "tau_hat_T": 3.5977483724497386e-05
+            },
+            "permutation": {
+              "tau_hat_T": 1.4730103894644576e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.0010248403305526288
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.004004364835932967
+            },
+            "drlearner": {
+              "tau_hat_T": 0.0005674053156817508
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f8",
+          "p": 12,
+          "T_idx": 9,
+          "feature_names": [
+            "f9",
+            "f6",
+            "f10",
+            "f4",
+            "f5",
+            "f1",
+            "f2",
+            "f7",
+            "f3",
+            "T",
+            "f11",
+            "f0"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.5250833333333333,
+          "marginal_2corr_T": -0.041426510710565606,
+          "tau_hat_T_mean": 0.015049605257809162,
+          "tau_hat_T_sd": 0.01583917839991151,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.041426510710565606
+            },
+            "shap": {
+              "tau_hat_T": -0.0016512619652196327
+            },
+            "permutation": {
+              "tau_hat_T": 0.0001025551042933559
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.005670213477033158
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.01015451045889107
+            },
+            "drlearner": {
+              "tau_hat_T": -0.014355278020913574
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f9",
+          "p": 12,
+          "T_idx": 6,
+          "feature_names": [
+            "f4",
+            "f6",
+            "f0",
+            "f1",
+            "f2",
+            "f5",
+            "T",
+            "f3",
+            "f11",
+            "f8",
+            "f7",
+            "f10"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.7940833333333334,
+          "marginal_2corr_T": 0.02143710784690786,
+          "tau_hat_T_mean": -0.06721089854836464,
+          "tau_hat_T_sd": 0.020954042063468858,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.02143710784690786
+            },
+            "shap": {
+              "tau_hat_T": 0.000785657081692226
+            },
+            "permutation": {
+              "tau_hat_T": 6.282403847209794e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.0018971335002483168
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.002369097835181607
+            },
+            "drlearner": {
+              "tau_hat_T": -0.004047517968179262
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f10",
+          "p": 12,
+          "T_idx": 4,
+          "feature_names": [
+            "f11",
+            "f7",
+            "f4",
+            "f0",
+            "T",
+            "f3",
+            "f2",
+            "f1",
+            "f6",
+            "f9",
+            "f5",
+            "f8"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9555833333333333,
+          "marginal_2corr_T": 0.04386354112401489,
+          "tau_hat_T_mean": -0.3828958302736282,
+          "tau_hat_T_sd": 0.1380101479246581,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": 0.04386354112401489
+            },
+            "shap": {
+              "tau_hat_T": 0.00016073998340017024
+            },
+            "permutation": {
+              "tau_hat_T": -4.6884355399368084e-05
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.002598999800100476
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.0035262045183481116
+            },
+            "drlearner": {
+              "tau_hat_T": -0.005162909492218319
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        },
+        {
+          "control": "f11",
+          "p": 12,
+          "T_idx": 4,
+          "feature_names": [
+            "f1",
+            "f8",
+            "f3",
+            "f7",
+            "T",
+            "f6",
+            "f0",
+            "f5",
+            "f4",
+            "f2",
+            "f10",
+            "f9"
+          ],
+          "cov_dropped_for_p_limit": null,
+          "top_freq": 0.9863333333333333,
+          "marginal_2corr_T": -0.015335204589980023,
+          "tau_hat_T_mean": 0.06723997779190541,
+          "tau_hat_T_sd": 0.0656240767416118,
+          "n_repeats_effective": 5,
+          "comparators": {
+            "marginal": {
+              "tau_hat_T": -0.015335204589980023
+            },
+            "shap": {
+              "tau_hat_T": -0.0
+            },
+            "permutation": {
+              "tau_hat_T": -0.0
+            },
+            "lingam": {
+              "tau_hat_T": 0.0
+            },
+            "doubleml": {
+              "tau_hat_T": -0.0032911664106224123
+            },
+            "causal_forest": {
+              "tau_hat_T": -0.004020768047195743
+            },
+            "drlearner": {
+              "tau_hat_T": 0.004852710480682228
+            },
+            "causalpfn": {
+              "tau_hat_T": null
+            },
+            "dopfn": {
+              "tau_hat_T": null
+            }
+          }
+        }
+      ],
+      "summary": {
+        "n_controls": 12,
+        "n_excluded_near_constant": 0,
+        "mean_abs_marginal_2corr_T": 0.027002419761063393,
+        "max_abs_marginal_2corr_T": 0.045614167889798954,
+        "mean_abs_tau_hat_T": 0.11721171265623222,
+        "max_abs_tau_hat_T": 0.3828958302736282,
+        "comparators": {
+          "marginal": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.027002419761063393,
+            "max_abs_tau_hat_T": 0.045614167889798954,
+            "n_errors": 0
+          },
+          "shap": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.00126919205748282,
+            "max_abs_tau_hat_T": 0.00552667840716068,
+            "n_errors": 0
+          },
+          "permutation": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.00024188815110522303,
+            "max_abs_tau_hat_T": 0.0012733948651255322,
+            "n_errors": 0
+          },
+          "lingam": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.0025301065714887516,
+            "max_abs_tau_hat_T": 0.030361278857865017,
+            "n_errors": 0
+          },
+          "doubleml": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.006168322912606944,
+            "max_abs_tau_hat_T": 0.019442841546139754,
+            "n_errors": 0
+          },
+          "causal_forest": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.007882733311460074,
+            "max_abs_tau_hat_T": 0.02064737525381986,
+            "n_errors": 0
+          },
+          "drlearner": {
+            "n": 12,
+            "mean_abs_tau_hat_T": 0.008367527769126306,
+            "max_abs_tau_hat_T": 0.023116367119063674,
+            "n_errors": 0
+          },
+          "causalpfn": {
+            "n": 0,
+            "mean_abs_tau_hat_T": null,
+            "max_abs_tau_hat_T": null,
+            "n_errors": 0
+          },
+          "dopfn": {
+            "n": 0,
+            "mean_abs_tau_hat_T": null,
+            "max_abs_tau_hat_T": null,
+            "n_errors": 0
+          }
+        }
+      }
+    }
+  }
+}

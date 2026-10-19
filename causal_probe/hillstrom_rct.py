@@ -1,6 +1,6 @@
 """Hillstrom RCT benchmark with hidden treatment + proxy/leak/null decoys.
 
-Experiment A:
+Implements the Hillstrom experiment:
 
   1. Load Hillstrom (randomized email marketing experiment).
   2. Binary treatment: Mens E-Mail vs No E-Mail.

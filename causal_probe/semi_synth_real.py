@@ -55,6 +55,146 @@ def _f_interaction(XC: np.ndarray, coeffs_lin: np.ndarray, pair_coef: float) -> 
 
 
 # ---------------------------------------------------------------------------
+# Oracle view of a generated instance: the DECOY-AUGMENTED causal graph
+# ---------------------------------------------------------------------------
+
+
+class _OracleSample:
+    """Minimal .X / .y / .tau namespace matching scm.sample() results."""
+
+    __slots__ = ("X", "y", "tau")
+
+    def __init__(self, X, y, tau):
+        self.X, self.y, self.tau = X, y, tau
+
+
+class DecoyOracleSCM:
+    """Graph-oracle interface to one make_benchmark instance, exposing the
+    AUGMENTED graph (real covariates + constructed decoys) in the shape the
+    causal-Shapley machinery (causal_probe.shapley_causal.both_shapley)
+    expects: ``simulate_do`` / ``sample`` / ``feature_to_Z`` / ``y_idx_in_Z``
+    / ``std_Z`` / ``_mean_Z`` / ``_topo_order``.
+
+    Node layout (Z indices):
+      0 .. p_full-1 : the observed X_full columns, in benchmark (shuffled) order
+      p_full        : Y
+      p_full + 1    : hidden confounder H (only when hidden_confound)
+
+    How each column kind enters the oracle's graph:
+      real (causal)     exogenous; joint empirical distribution over rows;
+                        parent of Y through the family mechanism f
+      real (non-causal) exogenous; no edge into Y
+      proxy_j           child of its SOURCE real column: proxy = X_src + eps.
+                        do(proxy) has no path into Y -> do-effect 0; do(X_src)
+                        propagates to the proxy (edge kept)
+      leak              child of Y: leak = Y + eps. do(leak) does not move Y
+                        -> do-effect exactly 0 (the skyline contrast: a fitted
+                        predictor loads heavily on the leak)
+      noise_j           isolated exogenous N(0,1) node
+      confchild_j       child of the HIDDEN node H: confchild = H + eps.
+                        H is a parent of Y (gamma * H) but not a feature;
+                        do(confchild) has no path into Y -> do-effect 0
+      Y                 child of the causal reals (+ gamma * H when hidden)
+
+    ``simulate_do(n, rng, clamp)`` draws n bootstrap rows of the empirical
+    (standardized) real matrix -- interventions on a real column overwrite it
+    (cutting its dependence on the other reals, exactly as the ground-truth
+    tau Monte-Carlo in make_benchmark does) -- then forward-simulates
+    Y -> {proxy, leak, noise, confchild} with fresh mechanism noise. All noise
+    is drawn in a fixed order regardless of the clamp set, so a +/- contrast
+    pair sharing one seed (common random numbers, as both_shapley does) cancels
+    exactly: every decoy's do-contrast is 0.0 to machine precision, and on the
+    linear family a causal real's contrast equals true_tau exactly.
+    """
+
+    def __init__(self, *, X_std, outcome_fn, causal_in_real, hidden_idx,
+                 gamma_confound, eps_scale, col_kinds, col_refs,
+                 X_full, y_raw, true_tau):
+        self._X_std = X_std                      # (n, p_real) incl. hidden col
+        self._outcome = outcome_fn
+        self._causal_in_real = list(causal_in_real)
+        self._hidden_idx = hidden_idx
+        self._gamma = float(gamma_confound)
+        self._eps_scale = float(eps_scale)
+        self._col_kinds = list(col_kinds)        # per X_full column
+        self._col_refs = list(col_refs)          # real-col index or None
+        p_full = X_full.shape[1]
+        self.p_full = p_full
+        self.y_idx_in_Z = p_full
+        self.feature_to_Z = np.arange(p_full, dtype=int)
+        self._z_hidden = p_full + 1 if hidden_idx is not None else None
+        N = p_full + 1 + (1 if hidden_idx is not None else 0)
+        self.N = N
+        self._topo_order = np.arange(N, dtype=int)  # unused (MC branch); shape only
+        mean = np.zeros(N); std = np.ones(N)
+        mean[:p_full] = X_full.mean(axis=0)
+        std[:p_full] = X_full.std(axis=0).clip(min=1e-9)
+        mean[p_full] = float(np.mean(y_raw))
+        std[p_full] = float(np.std(y_raw)) or 1.0
+        if self._z_hidden is not None:
+            mean[self._z_hidden] = float(np.mean(X_std[:, hidden_idx]))
+            std[self._z_hidden] = float(np.std(X_std[:, hidden_idx])) or 1.0
+        self._mean_Z = mean
+        self.std_Z = std
+        self._true_tau = np.asarray(true_tau, dtype=np.float64)
+
+    def simulate_do(self, n: int, rng: np.random.Generator, clamp=None) -> np.ndarray:
+        clamp = dict(clamp or {})
+        p_full, N = self.p_full, self.N
+        # Fixed draw order regardless of clamp set (common-random-numbers key).
+        rows = rng.integers(0, self._X_std.shape[0], size=n)
+        eps_y = rng.standard_normal(n)
+        eps_cols = rng.standard_normal((n, p_full))
+        Xr = self._X_std[rows]                   # copy (fancy indexing)
+        # 1. Interventions on observed real columns cut their incoming
+        #    (empirical-joint) dependence and propagate to children (Y, proxy).
+        for z, v in clamp.items():
+            if z < p_full and self._col_kinds[z] == "real":
+                Xr[:, self._col_refs[z]] = v
+        H = Xr[:, self._hidden_idx] if self._hidden_idx is not None else None
+        if self._z_hidden is not None and self._z_hidden in clamp:
+            H = np.full(n, float(clamp[self._z_hidden]))
+        # 2. Y from the true mechanism (reflects any upstream clamps).
+        y = self._outcome(Xr[:, self._causal_in_real])
+        if H is not None:
+            y = y + self._gamma * H
+        y = y + self._eps_scale * eps_y
+        if self.y_idx_in_Z in clamp:
+            y = np.full(n, float(clamp[self.y_idx_in_Z]))
+        # 3. Feature columns (decoys re-simulated from their parents).
+        Z = np.empty((n, N), dtype=np.float64)
+        for z in range(p_full):
+            if z in clamp:
+                Z[:, z] = float(clamp[z])
+                continue
+            k = self._col_kinds[z]
+            if k == "real":
+                Z[:, z] = Xr[:, self._col_refs[z]]
+            elif k == "proxy":
+                Z[:, z] = Xr[:, self._col_refs[z]] + self._eps_scale * eps_cols[:, z]
+            elif k == "leak":
+                Z[:, z] = y + self._eps_scale * eps_cols[:, z]
+            elif k == "noise":
+                Z[:, z] = eps_cols[:, z]
+            elif k == "conf":
+                Z[:, z] = H + self._eps_scale * eps_cols[:, z]
+            else:  # pragma: no cover
+                raise ValueError(f"unknown column kind {k!r}")
+        Z[:, self.y_idx_in_Z] = y
+        if self._z_hidden is not None:
+            Z[:, self._z_hidden] = H
+        return Z
+
+    def sample(self, n: int, rng: np.random.Generator) -> _OracleSample:
+        """Observational sample, standardized like the (X, y) the probe sees."""
+        Z = self.simulate_do(n, rng, {})
+        fz = self.feature_to_Z
+        X = (Z[:, fz] - self._mean_Z[fz]) / self.std_Z[fz]
+        y = (Z[:, self.y_idx_in_Z] - self._mean_Z[self.y_idx_in_Z]) / self.std_Z[self.y_idx_in_Z]
+        return _OracleSample(X, y, self._true_tau.copy())
+
+
+# ---------------------------------------------------------------------------
 # Construct the semi-synthetic benchmark
 # ---------------------------------------------------------------------------
 
@@ -70,6 +210,9 @@ def make_benchmark(
     add_leak: bool = True,
     n_mc: int = 8192,
     noise_sd: float = 0.3,
+    hidden_confound: bool = False,
+    gamma_confound: float = 1.0,
+    k_conf_child: int = 1,
 ):
     """Take real X, attach synthetic outcome + decoys, return everything.
 
@@ -87,6 +230,17 @@ def make_benchmark(
     # Choose causal parents
     causal_in_real = rng.choice(p_real, size=min(n_causal, p_real), replace=False).tolist()
     XC = X_std[:, causal_in_real]
+
+    # Optionally designate one real column as a HIDDEN confounder H: it is a
+    # parent of Y (added below) and of an observed proxy child, but is REMOVED
+    # from X_full. The backdoor H -> {observed feature, Y} is therefore
+    # unadjustable, so the confounded child's true tau is 0 while its
+    # observational association with Y is non-zero.
+    hidden_idx = None
+    if hidden_confound:
+        non_causal = [j for j in range(p_real) if j not in causal_in_real]
+        if non_causal:
+            hidden_idx = int(rng.choice(non_causal))
 
     # Build outcome function
     if outcome_family == "linear":
@@ -106,7 +260,10 @@ def make_benchmark(
         raise ValueError(f"Unknown outcome_family {outcome_family!r}")
 
     eps_scale = noise_sd
-    y_raw = _outcome(XC) + eps_scale * rng.standard_normal(n)
+    y_signal = _outcome(XC)
+    if hidden_idx is not None:                       # hidden confounder enters Y
+        y_signal = y_signal + gamma_confound * X_std[:, hidden_idx]
+    y_raw = y_signal + eps_scale * rng.standard_normal(n)
 
     # Decoys
     proxy_source = rng.choice(causal_in_real, size=min(k_proxy, len(causal_in_real)), replace=False).tolist()
@@ -115,23 +272,37 @@ def make_benchmark(
         P[:, j] = X_std[:, idx] + eps_scale * rng.standard_normal(n)
     L = y_raw + eps_scale * rng.standard_normal(n) if add_leak else None
     N = rng.standard_normal((n, k_noise))
+    # Observed children of the hidden confounder (true tau = 0, but associated
+    # with Y through the unobserved H).
+    conf_children = []
+    if hidden_idx is not None:
+        for _ in range(k_conf_child):
+            conf_children.append(X_std[:, hidden_idx] + eps_scale * rng.standard_normal(n))
 
-    # Assemble full feature matrix with shuffled order
+    # Assemble full feature matrix with shuffled order. The 5th tuple slot is
+    # the column's parent reference in the augmented graph: the real-column
+    # index for "real"/"proxy" kinds, None otherwise (leak's parent is Y,
+    # conf's parent is the hidden node, noise has no parent).
     parts = []
     for j in range(p_real):
+        if j == hidden_idx:
+            continue  # hidden confounder is unobserved -> excluded from X_full
         nm = f"real_{j}" + ("*" if j in causal_in_real else "")
-        parts.append((nm, X_std[:, j:j+1], j in causal_in_real, "real"))
+        parts.append((nm, X_std[:, j:j+1], j in causal_in_real, "real", j))
     for j in range(k_proxy):
-        parts.append((f"proxy_{j+1}_of_real{proxy_source[j]}", P[:, j:j+1], False, "proxy"))
+        parts.append((f"proxy_{j+1}_of_real{proxy_source[j]}", P[:, j:j+1], False, "proxy", proxy_source[j]))
     if add_leak:
-        parts.append((f"leak_Y", L.reshape(-1, 1), False, "leak"))
+        parts.append((f"leak_Y", L.reshape(-1, 1), False, "leak", None))
     for j in range(k_noise):
-        parts.append((f"noise_{j+1}", N[:, j:j+1], False, "noise"))
+        parts.append((f"noise_{j+1}", N[:, j:j+1], False, "noise", None))
+    for j, xc in enumerate(conf_children):
+        parts.append((f"confchild_{j+1}", xc.reshape(-1, 1), False, "conf", None))
 
     order = rng.permutation(len(parts))
     names = [parts[i][0] for i in order]
     is_causal = [parts[i][2] for i in order]
     kinds = [parts[i][3] for i in order]
+    refs = [parts[i][4] for i in order]
     X_full = np.concatenate([parts[i][1] for i in order], axis=1)
 
     # Compute ground-truth tau via MC do() on the causal parents;
@@ -159,6 +330,16 @@ def make_benchmark(
         y_minus = _outcome(XC_minus).mean()
         true_tau[col_idx] = (y_plus - y_minus) / sd_y
 
+    # Oracle handle on the augmented graph + mechanisms (consumes no rng, so
+    # the RNG stream -- and hence the replication checks downstream -- is
+    # unchanged by its construction).
+    oracle_scm = DecoyOracleSCM(
+        X_std=X_std, outcome_fn=_outcome, causal_in_real=causal_in_real,
+        hidden_idx=hidden_idx, gamma_confound=gamma_confound,
+        eps_scale=eps_scale, col_kinds=kinds, col_refs=refs,
+        X_full=X_full, y_raw=y_raw, true_tau=true_tau,
+    )
+
     return {
         "X_full": X_full,
         "y": y_raw,
@@ -167,6 +348,7 @@ def make_benchmark(
         "kinds": kinds,
         "causal_in_real": causal_in_real,
         "outcome_family": outcome_family,
+        "scm": oracle_scm,
     }
 
 

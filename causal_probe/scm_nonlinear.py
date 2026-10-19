@@ -22,7 +22,7 @@ import numpy as np
 from causal_probe.scm import SCMSample
 from causal_probe.scm_utils import (
     monte_carlo_tau,
-    sample_laplace_unit as _laplace_unit,
+    sample_noise as _sample_noise,
     select_y_and_features,
     standardize_for_sample,
 )
@@ -57,9 +57,11 @@ class NonlinearSCM:
         quad_scale: float = 0.6,
         n_mc: int = 8192,
         y_position: Optional[int] = None,
+        noise: str = "laplace",
     ):
         self.p = p
         self.n_mc = n_mc
+        self.noise = noise
         N = p + 1
         if y_position is None:
             self._topo_order, self.y_idx_in_Z, self.feature_to_Z, _ = (
@@ -113,7 +115,7 @@ class NonlinearSCM:
     def _simulate_raw(self, n: int, rng: np.random.Generator) -> np.ndarray:
         """Forward-sim n rows of raw Z without any intervention."""
         N = self.p + 1
-        eps = _laplace_unit((n, N), rng)
+        eps = _sample_noise((n, N), rng, self.noise)
         Z = np.zeros((n, N), dtype=np.float64)
         for rank, node in enumerate(self._topo_order.tolist()):
             parents = [int(self._topo_order[r]) for r in range(rank)]
@@ -132,12 +134,36 @@ class NonlinearSCM:
         self, n: int, rng: np.random.Generator, intervene_idx: int, intervene_val: float
     ) -> np.ndarray:
         N = self.p + 1
-        eps = _laplace_unit((n, N), rng)
+        eps = _sample_noise((n, N), rng, self.noise)
         Z = np.zeros((n, N), dtype=np.float64)
         for rank, node in enumerate(self._topo_order.tolist()):
             node = int(node)
             if node == intervene_idx:
                 Z[:, node] = intervene_val
+                continue
+            parents = [int(self._topo_order[r]) for r in range(rank)]
+            if parents:
+                lin = Z[:, parents] @ self.B_lin[node, parents]
+                quad = (Z[:, parents] ** 2 - self._E_sq[parents].reshape(1, -1)) @ self.B_quad[node, parents]
+                Z[:, node] = np.clip(lin + quad + eps[:, node], -15.0, 15.0)
+            else:
+                Z[:, node] = eps[:, node]
+        return Z
+
+    def simulate_do(self, n: int, rng: np.random.Generator, clamp: dict) -> np.ndarray:
+        """Forward-sim n rows with a SET of nodes clamped (do on all of ``clamp``).
+
+        Generalizes _simulate_intervention from one node to an arbitrary
+        {node: value} set for coalition-based do-Shapley. Mechanism, clip, and
+        noise are identical to _simulate_intervention.
+        """
+        N = self.p + 1
+        eps = _sample_noise((n, N), rng, self.noise)
+        Z = np.zeros((n, N), dtype=np.float64)
+        for rank, node in enumerate(self._topo_order.tolist()):
+            node = int(node)
+            if node in clamp:
+                Z[:, node] = clamp[node]
                 continue
             parents = [int(self._topo_order[r]) for r in range(rank)]
             if parents:

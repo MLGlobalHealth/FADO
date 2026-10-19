@@ -2,7 +2,7 @@
 depend on the type-emb signal, or only on the position-p readout?
 
 The published `no_type_emb` ablation in `app:ablations` retrains with the
-type embedding zeroed. Reviewer (issue #5 cluster 3, F3.a) noted that
+type embedding zeroed. A natural concern is that
 even with type emb off, two structural cues survive that distinguish y
 from features: (i) y is always at column p in the input, and (ii) the
 head always drops position p at readout (asymmetric gradient signal at

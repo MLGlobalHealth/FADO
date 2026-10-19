@@ -106,12 +106,13 @@ def _f3(x: float) -> str:
 
 
 def _f3sub(point: float, lo: float, hi: float, *, sig: bool = False,
-           bold: bool = False) -> str:
-    r"""$0.921\;[0.88, 0.96]$, with optional bold and signed format."""
+           bold: bool = False, prec: int = 2) -> str:
+    r"""$0.921\;[0.88, 0.96]$, with CI as inline brackets.
+    `prec` sets the point-value decimal places (CI is always 2)."""
     if not np.isfinite(point):
         return "---"
     fmt = "+" if sig else ""
-    s = f"${point:{fmt}.3f}\\;[{lo:{fmt}.2f},{hi:{fmt}.2f}]$"
+    s = f"${point:{fmt}.{prec}f}\\;[{lo:{fmt}.2f},{hi:{fmt}.2f}]$"
     return f"$\\mathbf{{{s[1:-1]}}}$" if bold else s
 
 
@@ -249,13 +250,15 @@ def build_heterogeneous_p() -> None:
 
 # Motif → key feature index in the SCM, paper label, paper structure string.
 MOTIF_SPEC: list[tuple[str, str, str, list[int]]] = [
-    # tag, key feature, paper label, structure description
+    # tag, key feature, paper label, structure description.
+    # Note: B_proxy was dropped from the paper figure/tables because it is
+    # the same SCM as C_observed_confounder up to relabeling (a fork with Y
+    # as one of two children). Surviving panels are renumbered A-E.
     ("A_direct_cause",      "$X_1$", "A: direct cause $X_1\\!\\to\\!Y$",                          [0]),
-    ("B_proxy",             "$X_2$", "B: proxy $X_1\\!\\to\\!Y,\\,X_1\\!\\to\\!X_2$",            [1]),
-    ("C_observed_confounder","$X_1$","C: confounded $Z\\!\\to\\!X_1,\\,Z\\!\\to\\!Y$",            [0]),
-    ("D_mediator",          "$X_1/X_2$","D: mediator $X_1\\!\\to\\!X_2\\!\\to\\!Y$",              [0, 1]),
-    ("E_target_descendant", "$X_1$", "E: target-descendant leak $Y\\!\\to\\!X_1$",                [0]),
-    ("F_collider_leakage",  "$C$",   "F: collider $X_1\\!\\to\\!C\\!\\leftarrow\\!Y$",            [1]),
+    ("C_observed_confounder","$X_1$","B: confounded $Z\\!\\to\\!X_1,\\,Z\\!\\to\\!Y$",            [0]),
+    ("D_mediator",          "$X_1/X_2$","C: mediator $X_1\\!\\to\\!X_2\\!\\to\\!Y$",              [0, 1]),
+    ("E_target_descendant", "$X_1$", "D: target descendant $Y\\!\\to\\!X_1$",                     [0]),
+    ("F_collider_leakage",  "$C$",   "E: collider $X_1\\!\\to\\!C\\!\\leftarrow\\!Y$",            [1]),
 ]
 
 
@@ -275,9 +278,11 @@ def _motif_bootstrap_ci(d_motif: dict, feat_idx: int) -> tuple[float, float, flo
 
 def build_motifs() -> None:
     d = _load(RESULTS / "eval_main_p5_50k.json")["motifs"]
+    shap_d = _load(RESULTS / "motif_pred_baselines_p5.json")["motifs"]
     rows = []
     for tag, key, label, feats in MOTIF_SPEC:
         info = d[tag]
+        shap_rows = {r["feature"]: r for r in shap_d[tag]["rows"]}
         if len(feats) == 1:
             i = feats[0]
             row = info["rows"][i]
@@ -285,33 +290,38 @@ def build_motifs() -> None:
             mean, lo, hi = _motif_bootstrap_ci(info, i)
             assoc = row["assoc_mean"]
             multi = row["multivariate_mean"]
+            shap = shap_rows[i]["shap_mean"]
             true_zero = abs(true) < 1e-6
             model_cell = _f3sub(mean, lo, hi, bold=true_zero)
             cells = [label, key, f"${true:.2f}$" if not true_zero else "$0$",
-                     model_cell, f"${assoc:.2f}$", f"${multi:.2f}$"]
+                     model_cell, f"${assoc:.2f}$", f"${multi:.2f}$",
+                     f"${shap:.2f}$"]
         else:
             i0, i1 = feats
             r0, r1 = info["rows"][i0], info["rows"][i1]
             t0, t1 = r0["tau_true_mean"], r1["tau_true_mean"]
             m0, lo0, hi0 = _motif_bootstrap_ci(info, i0)
             m1, lo1, hi1 = _motif_bootstrap_ci(info, i1)
+            s0 = shap_rows[i0]["shap_mean"]
+            s1 = shap_rows[i1]["shap_mean"]
             cells = [label, key,
                      f"${t0:.2f}/{t1:.2f}$",
                      f"{_f3sub(m0, lo0, hi0)}/{_f3sub(m1, lo1, hi1)}",
                      f"${r0['assoc_mean']:.2f}/{r1['assoc_mean']:.2f}$",
-                     f"${r0['multivariate_mean']:.2f}/{r1['multivariate_mean']:.2f}$"]
+                     f"${r0['multivariate_mean']:.2f}/{r1['multivariate_mean']:.2f}$",
+                     f"${s0:.2f}/{s1:.2f}$"]
         rows.append(" & ".join(cells) + " \\\\")
 
     body = (
-        "\\begin{tabular}{l l r r r r}\n"
+        "\\begin{tabular}{l l r r r r r}\n"
         "\\toprule\n"
-        "Motif (structure) & Key feature & Truth & Model $\\tauhat$ & Marginal & Lin. reg. \\\\\n"
+        "Motif (structure) & Key feature & Truth & Model $\\tauhat$ & Marginal corr. & Multivariate regression & SHAP \\\\\n"
         "\\midrule\n"
         + "\n".join(rows) + "\n"
         "\\bottomrule\n"
         "\\end{tabular}\n"
     )
-    _write("motifs", body, "tab:motifs — 6 motif stress tests, 50 instances each")
+    _write("motifs", body, "tab:motifs — 5 motif stress tests, 50 instances each")
 
 
 # ---------------------------------------------------------------------------
@@ -346,46 +356,10 @@ def _probe_pearson_ci(suffix: str) -> tuple[float, float, float]:
     return _bootstrap_pearson(npz["pred"], npz["true"])
 
 
-def build_causal_baselines() -> None:
-    methods = [("lingam", "LiNGAM"), ("notears", "NOTEARS"),
-               ("pc", "PC"), ("ges", "GES"), ("fci", "FCI"),
-               ("doubleml", "DML$^\\dagger$"),
-               ("causal_forest", "CF$^\\dagger$")]
-    rows = []
-    for label, suf in BASELINE_SETTINGS:
-        cells = [label]
-        method_vals = []
-        for m, _ in methods:
-            d = _load(RESULTS / f"{m}_{suf}.json")
-            method_vals.append(d["pearson"])
-        probe_pt, probe_lo, probe_hi = _probe_pearson_ci(suf)
-        all_vals = method_vals + [probe_pt]
-        # bold the per-row max
-        i_max = int(np.nanargmax([v if np.isfinite(v) else -np.inf for v in all_vals]))
-        for j, v in enumerate(method_vals):
-            s = f"{v:.3f}"
-            cells.append(f"$\\mathbf{{{s}}}$" if i_max == j else f"${s}$")
-        probe_cell = _f3sub(probe_pt, probe_lo, probe_hi,
-                            bold=(i_max == len(method_vals)))
-        cells.append(probe_cell)
-        rows.append(" & ".join(cells) + " \\\\")
-
-    header = "Setting & " + " & ".join(lbl for _, lbl in methods) + " & FADO \\\\"
-    col_spec = "l " + "r " * (len(methods) + 1)
-    body = (
-        "\\begin{tabular}{" + col_spec.strip() + "}\n"
-        "\\toprule\n"
-        + header + "\n"
-        "\\midrule\n"
-        + "\n".join(rows) + "\n"
-        "\\bottomrule\n"
-        "\\end{tabular}\n"
-    )
-    _write("causal_baselines", body, "tab:causal-baselines")
-
-    # Paired-bootstrap Δ for the Hidden confounder p=5 row (probe vs LiNGAM).
-    # Cited inline in the tab:causal-baselines caption; emit as a separate
-    # \input fragment so the caption stays in lockstep with the NPZs.
+def build_causal_baselines_hidden_delta() -> None:
+    # Paired-bootstrap Δ for the Hidden confounder p=5 row (probe vs LiNGAM),
+    # emitted as a standalone \input fragment so the caption stays in
+    # lockstep with the NPZs.
     probe = np.load(BOOT / "probe_hidden_p5.npz", allow_pickle=True)
     lingam = np.load(BOOT / "lingam_hidden_p5.npz", allow_pickle=True)
     if not np.allclose(probe["true"], lingam["true"]):
@@ -405,10 +379,8 @@ def build_causal_baselines() -> None:
 def build_offlabel_pfn() -> None:
     """Off-label per-feature application of interventional PFNs.
 
-    Reads the CausalPFN per-setting JSONs that backed the original C-PFN
-    row of tab:causal-baselines (now removed). The Do-PFN cell renders ---
-    until the follow-up branch produces causal_probe/results/dopfn_<suf>.json
-    files matching BASELINE_SETTINGS.
+    The Do-PFN cell renders --- until the follow-up branch produces
+    causal_probe/results/dopfn_<suf>.json files matching BASELINE_SETTINGS.
     """
     rows = []
     for label, suf in BASELINE_SETTINGS:
@@ -434,36 +406,6 @@ def build_offlabel_pfn() -> None:
     _write("causal_offlabel_pfn", body, "tab:offlabel-pfn")
 
 
-def build_predictive_baselines() -> None:
-    methods = [("marginal", "Marginal"), ("ridge", "Lin. reg."),
-               ("permutation", "Permutation"), ("shap", "SHAP")]
-    rows = []
-    for label, suf in BASELINE_SETTINGS:
-        cells = [label]
-        method_vals = []
-        for m, _ in methods:
-            method_vals.append(_load(RESULTS / f"{m}_{suf}.json")["pearson"])
-        probe_pt, probe_lo, probe_hi = _probe_pearson_ci(suf)
-        # probe always wins this table → always bold probe
-        for v in method_vals:
-            cells.append(f"${v:.3f}$")
-        cells.append(_f3sub(probe_pt, probe_lo, probe_hi, bold=True))
-        rows.append(" & ".join(cells) + " \\\\")
-
-    header = "Setting & " + " & ".join(lbl for _, lbl in methods) + " & FADO \\\\"
-    col_spec = "l " + "r " * (len(methods) + 1)
-    body = (
-        "\\begin{tabular}{" + col_spec.strip() + "}\n"
-        "\\toprule\n"
-        + header + "\n"
-        "\\midrule\n"
-        + "\n".join(rows) + "\n"
-        "\\bottomrule\n"
-        "\\end{tabular}\n"
-    )
-    _write("predictive_baselines", body, "tab:predictive-baselines")
-
-
 # ---------------------------------------------------------------------------
 # Table: semi-synthetic real-X (tab:semisynth-realx)
 # ---------------------------------------------------------------------------
@@ -477,108 +419,114 @@ SEMISYNTH_ROWS: list[tuple[str, str]] = [
 ]
 
 
-def _ss_bootstrap_ci(npz_path: Path, kind: str) -> dict:
-    """Compute pooled-Pearson and FP CIs from per-SCM arrays in npz.
-
-    npz fields: pred, true, marginal, multivariate, kinds (object array of
-    strings: 'real'/'proxy'/'noise'/'leak' per (scm, feature)).
-    """
-    from scipy.stats import pearsonr
-    z = np.load(npz_path, allow_pickle=True)
-    out: dict = {}
-    for label, model_key in [("probe", "pred"), ("marg", "marginal"), ("multi", "multivariate")]:
-        if model_key not in z.files:
-            out[f"{label}_pearson"] = (float("nan"), float("nan"), float("nan"))
-            continue
-        pred = z[model_key]
-        true = z["true"]
-        n_scms = pred.shape[0]
-        rng = np.random.default_rng(BOOT_SEED)
-        boots = np.empty(BOOT_B)
-        for b in range(BOOT_B):
-            idx = rng.integers(0, n_scms, n_scms)
-            boots[b] = pearsonr(pred[idx].flatten(), true[idx].flatten())[0]
-        pt = pearsonr(pred.flatten(), true.flatten())[0]
-        out[f"{label}_pearson"] = (pt, float(np.percentile(boots, 2.5)),
-                                   float(np.percentile(boots, 97.5)))
-    # FP_proxy and FP_noise: per-SCM mean |tauhat| on the decoy columns,
-    # then bootstrap over SCMs.
-    kinds = np.array(z["kinds"])
-    for kind_label, fp_key in [("proxy", "fp_proxy"), ("noise", "fp_noise")]:
-        for src, model_key in [("probe", "pred"), ("marg", "marginal")]:
-            arr = z[model_key]
-            n_scms = arr.shape[0]
-            vals_per_scm = np.array([
-                np.abs(arr[i, kinds[i] == kind_label]).mean()
-                if (kinds[i] == kind_label).any() else np.nan
-                for i in range(n_scms)
-            ])
-            valid = vals_per_scm[~np.isnan(vals_per_scm)]
-            n_v = len(valid)
-            if n_v == 0:
-                out.setdefault(fp_key, {})[src] = (float("nan"),) * 3
-                continue
-            pt = float(valid.mean())
-            rng = np.random.default_rng(BOOT_SEED + 1)
-            boots = np.empty(BOOT_B)
-            for b in range(BOOT_B):
-                idx = rng.integers(0, n_v, n_v)
-                boots[b] = valid[idx].mean()
-            out.setdefault(fp_key, {})[src] = (pt, float(np.percentile(boots, 2.5)),
-                                               float(np.percentile(boots, 97.5)))
+def _per_scm_fp(arr: np.ndarray, kinds: np.ndarray, kind_label: str) -> np.ndarray:
+    """Per-SCM mean |τ̂| restricted to decoy columns of the given kind.
+    Returns shape (n_scms,); NaN for SCMs with no column of that kind."""
+    out = np.full(arr.shape[0], np.nan)
+    for i in range(arr.shape[0]):
+        mask = kinds[i] == kind_label
+        if mask.any():
+            out[i] = float(np.abs(arr[i, mask]).mean())
     return out
 
 
+def _bootstrap_paired_fp_delta(per_a: np.ndarray, per_b: np.ndarray,
+                               B: int = BOOT_B, seed: int = BOOT_SEED
+                               ) -> tuple[float, float, float]:
+    """Paired-bootstrap CI on (mean per-SCM FP_a − mean per-SCM FP_b)
+    over SCMs where both methods have a defined per-SCM FP."""
+    valid = ~(np.isnan(per_a) | np.isnan(per_b))
+    a, b = per_a[valid], per_b[valid]
+    n = len(a)
+    if n < 2:
+        return float("nan"), float("nan"), float("nan")
+    d_pt = float(a.mean() - b.mean())
+    rng = np.random.default_rng(seed)
+    boots = np.empty(B)
+    for k in range(B):
+        idx = rng.integers(0, n, n)
+        boots[k] = a[idx].mean() - b[idx].mean()
+    return d_pt, float(np.percentile(boots, 2.5)), float(np.percentile(boots, 97.5))
+
+
 def build_semisynth() -> None:
-    """Use point estimates from JSON; bootstrap CIs from npz when present."""
+    """Point-estimate cells with B2 (paired-Δ significance) bolding.
+
+    Pearson columns: bold the column winner only if its paired-bootstrap
+    lead over the runner-up (among FADO, Marginal, Multivariate) excludes
+    zero at 95%. FP columns (lower is better): bold the FADO-vs-Marginal
+    winner only if its lead in mean per-SCM |τ̂| on the decoy columns
+    excludes zero at 95%.
+    """
+    from scipy.stats import pearsonr
     rows = []
     for label, tag in SEMISYNTH_ROWS:
         d = _load(RESULTS / f"{tag}.json")
-        # Try to compute CIs from npz if available; otherwise CIs from JSON.
         npz_path = BOOT / f"{tag}.npz"
-        ci = _ss_bootstrap_ci(npz_path, tag) if npz_path.exists() else {}
-        # Pearson cells
-        def _pcell(method_key: str, src: str, bold: bool) -> str:
-            if f"{src}_pearson" in ci and np.isfinite(ci[f"{src}_pearson"][0]):
-                pt, lo, hi = ci[f"{src}_pearson"]
-                return _f3sub(pt, lo, hi, bold=bold)
-            v = d["pearson"][method_key]
-            return f"$\\mathbf{{{v:.3f}}}$" if bold else f"${v:.3f}$"
+        if not npz_path.exists():
+            # Fallback for old JSON-only data: bare points, no significance.
+            peas = [d["pearson"][k] for k in ("model", "marginal", "multivariate")]
+            fp_p = [d["fp_proxy"][k] for k in ("model", "marginal")]
+            fp_n = [d["fp_noise"][k] for k in ("model", "marginal")]
+            cells = [label,
+                     *(f"${v:.2f}$" for v in peas),
+                     *(f"${v:.2f}$" for v in fp_p),
+                     *(f"${v:.2f}$" for v in fp_n)]
+            rows.append(" & ".join(cells) + " \\\\")
+            continue
 
-        # Find best Pearson among (model, marginal, multivariate)
-        peas = [d["pearson"]["model"], d["pearson"]["marginal"], d["pearson"]["multivariate"]]
-        i_best_p = int(np.nanargmax([v if np.isfinite(v) else -np.inf for v in peas]))
+        z = np.load(npz_path, allow_pickle=True)
+        true = z["true"]
+        kinds = np.array(z["kinds"])
+        methods = {"probe": z["pred"], "marg": z["marginal"], "multi": z["multivariate"]}
+        pear_pt = {k: float(pearsonr(v.flatten(), true.flatten())[0])
+                   for k, v in methods.items()}
 
-        # FP cells (lower is better)
-        def _fpcell(fp_key: str, src: str, json_dict_key: str, bold: bool) -> str:
-            if fp_key in ci and src in ci[fp_key] and np.isfinite(ci[fp_key][src][0]):
-                pt, lo, hi = ci[fp_key][src]
-                return _f3sub(pt, lo, hi, bold=bold)
-            v = d[json_dict_key][src.replace("marg", "marginal").replace("probe", "model")]
-            return f"$\\mathbf{{{v:.3f}}}$" if bold else f"${v:.3f}$"
+        # Pearson winner significance: paired-Δ winner vs runner-up.
+        order = sorted(pear_pt.items(), key=lambda kv: kv[1], reverse=True)
+        win_key = order[0][0]
+        ru_key = order[1][0]
+        _, p_lo, _ = _bootstrap_paired_delta(methods[win_key], methods[ru_key], true)
+        pear_winner_sig = p_lo > 0  # winner significantly above runner-up
 
-        fp_proxy_pair = [d["fp_proxy"]["model"], d["fp_proxy"]["marginal"]]
-        i_best_fpp = int(np.nanargmin(fp_proxy_pair))
-        fp_noise_pair = [d["fp_noise"]["model"], d["fp_noise"]["marginal"]]
-        i_best_fpn = int(np.nanargmin(fp_noise_pair))
+        # FP winner significance per kind (proxy / noise) over (FADO, Marginal).
+        fp_result = {}
+        for kind in ("proxy", "noise"):
+            per_p = _per_scm_fp(z["pred"],     kinds, kind)
+            per_m = _per_scm_fp(z["marginal"], kinds, kind)
+            point_p = float(np.nanmean(per_p)) if not np.all(np.isnan(per_p)) else float("nan")
+            point_m = float(np.nanmean(per_m)) if not np.all(np.isnan(per_m)) else float("nan")
+            if not (np.isfinite(point_p) and np.isfinite(point_m)):
+                fp_result[kind] = (None, False, point_p, point_m)
+                continue
+            # Δ = winner − loser; winner significantly lower ⇒ Δ CI's hi < 0.
+            if point_p <= point_m:
+                _, _, hi = _bootstrap_paired_fp_delta(per_p, per_m)
+                fp_result[kind] = ("probe", hi < 0, point_p, point_m)
+            else:
+                _, _, hi = _bootstrap_paired_fp_delta(per_m, per_p)
+                fp_result[kind] = ("marg",  hi < 0, point_p, point_m)
 
-        cells = [
-            label,
-            _pcell("model", "probe", bold=(i_best_p == 0)),
-            _pcell("marginal", "marg", bold=(i_best_p == 1)),
-            _pcell("multivariate", "multi", bold=(i_best_p == 2)),
-            _fpcell("fp_proxy", "probe", "fp_proxy", bold=(i_best_fpp == 0)),
-            _fpcell("fp_proxy", "marg",  "fp_proxy", bold=(i_best_fpp == 1)),
-            _fpcell("fp_noise", "probe", "fp_noise", bold=(i_best_fpn == 0)),
-            _fpcell("fp_noise", "marg",  "fp_noise", bold=(i_best_fpn == 1)),
-        ]
+        def _cell(val: float, bold: bool) -> str:
+            if not np.isfinite(val):
+                return "---"
+            return f"$\\mathbf{{{val:.2f}}}$" if bold else f"${val:.2f}$"
+
+        cells = [label,
+                 _cell(pear_pt["probe"], bold=(win_key == "probe" and pear_winner_sig)),
+                 _cell(pear_pt["marg"],  bold=(win_key == "marg"  and pear_winner_sig)),
+                 _cell(pear_pt["multi"], bold=(win_key == "multi" and pear_winner_sig))]
+        for kind in ("proxy", "noise"):
+            winner, sig, point_p, point_m = fp_result[kind]
+            cells.append(_cell(point_p, bold=(winner == "probe" and sig)))
+            cells.append(_cell(point_m, bold=(winner == "marg"  and sig)))
         rows.append(" & ".join(cells) + " \\\\")
 
     header_top = (" & \\multicolumn{3}{c}{Pearson $(\\tauhat,\\tau)$}"
                   " & \\multicolumn{2}{c}{FP proxy $|\\tauhat|$}"
                   " & \\multicolumn{2}{c}{FP noise $|\\tauhat|$} \\\\")
     cmid = "\\cmidrule(lr){2-4}\\cmidrule(lr){5-6}\\cmidrule(lr){7-8}"
-    header_bot = "Config & FADO & Marg. & Multi. & FADO & Marg. & FADO & Marg. \\\\"
+    header_bot = "Config & FADO & Marginal corr. & Multivariate regression & FADO & Marginal corr. & FADO & Marginal corr. \\\\"
     body = (
         "\\begin{tabular}{l r r r r r r r}\n"
         "\\toprule\n"
@@ -599,12 +547,12 @@ def build_semisynth() -> None:
 
 HILLSTROM_ROWS: list[tuple[str, str, bool]] = [
     # label, bootstrap json tag, bold-row flag (the chosen headline)
-    ("\\textbf{Mixture heavy (foundation)}", "hillstrom_main_heavy",            True),
-    ("Mixture heavy / conversion",           "hillstrom_main_heavy_conversion", False),
+    ("\\textbf{Visit}", "hillstrom_main_heavy",            True),
+    ("Conversion",      "hillstrom_main_heavy_conversion", False),
 ]
 
 
-def _bsub(point: float, ci: list[float], sig: bool = True, bold: bool = False) -> str:
+def _bsub(point: float, ci: list[float], sig: bool = False, bold: bool = False) -> str:
     return _f3sub(point, ci[0], ci[1], sig=sig, bold=bold)
 
 
@@ -615,21 +563,19 @@ def build_hillstrom() -> None:
         rct = d["tau_T_rct_mean"]
         cells = [
             label,
-            f"${rct:+.2f}$" if "conversion" not in tag else f"${rct:+.3f}$",
+            f"${rct:.2f}$" if "conversion" not in tag else f"${rct:.3f}$",
             _bsub(d["tau_hat_T_mean"], d["tau_hat_T_ci"], bold=bold),
-            _bsub(d["ATE_error_mean"], d["ATE_error_ci"], sig=False, bold=bold),
+            _bsub(d["ATE_error_mean"], d["ATE_error_ci"], bold=bold),
             _bsub(d["tau_hat_P_T_mean"], d["tau_hat_P_T_ci"]),
             _bsub(d["tau_hat_L_Y_mean"], d["tau_hat_L_Y_ci"]),
-            _f3sub(d["null_MAE_mean"], d["null_MAE_ci"][0], d["null_MAE_ci"][1],
-                   sig=False, bold=(not bold and tag in {"hillstrom_linear_p13", "hillstrom_mixed_p5", "hillstrom_mixed_p13_conversion"})),
         ]
         rows.append(" & ".join(cells) + " \\\\")
 
     body = (
-        "\\begin{tabular}{l r r r r r r}\n"
+        "\\begin{tabular}{l r r r r r}\n"
         "\\toprule\n"
-        "Ckpt & $\\tau_T^{\\mathrm{RCT}}$ & $\\tauhat_T$ & err & $\\tauhat_{P_T}$"
-        " & $\\tauhat_{L_Y}$ (assoc 1.52) & null MAE \\\\\n"
+        "Outcome & $\\tau_T^{\\mathrm{RCT}}$ & $\\tauhat_T$ & err & $\\tauhat_{P_T}$"
+        " & $\\tauhat_{L_Y}$ \\\\\n"
         "\\midrule\n"
         + "\n".join(rows) + "\n"
         "\\bottomrule\n"
@@ -692,7 +638,7 @@ TUBINGEN_ROWS = [
     ("Hetero linear",                  "tubingen_hetero_linear"),
     ("$p{=}13$",                       "tubingen_p13"),
     ("MLP $p{=}5$",                    "tubingen_mlp_p5"),
-    ("Mixture heavy (foundation)",     "tubingen_main_p5_100k_mixture_heavy"),
+    ("Foundation",                     "tubingen_main_p5_100k_mixture_heavy"),
 ]
 
 
@@ -727,7 +673,7 @@ SACHS_ROWS = [
     ("Linear $p{=}5$, 15k",          "sachs_p5"),
     ("$p{=}8$, 15k",                 "sachs_p8"),
     ("$p{=}13$, 20k",                "sachs_p13"),
-    ("Mixture heavy (foundation)",   "sachs_main_heavy"),
+    ("Foundation",                    "sachs_main_heavy"),
 ]
 
 
@@ -762,7 +708,7 @@ def build_sachs() -> None:
     body = (
         "\\begin{tabular}{l r r r r}\n"
         "\\toprule\n"
-        "Variant        & FADO & $\\Delta$ vs Marg.\\ & Marginal & Multivariate \\\\\n"
+        "Variant        & FADO & $\\Delta$ vs Marginal corr. & Marginal corr. & Multivariate regression \\\\\n"
         "\\midrule\n"
         + "\n".join(rows) + "\n"
         "\\bottomrule\n"
@@ -776,7 +722,7 @@ def build_sachs() -> None:
 # ---------------------------------------------------------------------------
 
 LALONDE_ROWS: list[tuple[str, str, bool]] = [
-    ("\\textbf{Mixture heavy (foundation) / CPS3}", "lalonde_main_heavy", True),
+    ("\\textbf{FADO foundation / CPS3}", "lalonde_main_heavy", True),
 ]
 
 
@@ -787,9 +733,9 @@ def build_lalonde() -> None:
         rct = d["tau_T_rct"]
         cells = [
             label,
-            f"${rct:+.3f}$",
+            f"${rct:.3f}$",
             _bsub(d["tau_hat_T_mean"], d["tau_hat_T_ci"], bold=bold),
-            _bsub(d["ATE_error_mean"], d["ATE_error_ci"], sig=False, bold=bold),
+            _bsub(d["ATE_error_mean"], d["ATE_error_ci"], bold=bold),
             _bsub(d["tau_hat_L_Y_mean"], d["tau_hat_L_Y_ci"]),
         ]
         rows.append(" & ".join(cells) + " \\\\")
@@ -811,7 +757,7 @@ def build_lalonde() -> None:
 # ---------------------------------------------------------------------------
 
 CRITEO_ROWS: list[tuple[str, str, bool]] = [
-    ("\\textbf{Mixture heavy (foundation)}", "criteo_main_heavy", True),
+    ("\\textbf{FADO foundation}", "criteo_main_heavy", True),
 ]
 
 
@@ -821,17 +767,17 @@ def build_criteo() -> None:
         d = _load(BOOT / f"{tag}.json")
         cells = [
             label,
-            f"${d['tau_T_rct']:+.3f}$",
+            f"${d['tau_T_rct']:.3f}$",
             _bsub(d["tau_hat_T_mean"], d["tau_hat_T_ci"], bold=bold),
             _bsub(d["tau_hat_L_Y_mean"], d["tau_hat_L_Y_ci"]),
-            _bsub(d["null_MAE_mean"], d["null_MAE_ci"], sig=False, bold=bold),
+            _bsub(d["null_MAE_mean"], d["null_MAE_ci"], bold=bold),
         ]
         rows.append(" & ".join(cells) + " \\\\")
 
     body = (
         "\\begin{tabular}{l r r r r}\n"
         "\\toprule\n"
-        "Ckpt & $\\tau_{\\mathrm{RCT}}$ & $\\tauhat_T$ & $\\tauhat_{L_Y}$ (assoc $\\sim 2$) & null MAE \\\\\n"
+        "Model & $\\tau_{\\mathrm{RCT}}$ & $\\tauhat_T$ & $\\tauhat_{L_Y}$ (assoc $\\sim 2$) & null MAE \\\\\n"
         "\\midrule\n"
         + "\n".join(rows) + "\n"
         "\\bottomrule\n"
@@ -962,24 +908,173 @@ def build_type_flip() -> None:
 
 # ---------------------------------------------------------------------------
 
+
+SHAPLEY_FAMILY_ROWS = [
+    ("Linear", "linear"),
+    ("Nonlinear", "nonlinear"),
+    ("MLP", "mlp"),
+    ("Hidden confounder", "hidden"),
+    ("MLP + hidden", "mlp_hidden"),
+]
+
+
+def build_shapley_comparison() -> None:
+    """tab:shapley-comparison — FADO vs oracle-graph do-Shapley / Causal Shapley.
+
+    do-Shapley (Jung et al. 2022) and Causal Shapley (Heskes et al. 2020) consume
+    the *true* SCM (marked with a dagger); FADO sees observational data only.
+    Cells are Pearson $r$ between the method's per-feature attribution and the
+    true $\\tau$ on held-out random SCMs.
+    """
+    d = _load(RESULTS / "shapley_comparison" /
+              "shapley_comparison_intersample_L_seed0_FINAL.json")
+    pf = d["random_by_family"]
+    # DSCM (learned-mechanism SCM): a third graph-requiring (dagger) skyline —
+    # true graph, but mechanisms LEARNED from data (vs the full-oracle Shapleys).
+    dscm = _load(RESULTS / "realdata_2026-09-29" / "dscm_baseline.json")["dscm_by_family"]
+    # Column order groups the three graph-requiring methods together.
+    cols = ["model", "do_shapley", "causal_shapley", "dscm", "marginal", "multivariate"]
+    rows = []
+    for label, fam in SHAPLEY_FAMILY_ROWS:
+        m = pf.get(fam, {})
+        vals = {c: m.get(c, {}).get("pearson") for c in cols if c != "dscm"}
+        vals["dscm"] = dscm.get(fam, {}).get("pearson")
+        finite = {c: v for c, v in vals.items() if v is not None and np.isfinite(v)}
+        best = max(finite, key=finite.get) if finite else None
+        cells = [label]
+        for c in cols:
+            r = vals[c]
+            s = "—" if r is None else f"{r:.2f}"
+            cells.append(f"$\\mathbf{{{s}}}$" if c == best and r is not None else f"${s}$")
+        rows.append(" & ".join(cells) + " \\\\")
+    body = (
+        "\\begin{tabular}{lrrrrrr}\n"
+        "\\toprule\n"
+        " & FADO & do-Shapley$^\\dagger$ & Causal Shapley$^\\dagger$ & DSCM$^\\dagger$ "
+        "& Marginal & Multivariate \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows) + "\n"
+        "\\bottomrule\n"
+        "\\end{tabular}\n"
+    )
+    _write("shapley_comparison", body,
+           "tab:shapley-comparison — FADO vs oracle-graph do-Shapley / Causal Shapley "
+           f"(Pearson r, {d['config']['n_random_scms']} held-out SCMs, p={d['config']['p']})")
+
+
+# ---------------------------------------------------------------------------
+# Table: foundation model across the 10 eval families (tab:foundation-per-family)
+# Source ckpt: probe_intersample_L_seed0.ckpt, evaluated at p=5 padded to 15.
+# ---------------------------------------------------------------------------
+
+FOUNDATION_PER_FAMILY_ROWS: list[tuple[str, str]] = [
+    ("Linear non-Gaussian",           "linear"),
+    ("Nonlinear (polynomial)",        "nonlinear"),
+    ("Random-MLP",                    "mlp"),
+    ("Hidden confounder (linear)",    "hidden"),
+    ("MLP + hidden confounder",       "mlp_hidden"),
+    ("Mixed binary/continuous",       "mixed"),
+    ("Designated treatment",          "treatment"),
+    ("Polynomial",                    "polynomial"),
+    ("Spline additive",               "spline"),
+    ("Discrete mixed",                "discrete_mix"),
+]
+
+
+def build_foundation_per_family() -> None:
+    rows = []
+    for label, fam in FOUNDATION_PER_FAMILY_ROWS:
+        p = RESULTS / "intersample_cf" / f"eval_foundation_intersample_L_seed0_p5_pad15_{fam}.json"
+        try:
+            d = _load(p)["random"]
+            cells = [
+                label,
+                f"${d['pearson']['model']:.2f}$",
+                f"${d['auroc_nonzero']['model']:.2f}$",
+                f"${d['mae_zero_features']['model']:.2f}$",
+                f"${d['pearson']['marginal']:.2f}$",
+            ]
+        except FileNotFoundError:
+            cells = [label, "—", "—", "—", "—"]
+        rows.append(" & ".join(cells) + " \\\\")
+    body = (
+        "\\begin{tabular}{lrrrr}\n"
+        "\\toprule\n"
+        " & \\multicolumn{3}{c}{FADO foundation $\\tauhat$ vs $\\tau$} & Marginal \\\\\n"
+        "\\cmidrule(lr){2-4} \\cmidrule(lr){5-5}\n"
+        "Eval family & Pearson $r$ & AUROC (nonzero) & MAE (zero) & Pearson $r$ \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows) + "\n"
+        "\\bottomrule\n"
+        "\\end{tabular}\n"
+    )
+    _write(
+        "foundation_per_family",
+        body,
+        f"tab:foundation-per-family — single FADO foundation × {len(FOUNDATION_PER_FAMILY_ROWS)} families",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Table: ACIC-2016 decoy false positives (tab:acic-fp)
+# Source: causal_probe/results/acic_fp_results.json, written by
+# causal_probe/semisynth_acic_fp.py with probe_intersample_L_seed0.ckpt.
+# ---------------------------------------------------------------------------
+
+ACIC_REGIMES = [("No confounding", "no_confounding"), ("Hidden confounder", "hidden_confounder")]
+ACIC_FAMILIES = [("Linear", "linear"), ("Mixed nonlinear", "mixed_nonlinear"),
+                 ("Interaction", "interaction")]
+ACIC_DECOYS = ["noise", "proxy", "leak", "conf"]
+
+
+def build_acic_fp() -> None:
+    src = "acic_fp_results.json"
+    d = _load(RESULTS / src)
+    lines = [
+        "\\begin{tabular}{llrrrrrrrrrrrr}",
+        "\\toprule",
+        "& & \\multicolumn{3}{c}{Noise} & \\multicolumn{3}{c}{Proxy} & "
+        "\\multicolumn{3}{c}{Leak} & \\multicolumn{3}{c}{Conf-child} \\\\",
+        "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}\\cmidrule(lr){9-11}\\cmidrule(lr){12-14}",
+        "Regime & Family & " + " & ".join(["F & Mg & Mv"] * 4) + " \\\\",
+    ]
+    for regime_label, regime in ACIC_REGIMES:
+        lines.append("\\midrule")
+        by_fam = {e["family"]: e for e in d[regime] if "family" in e}
+        for i, (fam_label, fam) in enumerate(ACIC_FAMILIES):
+            e = by_fam[fam]
+            cells = []
+            for decoy in ACIC_DECOYS:
+                for m in ("fado", "marginal", "multivariate"):
+                    v = e.get(f"{m}_fp_{decoy}")
+                    cells.append("—" if v is None else f"${v:.3f}$")
+            first = f"\\multirow{{3}}{{*}}{{{regime_label}}}" if i == 0 else ""
+            lines.append(f"{first} & {fam_label} & " + " & ".join(cells) + " \\\\")
+    lines += ["\\bottomrule", "\\end{tabular}"]
+    out = TABLES / "acic_fp.tex"
+    out.write_text(f"% Auto-generated from causal_probe/results/{src}\n% tab:acic-fp\n"
+                   + "\n".join(lines) + "\n")
+    print(f"  wrote {out.relative_to(REPO)}")
+
+
 ALL_BUILDERS = [
     build_held_out_dags,
+    build_shapley_comparison,
     build_seed_robust,
     build_heterogeneous_p,
     build_motifs,
-    build_causal_baselines,
+    build_causal_baselines_hidden_delta,
     build_offlabel_pfn,
-    build_predictive_baselines,
     build_semisynth,
-    build_hillstrom,
     build_shap_contrast,
-    build_tubingen,
     build_sachs,
     build_lalonde,
     build_criteo,
     build_ensemble,
     build_ablations,
     build_type_flip,
+    build_foundation_per_family,
+    build_acic_fp,
 ]
 
 

@@ -1,0 +1,77 @@
+{
+  "dscm_by_family": {
+    "linear": {
+      "n_scms": 100,
+      "pearson": 0.9688062330908891,
+      "spearman": 0.9244732412915291,
+      "mae": 0.05059243168213209,
+      "sign_acc": 1.0,
+      "pearson_mean_per_scm": 0.9843522833218793,
+      "pearson_ci95": [
+        0.9657858220101027,
+        0.9949362308874483
+      ]
+    },
+    "nonlinear": {
+      "n_scms": 100,
+      "pearson": 0.9459385151382839,
+      "spearman": 0.6793606498532198,
+      "mae": 0.06470196225593115,
+      "sign_acc": 0.9795918367346939,
+      "pearson_mean_per_scm": 0.9687814195100753,
+      "pearson_ci95": [
+        0.9346814416130981,
+        0.9899978383550664
+      ]
+    },
+    "mlp": {
+      "n_scms": 100,
+      "pearson": 0.9623135935569739,
+      "spearman": 0.7176039533739043,
+      "mae": 0.09278833264749056,
+      "sign_acc": 0.9831932773109243,
+      "pearson_mean_per_scm": 0.978658034497598,
+      "pearson_ci95": [
+        0.9706201950722602,
+        0.9860716555595138
+      ]
+    },
+    "hidden": {
+      "n_scms": 100,
+      "pearson": 0.950785485555419,
+      "spearman": 0.8996945225850138,
+      "mae": 0.07105377203511751,
+      "sign_acc": 0.9912280701754386,
+      "pearson_mean_per_scm": 0.9759153819955527,
+      "pearson_ci95": [
+        0.9562172723044192,
+        0.9903756425381117
+      ]
+    },
+    "mlp_hidden": {
+      "n_scms": 100,
+      "pearson": 0.9386311661676041,
+      "spearman": 0.6814291622703117,
+      "mae": 0.09455462676243656,
+      "sign_acc": 0.9482758620689655,
+      "pearson_mean_per_scm": 0.921654214838725,
+      "pearson_ci95": [
+        0.859606443705945,
+        0.968784054727941
+      ]
+    }
+  },
+  "config": {
+    "families": "linear,nonlinear,mlp,hidden,mlp_hidden",
+    "n_scms": 100,
+    "p": 5,
+    "n_rows": 512,
+    "noise": "laplace",
+    "nonlinear_mc": 4096,
+    "regressor": "gbm",
+    "seed": 100,
+    "device": "cpu",
+    "out": "causal_probe/results/dscm_baseline.json",
+    "dry_run": false
+  }
+}

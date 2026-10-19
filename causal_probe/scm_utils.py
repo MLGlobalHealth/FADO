@@ -26,6 +26,27 @@ def sample_laplace_unit(shape, rng: np.random.Generator) -> np.ndarray:
     return rng.laplace(loc=0.0, scale=1.0 / np.sqrt(2.0), size=shape)
 
 
+def sample_noise(shape, rng: np.random.Generator, noise: str = "laplace") -> np.ndarray:
+    """Dispatch unit-variance noise by name; mirrors LinearNonGaussianSCM._draw_eps.
+
+    Used by the nonlinear SCM families (nonlinear, mlp, mlp_hidden, polynomial,
+    spline, gp_cde) so that --noise=heavy/mixture/gaussian propagates through
+    the full mixture prior, not just the linear sub-families.
+    """
+    from causal_probe.scm import _sample_laplace, _sample_mixture, _sample_heavy
+    if noise == "laplace":
+        return _sample_laplace(shape, rng)
+    if noise == "mixture":
+        return _sample_mixture(shape, rng)
+    if noise == "gaussian":
+        if isinstance(shape, int):
+            return rng.standard_normal(shape)
+        return rng.standard_normal(shape)
+    if noise == "heavy":
+        return _sample_heavy(shape, rng)
+    raise ValueError(f"unknown noise: {noise!r}")
+
+
 def select_y_and_features(
     p: int, n_hidden: int, rng: np.random.Generator,
 ) -> Tuple[np.ndarray, int, np.ndarray, List[int]]:
@@ -107,8 +128,21 @@ def standardize_for_sample(
     y_idx_in_Z: int,
     feature_to_Z: np.ndarray,
 ) -> Tuple[np.ndarray, np.ndarray]:
-    """Z-standardize and split into (X, y) for the SCMSample boundary."""
+    """Z-standardize and split into (X, y) for the SCMSample boundary.
+
+    Output is clipped to ±8σ. When a node's clipped polynomial /
+    nonlinear / spline output saturates the structural-equation clip
+    (e.g. ±12 for polynomial), its empirical std_Z falls to the
+    ``.clip(min=1e-9)`` floor and ``(Z - mean) / std`` produces values
+    up to ~1e10 — finite, but enough to overflow value_proj's backward
+    in FP32 and poison the optimiser via clip_grad_norm_'s NaN
+    propagation (demonstrated for scm_polynomial.py at
+    SCM #330421). scm_treatment.py already applied the same ±8 clamp
+    inline; centralising it here protects every family that goes
+    through this helper.
+    """
     Z_std = (Z_raw - mean_Z.reshape(1, -1)) / std_Z.reshape(1, -1)
+    Z_std = np.clip(Z_std, -8.0, 8.0)
     y = Z_std[:, y_idx_in_Z].copy()
     X = Z_std[:, feature_to_Z].copy()
     return X, y

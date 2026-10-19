@@ -1,7 +1,7 @@
 [project]
 name = "fado"
 version = "0.0.0"
-description = "FADO: Learning to Explain Causal Effects with Prior-Fitted Networks for Explanations"
+description = "FADO: Learning Causal Explanations with Prior-Fitted Networks"
 requires-python = ">=3.11"
 dependencies = [
     "tabicl[shap]",

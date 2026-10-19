@@ -106,34 +106,164 @@ def permutation_tau(
 
 
 # ---------------------------------------------------------------------------
-# TreeSHAP via LightGBM (predictive attribution)
+# SHAP family (predictive attribution). All variants here attribute a FITTED
+# PREDICTOR of E[y|X], not the data-generating process; they are included so a
+# table can show the SHAP-variant debate (tree-path-dependent vs interventional
+# vs kernel/model-agnostic) is orthogonal to FADO's interventional-tau target
+# (see paper app:shap-variants). Each returns the probe reporting scale:
+# signed by marginal corr, mean|phi| aggregated over rows, divided by std(y).
 # ---------------------------------------------------------------------------
 
-def shap_tau(X: np.ndarray, y: np.ndarray) -> np.ndarray:
-    """LightGBM-regressor TreeSHAP, signed by marginal corr, /std(y)."""
-    import lightgbm as lgb
-
-    X = X.astype(np.float64)
-    y = y.astype(np.float64)
+def _marginal_signs(X: np.ndarray, y: np.ndarray, std_y: float) -> np.ndarray:
+    """Per-feature sign from marginal corr(X_i, y) (shared by the SHAP family;
+    SHAP magnitudes are non-negative in aggregate, so we restore a sign the same
+    way the original tree_path_dependent shap_tau did)."""
     p = X.shape[1]
-    std_y = float(np.std(y).clip(min=1e-9))
-
-    model = lgb.LGBMRegressor(
-        n_estimators=200, learning_rate=0.05, max_depth=6,
-        min_child_samples=10, num_leaves=31, verbose=-1, random_state=0,
-    )
-    model.fit(X, y)
-    contrib = model.predict(X, pred_contrib=True)
-    shap_vals = contrib[:, :-1]
-    mean_abs = np.mean(np.abs(shap_vals), axis=0)
-
     signs = np.zeros(p, dtype=np.float64)
     for i in range(p):
         sd = float(np.std(X[:, i]).clip(min=1e-9))
         signs[i] = np.sign(np.cov(X[:, i], y, ddof=1)[0, 1] / (sd * std_y))
     signs[signs == 0] = 1.0
+    return signs
 
+
+def _fit_lgbm(X: np.ndarray, y: np.ndarray):
+    import lightgbm as lgb
+    model = lgb.LGBMRegressor(
+        n_estimators=200, learning_rate=0.05, max_depth=6,
+        min_child_samples=10, num_leaves=31, verbose=-1, random_state=0,
+    )
+    model.fit(X, y)
+    return model
+
+
+def shap_tau(X: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """LightGBM-regressor TreeSHAP (tree_path_dependent), signed by marginal
+    corr, /std(y).
+
+    Uses LightGBM's native ``pred_contrib`` path, which is the conditional,
+    *tree_path_dependent* TreeSHAP of Lundberg et al. (phi conditioned on the
+    fitted tree structure / cover). This is the paper's canonical "shap"
+    baseline; ``shap_interventional`` below is the Janzing-style alternative.
+    """
+    X = X.astype(np.float64)
+    y = y.astype(np.float64)
+    std_y = float(np.std(y).clip(min=1e-9))
+
+    model = _fit_lgbm(X, y)
+    contrib = model.predict(X, pred_contrib=True)
+    shap_vals = contrib[:, :-1]
+    mean_abs = np.mean(np.abs(shap_vals), axis=0)
+
+    signs = _marginal_signs(X, y, std_y)
     return signs * mean_abs / std_y
+
+
+def shap_interventional_tau(X: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """Interventional (marginal / Janzing-style) TreeSHAP on the SAME LightGBM.
+
+    Uses ``shap.TreeExplainer(model, data=background,
+    feature_perturbation="interventional")``, which breaks dependence between
+    the on-coalition and off-coalition features by integrating over the marginal
+    (background) distribution rather than following the tree's conditional paths.
+    This is the "interventional SHAP" discussed in the paper's footnote
+    (Janzing, Minorics & Bloebaum 2020; Lundberg et al. 2020). Comparing it
+    head-to-head with the tree_path_dependent ``shap`` directly supports the
+    app:shap-variants argument: both explain the fitted predictor, so both load
+    on the outcome-leak decoy and track predictive (not interventional-tau)
+    importance.
+
+    Background is a kmeans summary of X (<=100 rows) for tractability.
+    """
+    import shap
+
+    X = X.astype(np.float64)
+    y = y.astype(np.float64)
+    std_y = float(np.std(y).clip(min=1e-9))
+
+    model = _fit_lgbm(X, y)
+    n = X.shape[0]
+    k = int(min(100, max(10, n // 10)))
+    try:
+        background = shap.kmeans(X, k).data
+    except Exception:
+        background = X[np.random.default_rng(0).choice(n, size=min(k, n),
+                                                        replace=False)]
+    explainer = shap.TreeExplainer(
+        model, data=background, feature_perturbation="interventional",
+    )
+    sv = explainer.shap_values(X, check_additivity=False)
+    sv = np.asarray(sv)
+    if sv.ndim == 3:  # (n, p, outputs) for some shap versions
+        sv = sv[..., 0]
+    mean_abs = np.mean(np.abs(sv), axis=0)
+
+    signs = _marginal_signs(X, y, std_y)
+    return signs * mean_abs / std_y
+
+
+def shap_kernel_tau(
+    X: np.ndarray, y: np.ndarray, *,
+    n_explain: int = 100, n_background: int = 50, seed: int = 0,
+) -> np.ndarray:
+    """Model-agnostic Kernel SHAP on a fitted NON-tree predictor.
+
+    Fits a non-tree predictor of E[y|X] — an sklearn ``MLPRegressor`` surrogate
+    — and attributes it with ``shap.KernelExplainer`` (the LIME-weighted
+    least-squares Shapley sampler of Lundberg & Lee 2017). This is deliberately
+    a different model class AND a different (sampling, model-agnostic) estimator
+    from the two TreeSHAP variants, so clustering of all three is evidence the
+    SHAP-variant choice is orthogonal to FADO's target. KernelExplainer cost
+    grows with n_explain and p, so we subsample rows to explain and use a kmeans
+    background summary.
+    """
+    import shap
+    from sklearn.neural_network import MLPRegressor
+
+    X = X.astype(np.float64)
+    y = y.astype(np.float64)
+    n, p = X.shape
+    std_y = float(np.std(y).clip(min=1e-9))
+    rng = np.random.default_rng(seed)
+
+    model = MLPRegressor(
+        hidden_layer_sizes=(64, 32), activation="relu", max_iter=400,
+        random_state=seed, early_stopping=True,
+    )
+    model.fit(X, y)
+
+    kb = int(min(n_background, max(5, n // 10)))
+    try:
+        background = shap.kmeans(X, kb)
+    except Exception:
+        background = X[rng.choice(n, size=min(kb, n), replace=False)]
+    ne = int(min(n_explain, n))
+    X_explain = X[rng.choice(n, size=ne, replace=False)]
+
+    explainer = shap.KernelExplainer(model.predict, background)
+    sv = explainer.shap_values(X_explain, nsamples="auto", silent=True)
+    sv = np.asarray(sv)
+    if sv.ndim == 3:
+        sv = sv[..., 0]
+    mean_abs = np.mean(np.abs(sv), axis=0)
+
+    signs = _marginal_signs(X, y, std_y)
+    return signs * mean_abs / std_y
+
+
+# Counterfactual Shapley (Lee, Plecko & Bareinboim, "Causal Explanations
+# through Counterfactual Variable Attributions", NeurIPS 2025 / Columbia
+# CausalAI Lab tech report R-135) is CITE-ONLY here: it defines counterfactual
+# Shapley values over a KNOWN structural causal model (natural total effect,
+# generalized direct effect, counterfactual SVs), not over a fitted predictor
+# of (X, y). A faithful implementation needs the true SCM counterfactuals and
+# is out of scope for this comparator harness; it is positioned in the paper's
+# prose (app:shap-variants) as targeting a different quantity from FADO's
+# interventional per-feature tau. The graph-ORACLE causal_shapley skyline in
+# semisynth_acic_fp.py (causal_probe.shapley_causal.both_shapley) is the closest
+# oracle analogue we DO run. Do NOT hand-roll a (X, y)-only "counterfactual
+# Shapley" here — it would be a dubious impl of a quantity the method does not
+# define on observational data alone.
 
 
 # ---------------------------------------------------------------------------
@@ -226,7 +356,40 @@ def pc_tau(X: np.ndarray, y: np.ndarray) -> np.ndarray:
     return _tau_from_W(W, X, y)
 
 
+def _patch_causallearn_bic_for_numpy2():
+    """Monkey-patch causallearn 0.1.4.5's local_score_BIC_from_cov so it
+    survives numpy >= 2.0. The upstream code does `float(yX @ XX_inv @ yX.T)`
+    where the product is a (1,1) 2-D array; numpy 2.x rejects float() on
+    non-0-d arrays. Idempotent — repeated calls are no-ops once patched."""
+    from causallearn.score import LocalScoreFunction as _LSF
+    if getattr(_LSF, "_l2e_numpy2_patched", False):
+        return
+    def local_score_BIC_from_cov(Data, i, PAi, parameters=None):
+        # Keep the original name — LocalScoreFunctionClass dispatches by
+        # __name__ to choose between cov-based and data-based call paths.
+        cov, n = Data
+        lambda_value = 0.5 if parameters is None else parameters["lambda_value"]
+        sigma = cov[i, i]
+        if len(PAi) > 0:
+            yX = cov[np.ix_([i], PAi)]
+            XX = cov[np.ix_(PAi, PAi)]
+            try:
+                XX_inv = np.linalg.inv(XX)
+            except np.linalg.LinAlgError:
+                XX_inv = np.linalg.pinv(XX)
+            sigma_arr = cov[i, i] - yX @ XX_inv @ yX.T
+            sigma = float(np.asarray(sigma_arr).reshape(()))
+        if sigma <= 0:
+            sigma = np.finfo(float).eps
+        likelihood = -0.5 * n * (1 + np.log(sigma))
+        penalty = lambda_value * (len(PAi) + 1) * np.log(n)
+        return likelihood - penalty
+    _LSF.local_score_BIC_from_cov = local_score_BIC_from_cov
+    _LSF._l2e_numpy2_patched = True
+
+
 def ges_tau(X: np.ndarray, y: np.ndarray) -> np.ndarray:
+    _patch_causallearn_bic_for_numpy2()
     from causallearn.search.ScoreBased.GES import ges
     Z = np.concatenate([X, y.reshape(-1, 1)], axis=1)
     res = ges(Z, score_func="local_score_BIC")
@@ -398,6 +561,8 @@ METHODS = {
     "ridge":         ridge_tau,
     "permutation":   permutation_tau,
     "shap":          shap_tau,
+    "shap_interventional": shap_interventional_tau,
+    "shap_kernel":   shap_kernel_tau,
     "lingam":        lingam_tau,
     "notears":       notears_tau,
     "pc":            pc_tau,
@@ -417,26 +582,16 @@ METHODS = {
 def _sample_scms(
     scm_type: str, p: int, noise: str, n_scms: int, rng: np.random.Generator,
 ) -> list:
-    """Build n_scms SCMs of the given type. Mirrors the per-driver if-elif chain
-    to preserve exact rng-consumption order."""
+    """Build n_scms SCMs of the given type.
+
+    Delegates to causal_probe.eval._make_eval_scm so this matches the
+    model-side eval exactly — same family inventory, same support for
+    `mixture` (canonical _PAPER_MIXTURE_PRIOR), same Track-C families.
+    """
+    from causal_probe.eval import _make_eval_scm
     scms = []
     for _ in range(n_scms):
-        seed = rng.integers(0, 2**31)
-        if scm_type == "linear":
-            from causal_probe.scm import LinearNonGaussianSCM
-            scms.append(LinearNonGaussianSCM(p=p, rng=np.random.default_rng(seed), noise=noise))
-        elif scm_type == "nonlinear":
-            from causal_probe.scm_nonlinear import NonlinearSCM
-            scms.append(NonlinearSCM(p=p, rng=np.random.default_rng(seed), n_mc=2048))
-        elif scm_type == "mlp":
-            from causal_probe.scm_mlp import MLPSCM
-            scms.append(MLPSCM(p=p, rng=np.random.default_rng(seed), n_mc=2048))
-        elif scm_type == "hidden":
-            from causal_probe.scm_hidden import LinearNonGaussianSCMHidden
-            scms.append(LinearNonGaussianSCMHidden(p=p, rng=np.random.default_rng(seed), noise=noise))
-        elif scm_type == "mixed":
-            from causal_probe.scm_mixed import LinearMixedSCM
-            scms.append(LinearMixedSCM(p=p, rng=np.random.default_rng(seed), noise=noise))
+        scms.append(_make_eval_scm(scm_type, p, rng, noise=noise))
     return scms
 
 
@@ -532,12 +687,14 @@ def eval_method_on_scms(
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--method", required=True, choices=list(METHODS.keys()))
+    from causal_probe.eval import ALL_EVAL_SCM_TYPES
     ap.add_argument(
         "--scm-type", default="linear",
-        choices=["linear", "nonlinear", "mlp", "hidden", "mixed"],
+        choices=list(ALL_EVAL_SCM_TYPES) + ["mixture"],
     )
     ap.add_argument("--p", type=int, default=5)
-    ap.add_argument("--noise", default="laplace", choices=["laplace", "gaussian"])
+    ap.add_argument("--noise", default="laplace",
+                    choices=["laplace", "gaussian", "heavy"])
     ap.add_argument("--n-scms", type=int, default=100)
     ap.add_argument("--n-rows", type=int, default=512)
     ap.add_argument("--seed", type=int, default=2025)

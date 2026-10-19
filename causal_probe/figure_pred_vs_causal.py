@@ -41,49 +41,111 @@ OUT_PDF = "paper/figures/predictive_vs_causal.pdf"
 _KEY_FEATURES = {
     # motif name in eval JSON -> [(feature index, point label)]
     "A_direct_cause":         [(0, r"$X_1$ direct cause")],
-    "B_proxy":                [(1, r"$X_2$ proxy")],
     "C_observed_confounder":  [(0, r"$X_1$ confounded")],
     "D_mediator":             [(0, r"$X_1$ upstream"),
                                (1, r"$X_2$ mediator")],
-    "E_target_descendant":    [(0, r"$X_1$ leak")],
+    "E_target_descendant":    [(0, r"$X_1$ descendant")],
     "F_collider_leakage":     [(1, r"$C$ collider")],
 }
+# Okabe-Ito colorblind-safe qualitative palette. The A (bluish green)
+# vs E (vermillion) pair stays separable under deuteranopia/protanopia,
+# unlike the previous green/red.
 _MOTIF_COLOR = {
-    "A_direct_cause": "#2ca02c",
-    "B_proxy": "#ff7f0e",
-    "C_observed_confounder": "#9467bd",
-    "D_mediator": "#1f77b4",
-    "E_target_descendant": "#d62728",
-    "F_collider_leakage": "#8c564b",
+    "A_direct_cause": "#009E73",          # bluish green
+    "C_observed_confounder": "#CC79A7",   # reddish purple
+    "D_mediator": "#0072B2",              # blue
+    "E_target_descendant": "#D55E00",     # vermillion
+    "F_collider_leakage": "#E69F00",      # orange
 }
 _NOISE_COLOR = "#bbbbbb"
 
+# Cosmetic-only horizontal nudge (in data units) applied when drawing
+# markers/labels. D (X_1 descendant) and E (C collider) are nearly
+# coincident — both predictive-only with ~zero causal effect — so their
+# DAG-style discs would fuse. The underlying SHAP values are unchanged;
+# this only spreads the two discs so both stay readable.
+_PLOT_DX = {
+    "E_target_descendant": -0.035,
+    "F_collider_leakage": 0.035,
+}
+
+# Where each descriptive label sits relative to its node, in points
+# (dx, dy). Hand-tuned so labels clear the discs with room to spare;
+# there is plenty of empty space in this panel so we push them out.
+_LABEL_OFFSET = {
+    "direct cause": (-20, -22),
+    "confounded":   (14, 16),
+    "upstream":     (22, 18),
+    "mediator":     (18, -20),
+    "descendant":   (-8, 34),
+    "collider":     (16, 34),
+}
+
+
+def draw_compass(ax, cx=0.5, cy=0.45, hx=0.18, vy=0.15, fontsize=9.5,
+                 wide_h=False, h_inset_pt=4.8):
+    """Conceptual-orientation compass for a predictive-vs-causal panel:
+    two double-headed gray arrows crossing at (cx, cy) in axes fraction.
+    Horizontal = less <-> more predictive; vertical = less <-> more
+    causal. No threshold line is implied. Reused by the small-multiples
+    appendix so all panels share the same orientation cue.
+
+    wide_h: stretch the horizontal element so the single-line 'less
+    predictive' / 'more predictive' labels sit near the panel edges and
+    the arrow spans between them (text-inclusive full width). The arrow
+    ends are measured off the rendered text so the heads never collide
+    with the words."""
+    arr = dict(arrowstyle="<->", color="gray", lw=1.1,
+               alpha=0.65, shrinkA=0, shrinkB=0)
+    lbl = dict(fontsize=fontsize, color="gray", alpha=0.8,
+               transform=ax.transAxes, zorder=5)
+    if wide_h:
+        # Inset each edge label inward by h_inset_pt points (~10px/side
+        # at 150 dpi) so the text isn't jammed flush against the spines.
+        from matplotlib.transforms import offset_copy
+        lbl_h = {k: v for k, v in lbl.items() if k != "transform"}
+        left_tr = offset_copy(ax.transAxes, ax.figure,
+                              x=h_inset_pt, y=0, units="points")
+        right_tr = offset_copy(ax.transAxes, ax.figure,
+                               x=-h_inset_pt, y=0, units="points")
+        t_left = ax.text(0.0, cy, "less predictive", ha="left",
+                         va="center", transform=left_tr, **lbl_h)
+        t_right = ax.text(1.0, cy, "more predictive", ha="right",
+                          va="center", transform=right_tr, **lbl_h)
+        # End the arrow just inside the actual rendered text (measured),
+        # with a real gap, so the heads never collide with the words.
+        ax.figure.canvas.draw()
+        inv = ax.transAxes.inverted()
+        gap = 0.022  # axes-fraction breathing room each side
+        bl = t_left.get_window_extent()
+        br = t_right.get_window_extent()
+        al = inv.transform((bl.x1, bl.y0))[0] + gap   # right edge of "less"
+        ar = inv.transform((br.x0, br.y0))[0] - gap   # left edge of "more"
+        ax.annotate("", xy=(ar, cy), xytext=(al, cy),
+                    xycoords="axes fraction", textcoords="axes fraction",
+                    arrowprops=arr, zorder=4)
+    else:
+        ax.annotate("", xy=(cx + hx, cy), xytext=(cx - hx, cy),
+                    xycoords="axes fraction", textcoords="axes fraction",
+                    arrowprops=arr, zorder=4)
+        ax.text(cx - hx - 0.015, cy, "less\npredictive",
+                ha="right", va="center", **lbl)
+        ax.text(cx + hx + 0.015, cy, "more\npredictive",
+                ha="left", va="center", **lbl)
+    ax.annotate("", xy=(cx, cy + vy), xytext=(cx, cy - vy),
+                xycoords="axes fraction", textcoords="axes fraction",
+                arrowprops=arr, zorder=4)
+    ax.text(cx, cy - vy - 0.02, "less causal",
+            ha="center", va="top", **lbl)
+    ax.text(cx, cy + vy + 0.02, "more causal",
+            ha="center", va="bottom", **lbl)
+
 
 def _decorate_2x2(ax, xlim, ylim):
-    """Midline thresholds split [0, xlim] x [0, ylim] into four
-    descriptive cells. The two axes are different magnitudes (|SHAP|
-    in tau-scale units; |tau_hat| in standardized-contrast units), so
-    each axis gets its own midline at half its observed maximum range.
-    These are not signed quadrants."""
-    xm, ym = xlim / 2.0, ylim / 2.0
-    ax.axvline(xm, color="gray", linewidth=0.7, linestyle="--", alpha=0.7)
-    ax.axhline(ym, color="gray", linewidth=0.7, linestyle="--", alpha=0.7)
-    txt_kw = dict(fontsize=10, color="gray", alpha=0.95,
-                  bbox=dict(facecolor="white", alpha=0.9,
-                            edgecolor="none", pad=2.0))
-    # Cell labels at outer corners. Stored on the axes so the caller can
-    # pass them as static obstacles to adjust_text (so data labels won't
-    # overlap them).
-    ax._cell_labels = [
-        ax.text(0.02, 0.97, "causal only",
-                ha="left",  va="top", transform=ax.transAxes, **txt_kw),
-        ax.text(0.98, 0.97, "causal + predictive",
-                ha="right", va="top", transform=ax.transAxes, **txt_kw),
-        ax.text(0.02, 0.47, "neither",
-                ha="left",  va="top", transform=ax.transAxes, **txt_kw),
-        ax.text(0.98, 0.47, "predictive only",
-                ha="right", va="top", transform=ax.transAxes, **txt_kw),
-    ]
+    """Orient the reader with a compass in the (mostly empty) centre of
+    the panel instead of corner region words."""
+    draw_compass(ax, wide_h=True)
+    ax._cell_labels = []
     ax.set_xlim(0, xlim)
     ax.set_ylim(0, ylim)
 
@@ -121,21 +183,40 @@ def _motifs_panel(ax):
     xlim = float(pred.max()) * 1.15
     ylim = float(causal.max()) * 1.15
 
-    # Plot points and seed text artists at each point's position.
+    # Plot points as DAG-style nodes: a coloured disc with the white
+    # bold variable name inside (matching the mini-DAG aesthetics on the
+    # left). The descriptive remainder of the label ("direct cause",
+    # "mediator", ...) becomes the external annotation. clip_on=False so
+    # markers sitting at y~0 overplot the axis rather than truncating.
     seen = set()
-    text_artists = []
-    point_xs, point_ys = [], []
     for name, _idx, label, x, y in points:
         color = _MOTIF_COLOR[name]
         legend_lbl = None
         if name not in seen:
             legend_lbl = name.replace("_", " ")
             seen.add(name)
-        ax.scatter(x, y, c=color, s=140,
-                   edgecolors="black", linewidth=0.6,
+        var, _, desc = label.partition(" ")
+        xp = x + _PLOT_DX.get(name, 0.0)  # cosmetic-only x nudge
+        ax.scatter(xp, y, c=color, s=460,
+                   edgecolors="black", linewidth=0.8,
                    label=legend_lbl, zorder=3)
-        text_artists.append(ax.text(x, y, label, fontsize=9, zorder=4))
-        point_xs.append(x); point_ys.append(y)
+        ax.text(xp, y, var, ha="center", va="center",
+                fontsize=9, fontweight="bold", color="white",
+                zorder=4)
+        dx, dy = _LABEL_OFFSET.get(desc, (16, 14))
+        ax.annotate(
+            desc or var, xy=(xp, y), xytext=(dx, dy),
+            textcoords="offset points", fontsize=9, zorder=4,
+            ha="left" if dx >= 0 else "right",
+            va="bottom" if dy >= 0 else "top",
+            # annotate builds the arrow text->point, so shrinkB trims
+            # the NODE side and shrinkA the TEXT side. shrinkB ~ node
+            # radius in points (s=460 -> dia~sqrt(460)~21pt, r~11, +gap)
+            # so the line stops just outside the disc; shrinkA small so
+            # it still reaches the text.
+            arrowprops=dict(arrowstyle="-", color="gray",
+                            alpha=0.6, lw=0.6,
+                            shrinkA=2, shrinkB=13))
 
     # x-axis quantity is mean |TreeSHAP| (convention: feature importance
     # in the SHAP literature is the magnitude). Caption notes that.
@@ -145,24 +226,20 @@ def _motifs_panel(ax):
     # (which the paper's main text owns).
     ax.set_xlabel(r"SHAP  (feature importance, $|\mathrm{TreeSHAP}|$)")
     ax.set_ylabel(r"FADO  (feature intervention effect, $\hat\tau$)")
-    ax.set_title("Predictive vs causal explainability on motifs A–F")
+    ax.set_title("Predictive vs causal explainability on motifs A–E")
     _decorate_2x2(ax, xlim, ylim)
 
-    # Auto-place data labels to avoid overlap with each other, the
-    # markers, AND the cell labels. Cell labels live on `ax._cell_labels`
-    # (set by _decorate_2x2) and are passed in as static obstacles.
-    from adjustText import adjust_text
-    adjust_text(
-        text_artists,
-        x=point_xs, y=point_ys,
-        ax=ax,
-        objects=getattr(ax, "_cell_labels", []),
-        arrowprops=dict(arrowstyle="-", color="gray", alpha=0.6, lw=0.6),
-        expand=(1.6, 2.0),
-        force_text=(0.8, 1.4),
-        force_static=(1.2, 1.6),
-        iter_lim=200,
-    )
+    # Small negative bottom margin so the discs sitting at tau_hat~0
+    # (confounded / descendant / collider) are fully inside the panel,
+    # clear of the x-axis spine and tick labels, instead of straddling
+    # them. Ticks still start at 0.0.
+    y_pad = 0.035 * ylim
+    ax.set_ylim(-y_pad, ylim)
+    ax.set_yticks(np.arange(0.0, ylim, 0.2))
+
+    # Region words are gone (compass instead), so no need to widen past
+    # the data: cap the view at 0.8 (max plotted SHAP ~0.6).
+    ax.set_xlim(0, 0.8)
 
 
 _DAG_SPECS = [
@@ -173,23 +250,19 @@ _DAG_SPECS = [
      {r"$X_1$": (-0.6, 0), r"$Y$": (0.6, 0)},
      [(r"$X_1$", r"$Y$")],
      [r"$X_1$"], []),
-    ("B_proxy", r"(B) proxy",
-     {r"$X_1$": (-0.6, 0), r"$Y$": (0.6, 0.4), r"$X_2$": (0.6, -0.4)},
-     [(r"$X_1$", r"$Y$"), (r"$X_1$", r"$X_2$")],
-     [r"$X_2$"], []),
-    ("C_observed_confounder", r"(C) observed confounder",
+    ("C_observed_confounder", r"(B) observed confounder",
      {r"$X_1$": (-0.6, -0.2), r"$Y$": (0.6, -0.2), r"$Z$": (0, 0.5)},
      [(r"$Z$", r"$X_1$"), (r"$Z$", r"$Y$")],
      [r"$X_1$"], []),
-    ("D_mediator", r"(D) mediator",
+    ("D_mediator", r"(C) mediator",
      {r"$X_1$": (-0.75, 0), r"$X_2$": (0, 0), r"$Y$": (0.75, 0)},
      [(r"$X_1$", r"$X_2$"), (r"$X_2$", r"$Y$")],
      [r"$X_1$", r"$X_2$"], []),
-    ("E_target_descendant", r"(E) target descendant (label leak)",
+    ("E_target_descendant", r"(D) target descendant",
      {r"$Y$": (-0.6, 0), r"$X_1$": (0.6, 0)},
      [(r"$Y$", r"$X_1$")],
      [r"$X_1$"], []),
-    ("F_collider_leakage", r"(F) collider",
+    ("F_collider_leakage", r"(E) collider",
      {r"$X_1$": (-0.6, 0.4), r"$Y$": (0.6, 0.4), r"$C$": (0, -0.4)},
      [(r"$X_1$", r"$C$"), (r"$Y$", r"$C$")],
      [r"$C$"], []),
@@ -208,13 +281,7 @@ def _draw_dag(ax, motif_key, title, nodes, edges, highlight, hidden=()):
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
         s.set_visible(False)
-    # Motif E's title ("(E) target descendant (label leak)") is wider than
-    # the (E) DAG axes, so it bleeds past the surrounding gray box on the
-    # left. Shift its title slightly right so it stays inside the box.
-    if motif_key == "E_target_descendant":
-        ax.set_title(title, fontsize=9, x=0.62)
-    else:
-        ax.set_title(title, fontsize=9)
+    ax.set_title(title, fontsize=9)
 
     color = _MOTIF_COLOR[motif_key]
     radius = 0.16
@@ -256,8 +323,7 @@ def _pack_dag_rows(dag_axes, y_bottom):
 
     We keep the top row fixed and shrink the two inter-row gaps evenly.
     That lifts the middle row slightly and the bottom row a bit more,
-    removing the excess whitespace that otherwise leaves motif F hanging
-    below the gray background box.
+    removing the excess whitespace below the last motif.
     """
     top_row = dag_axes[:2]
     row_height = top_row[0].get_position().height
@@ -285,14 +351,18 @@ def main():
     gs = gridspec.GridSpec(
         4, 4, figure=fig,
         width_ratios=[1.0, 1.0, 0.15, 2.5],
-        height_ratios=[0.18, 1.0, 1.0, 1.0],
+        height_ratios=[0.38, 1.0, 1.0, 1.0],
         wspace=0.25, hspace=0.45,
     )
-    dag_axes = [fig.add_subplot(gs[r + 1, c])
-                for r in range(3) for c in range(2)]
+    dag_axes_full = [fig.add_subplot(gs[r + 1, c])
+                     for r in range(3) for c in range(2)]
+    # Delete extra grid cells when fewer than 6 motifs (e.g. after dropping
+    # the duplicate proxy panel) so no blank subplot leaks through.
+    for ax_unused in dag_axes_full[len(_DAG_SPECS):]:
+        fig.delaxes(ax_unused)
+    dag_axes = dag_axes_full[:len(_DAG_SPECS)]
     for ax_dag, spec in zip(dag_axes, _DAG_SPECS):
         _draw_dag(ax_dag, *spec)
-        # Transparent axes face so the figure-level gray box shows through.
         ax_dag.set_facecolor("none")
 
     ax_scatter = fig.add_subplot(gs[:, 3])
@@ -303,10 +373,21 @@ def main():
 
     # Once the scatter panel becomes square, it no longer spans the full
     # GridSpec cell vertically. Re-pack the DAG rows into that shorter span
-    # so the lower motifs stay inside the gray box without manual per-motif
-    # nudges.
+    # so the lower motifs stay aligned with the scatter panel without
+    # manual per-motif nudges.
     fig.canvas.draw()
     _pack_dag_rows(dag_axes, ax_scatter.get_position().y0)
+
+    # The bottom row holds only motif E (collider): the 3x2 grid leaves
+    # gs[3, 1] empty. Centre it horizontally across the two-column DAG
+    # block instead of leaving it alone at the left column.
+    if len(dag_axes) == 5:
+        col_left = dag_axes[0].get_position().x0
+        col_right = dag_axes[1].get_position().x1
+        e_pos = dag_axes[4].get_position()
+        new_x0 = (col_left + col_right) / 2.0 - e_pos.width / 2.0
+        dag_axes[4].set_position(
+            [new_x0, e_pos.y0, e_pos.width, e_pos.height])
 
     # "Motifs" header centred over the DAG block. Same font + weight as
     # the scatter title so the two read as siblings; vertical position
@@ -323,25 +404,6 @@ def main():
              ha="center", va="bottom",
              fontsize=plt.rcParams["axes.titlesize"],
              fontweight=plt.rcParams["axes.titleweight"])
-
-    # Light gray box surrounding only the DAG block. Vertical extent
-    # matches the scatter axes (right panel) exactly; "Motifs" header
-    # sits above the box, aligned with the scatter title.
-    from matplotlib.patches import Rectangle
-    pad_x = 0.018
-    scatter_pos = ax_scatter.get_position()
-    box_left = min(ax.get_position().x0 for ax in dag_axes) - pad_x
-    box_right = max(ax.get_position().x1 for ax in dag_axes) + pad_x
-    box_top = scatter_pos.y1
-    box_bottom = scatter_pos.y0
-    rect = Rectangle(
-        (box_left, box_bottom),
-        box_right - box_left, box_top - box_bottom,
-        transform=fig.transFigure,
-        facecolor="#eeeeee", edgecolor="#bbbbbb", linewidth=0.8,
-        zorder=0,
-    )
-    fig.add_artist(rect)
 
     Path(OUT_PDF).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT_PDF, bbox_inches="tight")

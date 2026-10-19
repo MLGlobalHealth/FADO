@@ -158,6 +158,134 @@ def motif_collider(p: int = 5, rng: Optional[np.random.Generator] = None) -> Mot
     )
 
 
+def motif_chained_mediators_k3(p: int = 5, rng: Optional[np.random.Generator] = None) -> MotifSpec:
+    """X0 -> X1 -> X2 -> X3 -> Y (3-step mediator chain).
+
+    Tests longer indirect causal paths than D_mediator (which is 1-step).
+    All four features (X0..X3) are in the causal path so all have nonzero
+    tau; the value attenuates along the chain in raw units but the
+    standardized contrasts are comparable in scale.
+    """
+    if p < 4:
+        raise ValueError(f"chained_mediators_k3 needs p >= 4, got {p}")
+    B = _blank(p)
+    y_idx = p
+    B[1, 0]     = _w(rng)
+    B[2, 1]     = _w(rng)
+    B[3, 2]     = _w(rng)
+    B[y_idx, 3] = _w(rng)
+    feature_to_Z = np.arange(p, dtype=int)
+    return MotifSpec(
+        name="G_chained_mediators_k3",
+        description="X0 -> X1 -> X2 -> X3 -> Y (chain of 3 mediators between X0 and Y)",
+        B=B, y_idx_in_Z=y_idx, feature_to_Z=feature_to_Z, scm_p=p,
+        notes="tau[0..3] all nonzero; X4..p-1 independent noise with tau=0",
+    )
+
+
+def motif_chained_mediators_k5(p: int = 5, rng: Optional[np.random.Generator] = None) -> MotifSpec:
+    """X0 -> X1 -> X2 -> X3 -> X4 -> Y (5-step mediator chain).
+
+    Stress test for very long indirect paths. Needs at least 5 features.
+    """
+    if p < 5:
+        raise ValueError(f"chained_mediators_k5 needs p >= 5, got {p}")
+    B = _blank(p)
+    y_idx = p
+    B[1, 0]     = _w(rng)
+    B[2, 1]     = _w(rng)
+    B[3, 2]     = _w(rng)
+    B[4, 3]     = _w(rng)
+    B[y_idx, 4] = _w(rng)
+    feature_to_Z = np.arange(p, dtype=int)
+    return MotifSpec(
+        name="H_chained_mediators_k5",
+        description="X0 -> X1 -> X2 -> X3 -> X4 -> Y (chain of 5 mediators between X0 and Y)",
+        B=B, y_idx_in_Z=y_idx, feature_to_Z=feature_to_Z, scm_p=p,
+        notes="tau[0..4] all nonzero; X5..p-1 independent noise with tau=0",
+    )
+
+
+def motif_latent_clique_2x2(p: int = 5, rng: Optional[np.random.Generator] = None) -> MotifSpec:
+    """Two hidden confounders affecting two cliques of features and Y.
+
+    Z1 -> {X0, X1, Y} (clique 1: 2 features confounded with Y)
+    Z2 -> {X2, X3, Y} (clique 2: 2 features confounded with Y)
+    X4 -> Y           (the only true direct cause)
+
+    None of X0..X3 cause Y, but each correlates with Y marginally through
+    its hidden confounder. The model has to recognize that despite the
+    correlation, do(X_i) does not move Y for i in {0..3}.
+
+    Harder than C_observed_confounder (one observed Z) because both Z's
+    are unobserved AND there are two parallel cliques. Needs p >= 5.
+    """
+    if p < 5:
+        raise ValueError(f"latent_clique_2x2 needs p >= 5, got {p}")
+    n_hidden = 2
+    N = p + 1 + n_hidden
+    B = np.zeros((N, N), dtype=np.float64)
+    y_idx = p
+    z1_idx = p + 1
+    z2_idx = p + 2
+    # Hidden Z1 -> X0, X1, Y
+    B[0, z1_idx]     = _w(rng)
+    B[1, z1_idx]     = _w(rng)
+    B[y_idx, z1_idx] = _w_strong(rng)
+    # Hidden Z2 -> X2, X3, Y
+    B[2, z2_idx]     = _w(rng)
+    B[3, z2_idx]     = _w(rng)
+    B[y_idx, z2_idx] = _w_strong(rng)
+    # X4 -> Y (true direct cause)
+    B[y_idx, 4] = _w_strong(rng)
+    feature_to_Z = np.arange(p, dtype=int)
+    return MotifSpec(
+        name="I_latent_clique_2x2",
+        description="Hidden Z1->{X0,X1,Y}, Z2->{X2,X3,Y}. X4 is the only causal feature.",
+        B=B, y_idx_in_Z=y_idx, feature_to_Z=feature_to_Z, scm_p=p,
+        notes="tau[0..3]==0 (latent-confounded); tau[4] large; X5..p-1 zero noise.",
+    )
+
+
+def motif_latent_clique_3x3(p: int = 10, rng: Optional[np.random.Generator] = None) -> MotifSpec:
+    """Three hidden confounders, each fanning to three features and to Y.
+
+    Z1 -> {X0, X1, X2, Y}
+    Z2 -> {X3, X4, X5, Y}
+    Z3 -> {X6, X7, X8, Y}
+    X9 -> Y                (true direct cause)
+
+    Stress version of 2x2: more confounding, more correlated-but-noncausal
+    features. Needs p >= 10.
+    """
+    if p < 10:
+        raise ValueError(f"latent_clique_3x3 needs p >= 10, got {p}")
+    n_hidden = 3
+    N = p + 1 + n_hidden
+    B = np.zeros((N, N), dtype=np.float64)
+    y_idx = p
+    z1_idx = p + 1
+    z2_idx = p + 2
+    z3_idx = p + 3
+    for x in (0, 1, 2):
+        B[x, z1_idx] = _w(rng)
+    B[y_idx, z1_idx] = _w_strong(rng)
+    for x in (3, 4, 5):
+        B[x, z2_idx] = _w(rng)
+    B[y_idx, z2_idx] = _w_strong(rng)
+    for x in (6, 7, 8):
+        B[x, z3_idx] = _w(rng)
+    B[y_idx, z3_idx] = _w_strong(rng)
+    B[y_idx, 9] = _w_strong(rng)
+    feature_to_Z = np.arange(p, dtype=int)
+    return MotifSpec(
+        name="J_latent_clique_3x3",
+        description="Hidden Z1->{X0,X1,X2,Y}, Z2->{X3,X4,X5,Y}, Z3->{X6,X7,X8,Y}. X9 is causal.",
+        B=B, y_idx_in_Z=y_idx, feature_to_Z=feature_to_Z, scm_p=p,
+        notes="tau[0..8]==0 (latent-confounded); tau[9] large; X10..p-1 zero noise.",
+    )
+
+
 ALL_MOTIFS: Dict[str, callable] = {
     "A_direct_cause": motif_direct_cause,
     "B_proxy": motif_proxy,
@@ -165,6 +293,10 @@ ALL_MOTIFS: Dict[str, callable] = {
     "D_mediator": motif_mediator,
     "E_target_descendant": motif_target_descendant,
     "F_collider_leakage": motif_collider,
+    "G_chained_mediators_k3": motif_chained_mediators_k3,
+    "H_chained_mediators_k5": motif_chained_mediators_k5,
+    "I_latent_clique_2x2": motif_latent_clique_2x2,
+    "J_latent_clique_3x3": motif_latent_clique_3x3,
 }
 
 

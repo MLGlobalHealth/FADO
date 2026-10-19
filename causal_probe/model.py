@@ -1,6 +1,6 @@
 """Minimal column-permutation-equivariant causal probe model.
 
-Architecture: row-then-column transformer
+Architecture: axial transformer
 
   1. Each cell (row r, column c) is embedded via a shared Linear(1, d).
   2. A learned 2-element TYPE embedding distinguishes feature columns from

@@ -44,6 +44,10 @@ URLS_CPS3 = [
     "http://users.nber.org/~rdehejia/data/cps3_controls.txt",
     "https://users.nber.org/~rdehejia/data/cps3_controls.txt",
 ]
+URLS_CPS1 = [
+    "http://users.nber.org/~rdehejia/data/cps_controls.txt",
+    "https://users.nber.org/~rdehejia/data/cps_controls.txt",
+]
 
 # Dehejia's format: treatment(0/1) age educ black hisp married nodegr re74 re75 re78
 COLUMNS = ["T", "age", "educ", "black", "hisp", "married", "nodegr", "re74", "re75", "re78"]
@@ -79,6 +83,8 @@ def load_lalonde_obs(control: str = "cps3"):
         ctrl = _parse_dehejia(_fetch_text(URLS_NSW_CONTROL))
     elif control == "cps3":
         ctrl = _parse_dehejia(_fetch_text(URLS_CPS3))
+    elif control == "cps1":
+        ctrl = _parse_dehejia(_fetch_text(URLS_CPS1))
     else:
         raise ValueError(f"Unknown control {control!r}")
     # treated has T=1, ctrl has T=0 (cps3) or T=0 (nsw_control)
@@ -205,8 +211,8 @@ def evaluate_bootstrap(
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt", required=True)
-    ap.add_argument("--control", default="cps3", choices=["cps3", "nsw"],
-                    help="cps3 = confounded observational; nsw = RCT control")
+    ap.add_argument("--control", default="cps3", choices=["cps3", "cps1", "nsw"],
+                    help="cps3 = confounded observational; cps1 = full CPS-1; nsw = RCT control")
     ap.add_argument("--outcome", default="re78", choices=["re78", "re75"])
     ap.add_argument("--k-noise", type=int, default=3)
     ap.add_argument("--n-rows", type=int, default=512)

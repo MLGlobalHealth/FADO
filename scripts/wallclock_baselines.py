@@ -36,7 +36,7 @@ CACHE = RESULTS / "wallclock_baselines.json"
 
 DEFAULT_METHODS = ["marginal", "ridge", "shap", "doubleml",
                    "causal_forest", "causalpfn", "probe"]
-PROBE_CKPT = REPO / "causal_probe" / "results" / "probe_main_p5_15k.ckpt"
+DEFAULT_PROBE_CKPT = REPO / "causal_probe" / "results" / "probe_main_p5_100k_mixture_heavy.ckpt"
 
 
 def _sample_scms(p: int, n_scms: int, seed: int) -> list:
@@ -53,7 +53,7 @@ def _sample_scms(p: int, n_scms: int, seed: int) -> list:
 
 def time_method(
     method: str, scms: list, n_rows: int, device: str, seed: int,
-    max_seconds: float,
+    max_seconds: float, probe_ckpt: Path = DEFAULT_PROBE_CKPT,
 ) -> dict:
     """Return {timings_s: [...], median_s, p25_s, p75_s, n_completed, n_skipped}."""
     from causal_probe.run_baseline import METHODS
@@ -62,7 +62,7 @@ def time_method(
     if method == "causalpfn":
         kwargs["device"] = device
     elif method == "probe":
-        kwargs["ckpt_path"] = str(PROBE_CKPT)
+        kwargs["ckpt_path"] = str(probe_ckpt)
         kwargs["device"] = device
 
     timings = []
@@ -129,6 +129,8 @@ def main():
     ap.add_argument("--n-scms", type=int, default=20)
     ap.add_argument("--seed", type=int, default=2025)
     ap.add_argument("--max-seconds-per-method", type=float, default=600.0)
+    ap.add_argument("--probe-ckpt", default=str(DEFAULT_PROBE_CKPT),
+                    help="Path to FADO probe checkpoint (used when method=probe)")
     ap.add_argument("--force", action="store_true",
                     help="Re-time even if cached")
     args = ap.parse_args()
@@ -151,7 +153,8 @@ def main():
             continue
         print(f"[run]   {m:>15s} ({args.device})...")
         res = time_method(m, scms, args.n_rows, args.device, args.seed,
-                          args.max_seconds_per_method)
+                          args.max_seconds_per_method,
+                          probe_ckpt=Path(args.probe_ckpt))
         cache[key] = res
         CACHE.write_text(json.dumps(cache, indent=2))
         if "error" in res:

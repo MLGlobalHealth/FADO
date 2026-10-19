@@ -1,4 +1,24 @@
 {
+  "hillstrom": {
+    "n_features": 19,
+    "n_flagged": 0,
+    "out": "causal_probe/results/anchor_audit/hillstrom.json"
+  },
+  "criteo": {
+    "n_features": 13,
+    "n_flagged": 1,
+    "out": "causal_probe/results/anchor_audit/criteo.json"
+  },
+  "lalonde": {
+    "n_features": 9,
+    "n_flagged": 0,
+    "out": "causal_probe/results/anchor_audit/lalonde.json"
+  },
+  "sachs": {
+    "n_features": 10,
+    "n_flagged": 0,
+    "out": "causal_probe/results/anchor_audit/sachs.json"
+  },
   "tubingen": {
     "n_features": 99,
     "n_flagged": 2,

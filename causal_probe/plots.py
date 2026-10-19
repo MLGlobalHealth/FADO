@@ -1,6 +1,6 @@
 """Produce the key sprint plots.
 
-  1. Scatter: predicted tau_hat vs true tau on 500 random held-out SCMs,
+  1. Scatter: predicted tau_hat vs true tau on 300 random held-out SCMs,
      with model + marginal baseline for comparison.
   2. Bar plot for proxy motif: X1 (true cause) vs X2 (proxy) showing
      true tau, model tau_hat, marginal baseline.
@@ -37,16 +37,27 @@ def _scatter_plot(
     seed: int,
     device: str,
     out_path: Path,
+    p_pad: int | None = None,
 ) -> None:
     rng = np.random.default_rng(seed)
     preds, truths, assocs = [], [], []
     for _ in range(n_scms):
         scm = LinearNonGaussianSCM(p=p, rng=np.random.default_rng(rng.integers(0, 2**31)))
         samp = scm.sample(n=n_rows, rng=np.random.default_rng(rng.integers(0, 2**31)))
-        X_t = torch.from_numpy(samp.X.astype(np.float32)).unsqueeze(0).to(device)
+        X_real = samp.X.astype(np.float32)
+        if p_pad is not None and p_pad > p:
+            # Match eval.py: pad with iid standard-normal noise columns so a
+            # foundation trained at p_max=15 sees its training shape; keep the
+            # predictions over the first p (real) columns only.
+            pad = np.random.default_rng(rng.integers(0, 2**31)).standard_normal(
+                (n_rows, p_pad - p)).astype(np.float32)
+            X_model = np.concatenate([X_real, pad], axis=1)
+        else:
+            X_model = X_real
+        X_t = torch.from_numpy(X_model).unsqueeze(0).to(device)
         y_t = torch.from_numpy(samp.y.astype(np.float32)).unsqueeze(0).to(device)
         with torch.no_grad():
-            pred = model(X_t, y_t).squeeze(0).cpu().numpy()
+            pred = model(X_t, y_t).squeeze(0).cpu().numpy()[:p]
         preds.append(pred); truths.append(samp.tau); assocs.append(BASELINES["marginal"](samp.X, samp.y))
     preds = np.stack(preds).reshape(-1)
     truths = np.stack(truths).reshape(-1)
@@ -199,11 +210,14 @@ def main():
     ap.add_argument("--ckpt", default="causal_probe/results/probe_5k.ckpt")
     ap.add_argument("--eval-json", default="causal_probe/results/eval_5k.json")
     ap.add_argument("--out-dir", default="causal_probe/results")
-    ap.add_argument("--n-scatter-scms", type=int, default=500)
+    ap.add_argument("--n-scatter-scms", type=int, default=200)
     ap.add_argument("--p", type=int, default=5)
     ap.add_argument("--n-rows", type=int, default=512)
     ap.add_argument("--seed", type=int, default=777)
     ap.add_argument("--device", default="cpu")
+    ap.add_argument("--p-pad", type=int, default=None,
+                    help="Pad to this many columns with iid noise (match a "
+                         "foundation trained at p_max); metrics over first p.")
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir); out_dir.mkdir(parents=True, exist_ok=True)
@@ -213,7 +227,8 @@ def main():
         eval_data = json.load(f)
 
     _scatter_plot(model, args.n_scatter_scms, args.p, args.n_rows,
-                  args.seed, args.device, out_dir / "scatter_true_vs_pred.png")
+                  args.seed, args.device, out_dir / "scatter_true_vs_pred.png",
+                  p_pad=args.p_pad)
     for name, mdata in eval_data["motifs"].items():
         _motif_bar(name, mdata, out_dir / f"motif_{name}.png")
     _motifs_combined(eval_data, out_dir / "motifs_combined.pdf")

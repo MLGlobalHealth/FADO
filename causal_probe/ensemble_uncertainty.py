@@ -2,7 +2,7 @@
 evaluate each on the same held-out SCMs, report ensemble mean, per-τ̂_i
 std, and correlation between uncertainty and error.
 
-Reviewer objection this addresses: "causal effects are not identifiable
+Objection this addresses: "causal effects are not identifiable
 from observational data — how does your model communicate that?"
 Answer: ensemble std rises under Gaussian-ambiguous generators and under
 hidden-confounded generators.
