@@ -64,8 +64,8 @@ uv run python scripts/build_tables.py             # main + appendix tables
 uv run python scripts/make_result_tables.py       # uncertainty, negative controls, IHDP decoys, Chambers
 uv run python scripts/paired_delta_baselines.py   # tab:all-baselines-paired-ci
 uv run python scripts/make_selective_prediction_fig.py
-uv run python scripts/cross_family_heatmap.py
-uv run python scripts/make_figures.py --which all
+PYTHONPATH=. uv run python scripts/cross_family_heatmap.py   # fig: cross-family heatmap (cached cells)
+PYTHONPATH=. uv run python -m causal_probe.figure_pred_vs_causal  # fig:pred-vs-causal (Fig. 1)
 ```
 
 Outputs land in `paper/tables/` and `paper/figures/`.
@@ -73,7 +73,7 @@ Outputs land in `paper/tables/` and `paper/figures/`.
 `scripts/paired_delta_baselines.py`; `tab:wallclock` comes from
 `scripts/wallclock_baselines.py` + `scripts/wallclock_figure.py`; the
 anchor-audit appendix from `scripts/run_anchor_audit.py` +
-`scripts/plot_anchor_audit.py`.
+`scripts/plot_anchor_audit.py`; the τ̂-vs-τ scatter from `causal_probe/plots.py`.
 
 ## Reproduce from scratch (training and evaluation)
 

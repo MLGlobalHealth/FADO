@@ -31,8 +31,8 @@ set -euo pipefail
 # uv run python scripts/make_result_tables.py
 # uv run python scripts/paired_delta_baselines.py
 # uv run python scripts/make_selective_prediction_fig.py
-# uv run python scripts/cross_family_heatmap.py
-# uv run python scripts/make_figures.py --which all
+# PYTHONPATH=. uv run python scripts/cross_family_heatmap.py   # fig: cross-family heatmap (cached cells)
+# PYTHONPATH=. uv run python -m causal_probe.figure_pred_vs_causal  # fig:pred-vs-causal (Fig. 1)
 
 # -----------------------------------------------------------------------------
 # Step 1a: train FADO p=5 (Sec. 3; "FADO: p=5" in tab:checkpoints)
