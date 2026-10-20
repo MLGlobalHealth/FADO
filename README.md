@@ -49,7 +49,12 @@ The training prior weights for both models are in `causal_probe/train.py`
 training arguments under the `args` key. Result JSONs from foundation-model
 runs record the checkpoint under its original training filename,
 `probe_foundation_intersample_L_p3_15_intersample_L_seed0.ckpt`, which holds
-the same weights as `probe_intersample_L_seed0.ckpt`. The p=5 checkpoint was
+the same weights as `probe_intersample_L_seed0.ckpt`. The ensemble row of
+tab:uncertainty-quality also used foundation-model seeds 1–4 (listed under
+`ensemble_ckpts` in
+`causal_probe/results/realdata_2026-09-29/uncertainty_estimator_compare.json`);
+those checkpoints are not shipped, so that one evaluation cannot be rerun, but
+the cached JSON is sufficient to rebuild the table. The p=5 checkpoint was
 trained with an earlier revision of the SCM generators (before a ±8σ clamp in
 the shared standardisation helper was added); retraining with this code
 follows the same recipe but is not bit-for-bit identical.

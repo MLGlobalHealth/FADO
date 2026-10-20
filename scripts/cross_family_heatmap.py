@@ -20,7 +20,6 @@ from causal_probe.eval import _load_model, evaluate_random
 REPO = Path(__file__).resolve().parents[1]
 RESULTS = REPO / "causal_probe" / "results"
 CACHE = RESULTS / "cross_family_eval.json"
-OUT_PNG = REPO / "notes" / "cross_family_heatmap.png"
 OUT_PDF = REPO / "paper" / "figures" / "cross_family_heatmap.pdf"
 
 
@@ -160,9 +159,6 @@ def plot(data: dict) -> None:
         fontsize=10,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.96))
-    OUT_PNG.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT_PNG, dpi=160)
-    print(f"\nwrote {OUT_PNG}")
     OUT_PDF.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT_PDF)
     print(f"wrote {OUT_PDF}")

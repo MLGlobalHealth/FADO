@@ -61,13 +61,16 @@ set -euo pipefail
 #     --scm-type mixture --prior foundation_l --noise heavy --seed 0 \
 #     --num-workers 4 --save-every 1000 --eval-every 10000 \
 #     --device cuda --ckpt-out causal_probe/results/probe_intersample_L_seed0.ckpt
-# Seeds 1-4 (--seed 1..4) give the ensemble used in tab:uncertainty-quality.
+# Seeds 1-4 (--seed 1..4) give the ensemble used in tab:uncertainty-quality
+# (those four checkpoints are not shipped; the cached JSON covers the table).
 
 # -----------------------------------------------------------------------------
 # Step 2: held-out random-SCM evaluation (tab:held-out-scms)
 # Output: causal_probe/results/eval_*.json
 # Wall clock: ~5 minutes per checkpoint on 1x GPU
 # -----------------------------------------------------------------------------
+# (eval_main_p5_50k.json is a legacy filename; it holds the eval of the 100k
+# checkpoint below.)
 # uv run python -m causal_probe.eval \
 #     --ckpt causal_probe/results/probe_main_p5_100k_mixture_heavy.ckpt \
 #     --p 5 --scm-type linear --noise heavy --n-random-scms 500 \

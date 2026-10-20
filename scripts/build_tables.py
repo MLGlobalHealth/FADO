@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import sys
 from pathlib import Path
 from typing import Iterable
 
@@ -1080,12 +1081,17 @@ ALL_BUILDERS = [
 
 def main() -> None:
     TABLES.mkdir(parents=True, exist_ok=True)
+    failed = []
     for fn in ALL_BUILDERS:
         print(f"--- {fn.__name__}")
         try:
             fn()
         except Exception as e:
             print(f"  FAIL: {type(e).__name__}: {e}")
+            failed.append(fn.__name__)
+    if failed:
+        print(f"{len(failed)} builder(s) failed: {', '.join(failed)}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

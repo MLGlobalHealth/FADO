@@ -371,8 +371,8 @@ def _parse_realdata_folder(name: str) -> tuple[str, int] | None:
     """Parse ``realdata_<dataset>_<jobid>`` or ``realdata_<dataset>_seed<N>_<jobid>``.
 
     Returns ``(dataset, seed)`` or None if the name is malformed. Seed is 0
-    when the folder has no ``_seed<N>`` infix (matches bench_realdata.slurm's
-    convention that seed 0 stays on the preregistered path).
+    when the folder has no ``_seed<N>`` infix (seed 0 stays on the
+    preregistered path).
     """
     if not name.startswith("realdata_") or name.startswith("realdata_greedy_smoke"):
         return None

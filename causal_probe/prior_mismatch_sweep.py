@@ -7,7 +7,7 @@ the single canonical foundation-L checkpoint (NOT retrained per condition).
 
 The foundation model is trained on ``train._MIXED_PRIOR_DEFAULT`` — a fixed
 mixture over 11 SCM families, with ``--noise heavy`` and heterogeneous
-``p in [3, 15]`` padded to 15 (see ``train_foundation.slurm``). Both axes
+``p in [3, 15]`` padded to 15 (see ``reproduce.sh``, Step 1b). Both axes
 below hold that model fixed and vary only the TEST distribution.
 
 AXIS 1 — discrete family mismatch (``--axes family``)
