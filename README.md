@@ -41,6 +41,15 @@ Two trained FADO models are used in the paper. Both checkpoints are included.
 | `probe_main_p5_100k_mixture_heavy.ckpt` (5 MB) | row/column transformer, d=96, 3+3 layers, 4 heads; p=5 | 5 SCM families (`--prior fado_p5`), 100k steps | §3 "FADO: p=5"; tab:held-out-scms, tab:all-baselines, tab:offlabel-pfn, tab:seed-robust, tab:motifs, tab:ablations, tab:type-flip-ablation, tab:lalonde, tab:criteo, tab:shap-contrast, tab:sachs-ckpts, tab:semisynth-realx |
 | `probe_intersample_L_seed0.ckpt` (57 MB, weights only) | intersample transformer, d=384, 6+6 layers, 8 heads; p ∈ [3, 15] | 11 SCM families (`--prior foundation_l`), 150k steps | tab:acic-fp, tab:foundation-per-family, tab:shapley-comparison, tab:uncertainty-coverage, tab:uncertainty-quality, fig:selective-prediction, tab:rct-negcontrols, tab:chambers-perfeature, the 124-trial RCT_Bench result |
 
+**Note on the paper's model description.** The architecture described in
+the submitted paper's §3 and in tab:checkpoints (4 heads, 3+3 blocks, d=96)
+is that of the FADO p=5 model. The tables in the second row above were
+produced by a larger foundation model that the submission does not describe:
+inter-sample attention, d=384, 8 heads, 6+6 layers, 14.2M parameters,
+p ∈ [3, 15] padded to 15, trained for 150k steps (lr 1e-4, 5k warmup,
+batch 8) on the 11-family prior `_FOUNDATION_L_PRIOR`. Its exact training
+arguments are stored in the checkpoint's `args` key.
+
 Single-family variants listed in tab:checkpoints are also included
 (`probe_*_{15,20,25,30}k.ckpt`, Gaussian controls, hetero-p).
 
